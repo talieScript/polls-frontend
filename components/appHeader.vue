@@ -1,6 +1,6 @@
 <template>
   <header>
-    here
+    <h1>Poll <span class="text-primary">Simple</span></h1>
   </header>
 </template>
 
