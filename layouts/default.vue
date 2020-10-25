@@ -1,5 +1,5 @@
 <template>
-  <div class="font-sans">
+  <div class="font-sans bg-secondary h-screen text-gray-600">
     <AppHeader />
     <Nuxt />
   </div>
