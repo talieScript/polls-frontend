@@ -12,7 +12,7 @@
     <div class="block sm:hidden">
       <button
         @click="toggle"
-        class="flex items-center px-3 py-2 border rounded text-teal-lighter"
+        class="flex items-center px-3 py-2 rounded text-teal-lighter focus:outline-none"
       >
         <svg
           class="fill-current h-3 w-3"
@@ -38,7 +38,7 @@
         'sm:opacity-100',
       ]"
     >
-      <div class="sm:flex-grow">
+      <div class="content sm:flex-grow">
         <a
           class="mr-3 hover:text-gray-500 transition-colors duration-200 block mt-4 sm:inline-block sm:mt-0"
           href="/poll-list"
@@ -53,7 +53,7 @@
         </a>
       </div>
       <div
-        class="border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
+        class="content border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
       >
         <button class="mr-2 hover:text-gray-500 transition-colors duration-200">
           Login
@@ -88,13 +88,21 @@ export default {
 .small-nav {
   height: 0;
   opacity: 0;
-  transition-duration: 0.5s, 0.3s;
+  overflow: hidden;
+  transition-duration: 0.5s, 0.5s;
   transition-property: height, opacity;
 
+  & .content {
+    transition: transform 0.55s;
+    transform: translateY(-120px);
+  }
+
   &--open {
-    transform: translateY(0);
     opacity: 1;
     height: 120px;
+    & .content {
+      transform: translateY(0);
+    }
   }
   // transform: translateY(-100px);
 }
