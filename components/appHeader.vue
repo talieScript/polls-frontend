@@ -1,5 +1,7 @@
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-teal p-6 bg-white">
+  <nav
+    class="flex items-center justify-between flex-wrap bg-teal p-3 sm:p-4 bg-white h-14 fixed w-full"
+  >
     <a
       href="/"
       class="w-30 w-xp font-bold text-xl justify-self-start text-black mr-6"
@@ -34,7 +36,6 @@
         'sm:items-center',
         'sm:w-auto',
         'sm:opacity-100',
-        'opacity-0',
       ]"
     >
       <div class="sm:flex-grow">
@@ -86,6 +87,7 @@ export default {
 <style lang="scss" scoped>
 .small-nav {
   height: 0;
+  opacity: 0;
   transition-duration: 0.5s, 0.3s;
   transition-property: height, opacity;
 
