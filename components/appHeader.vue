@@ -1,6 +1,7 @@
 <template>
   <nav
     class="flex items-center justify-between flex-wrap bg-teal p-3 sm:p-4 bg-white h-14 fixed w-full"
+    v-click-outside="onClickOutside"
   >
     <a
       href="/"
@@ -71,6 +72,7 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
 export default {
   name: 'AppHeader',
   data() {
@@ -82,6 +84,12 @@ export default {
     toggle() {
       this.open = !this.open
     },
+    onClickOutside() {
+      this.open = false
+    },
+  },
+  directives: {
+    ClickOutside,
   },
 }
 </script>
