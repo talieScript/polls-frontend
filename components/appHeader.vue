@@ -114,6 +114,5 @@ export default {
       transform: translateY(0);
     }
   }
-  // transform: translateY(-100px);
 }
 </style>
