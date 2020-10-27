@@ -35,10 +35,12 @@
         'sm:flex',
         'sm:items-center',
         'sm:w-auto',
+        'sm:overflow-visible',
+        'sm:h-0',
         'sm:opacity-100',
       ]"
     >
-      <div class="content sm:flex-grow">
+      <div class="content sm:transform sm:-translate-y-0 sm:flex-grow">
         <a
           class="mr-3 hover:text-gray-500 transition-colors duration-200 block mt-4 sm:inline-block sm:mt-0"
           href="/poll-list"
@@ -53,7 +55,7 @@
         </a>
       </div>
       <div
-        class="content border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
+        class="content sm:transform sm:-translate-y-0 sm:translate-y-0 border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
       >
         <button class="mr-2 hover:text-gray-500 transition-colors duration-200">
           Login
