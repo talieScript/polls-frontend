@@ -1,7 +1,7 @@
 <template>
   <div class="font-sans bg-secondary h-screen text-gray-600">
     <AppHeader />
-    <Nuxt class="pt-16 sm:pt-16" />
+    <Nuxt class="pt-16 sm:pt-16 px-12" />
   </div>
 </template>
 

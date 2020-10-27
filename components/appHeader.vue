@@ -103,13 +103,13 @@ export default {
   transition-property: height, opacity;
 
   & .content {
-    transition: transform 0.55s;
+    transition: transform 0.5s;
     transform: translateY(-120px);
   }
 
   &--open {
     opacity: 1;
-    height: 120px;
+    height: 125px;
     & .content {
       transform: translateY(0);
     }
