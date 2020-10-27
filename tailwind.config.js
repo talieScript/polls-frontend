@@ -2,8 +2,21 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   important: true,
   theme: {
+    extend: {
+      zIndex: {
+        "-1": "-1",
+      },
+      transformOrigin: {
+        "0": "0%",
+      },
+      left: {
+        "1": "0.25rem"
+      }
+    },
     fontFamily: {
-      sans: ["Nunito Sans", ...defaultTheme.fontFamily.sans],
+      ...defaultTheme.fontFamily,
+      sans: ['Noto Sans TC', ...defaultTheme.fontFamily.sans],
+      roboto: ['Roboto', 'sans-serif']
     },
     colors: {
       ...defaultTheme.colors,
@@ -19,7 +32,9 @@ module.exports = {
       red: '#D7263D',
       white: '#FFFFFF',
     },
-    variants: {},
-    plugins: []
-  }
+  },
+  plugins: [],
+  variants: {
+    borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
+  },
 };

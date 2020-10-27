@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TextInput label="Title" placeholder="Title" />
+    <TextInput label="Title" placeholder="Title" class="mt-5" />
   </div>
 </template>
 
