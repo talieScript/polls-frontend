@@ -21,6 +21,9 @@
         { rounded: outline },
         `bg-${bgColor}`,
       ]"
+      @input="emitInput($event.target.value)"
+      :value="value"
+      :required="required"
     />
     <label
       v-if="label"
@@ -67,6 +70,22 @@ export default {
       type: String,
       default: 'secondary',
     },
+    rules: {
+      type: Array,
+      required: false,
+    },
+    value: {
+      type: String,
+    },
+    required: {
+      type: Boolean,
+      required: false,
+    }
+  },
+  methods: {
+    emitInput(input) {
+      this.$emit('input', input)
+    }
   },
 }
 </script>

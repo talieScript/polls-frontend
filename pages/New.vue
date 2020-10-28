@@ -1,12 +1,18 @@
 <template>
   <div>
-    <TextInput label="Title" bgColor="secondary"  />
-    <TextArea label="Question" bgColor="white" outline  />
+    <TextInput v-model="input" label="Title" bgColor="secondary"  />
+    <TextArea v-model="input" label="Question" bgColor="white" outline  />
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      input: 'hello'
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped>

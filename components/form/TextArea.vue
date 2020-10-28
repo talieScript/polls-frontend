@@ -21,6 +21,9 @@
         outline ? 'rounded' : 'rounded-t-sm',
         `bg-${bgColor}`,
       ]"
+      @input="emitInput($event.target.value)"
+      :value="value"
+      :required="required"
     />
     <label
       v-if="label"
@@ -67,6 +70,18 @@ export default {
       type: String,
       default: 'secondary',
     },
+    value: {
+      type: String,
+    },
+    required: {
+      type: Boolean,
+      required: false,
+    }
+  },
+  methods: {
+    emitInput(input) {
+      this.$emit('input', input)
+    }
   },
 }
 </script>
