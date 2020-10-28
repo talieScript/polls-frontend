@@ -2,6 +2,7 @@
   <div
     :class="[
       'relative',
+      'mt-5',
       `${width ? `w-${width}` : ''}`,
       { rounded: outline },
       outline ? 'border' : 'border-b-2',

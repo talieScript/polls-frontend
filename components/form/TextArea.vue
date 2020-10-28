@@ -2,8 +2,9 @@
   <div
     :class="[
       'relative',
+      'mt-5',
       `${width ? `w-${width}` : ''}`,
-      { rounded: outline },
+      outline ? 'rounded' : 'rounded-t-sm',
       outline ? 'border' : 'border-b-2',
       { outline },
       'focus-within:border-primary',
@@ -15,9 +16,9 @@
       type="text"
       :aria-describedby="ariaDescribedby"
       :class="[
-        'input p-1 text-black block w-full appearance-none focus:outline-none z-10 rounded',
+        'input p-1 text-black block w-full appearance-none focus:outline-none z-10',
         { 'p-2': outline },
-        { rounded: outline },
+        outline ? 'rounded' : 'rounded-t-sm',
         `bg-${bgColor}`,
       ]"
     />
@@ -26,8 +27,8 @@
       for="text-input"
       :class="[
         'label absolute top-0 px-1z-0 duration-300 origin-0',
-        outline ? 'mt-2' : 'mt-1',
-        outline ? 'ml-2' : 'ml-0',
+        outline ? 'mt-2' : 'mt-0',
+        outline ? 'ml-2' : 'ml-1',
       ]"
     >
       {{ label }}
@@ -81,15 +82,15 @@ export default {
 
 .input:focus-within ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  @apply transform scale-90 -translate-y-6;
+  @apply transform scale-90 -translate-y-6 -translate-x-1;
 }
 
-.outline input:focus-within ~ .label,
-.outline input:not(:placeholder-shown) ~ .label {
-  @apply transform scale-90 -translate-y-8 z-0 px-1 py-0 -translate-x-2;
+.outline .input:focus-within ~ .label,
+.outline .input:not(:placeholder-shown) ~ .label {
+  @apply transform scale-90 -translate-y-8 z-0 px-1 py-0 -translate-x-3;
 }
 
-input:focus-within ~ label,
+.input:focus-within ~ label,
 .outline input:focus-within ~ label {
   @apply text-primary;
 }
