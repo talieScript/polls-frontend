@@ -9,7 +9,7 @@
       'focus-within:border-primary',
     ]"
   >
-    <input
+    <textarea
       id="text-input"
       :placeholder="' '"
       type="text"
