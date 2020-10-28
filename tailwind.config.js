@@ -11,7 +11,7 @@ module.exports = {
       },
       left: {
         "1": "0.25rem"
-      }
+      },
     },
     fontFamily: {
       ...defaultTheme.fontFamily,
@@ -36,5 +36,6 @@ module.exports = {
   plugins: [],
   variants: {
     borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
+    border: ['responsive', 'hover', 'focus', 'focus-within'],
   },
 };

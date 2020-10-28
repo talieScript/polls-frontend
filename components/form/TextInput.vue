@@ -4,7 +4,7 @@
       'relative',
       `${width ? `w-${width}` : ''}`,
       { rounded: outline },
-      outline ? 'border-2' : 'border-b-2',
+      outline ? 'border' : 'border-b-2',
       { outline },
       'focus-within:border-primary',
     ]"
@@ -28,7 +28,6 @@
         'label absolute top-0 px-1z-0 duration-300 origin-0',
         outline ? 'mt-2' : 'mt-1',
         outline ? 'ml-2' : 'ml-0',
-        `bg-${bgColor}`,
       ]"
     >
       {{ label }}
@@ -72,17 +71,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.label {
+  @apply text-gray-400;
+}
+
+.input:not(:focus):not(:placeholder-shown) ~ .label {
+  @apply text-gray-600;
+}
+
 .input:focus-within ~ .label,
-input:not(:placeholder-shown) ~ label {
+.input:not(:placeholder-shown) ~ .label {
   @apply transform scale-90 -translate-y-6;
 }
 
-input:focus-within ~ label {
-  @apply text-primary;
+.outline input:focus-within ~ .label,
+.outline input:not(:placeholder-shown) ~ .label {
+  @apply transform scale-90 -translate-y-8 z-0 px-1 py-0 -translate-x-2;
 }
 
-.outline input:focus-within ~ label,
-.outline input:not(:placeholder-shown) ~ label {
-  @apply transform scale-90 -translate-y-6 z-0 ml-3 px-1 py-0;
+input:focus-within ~ label,
+.outline input:focus-within ~ label {
+  @apply text-primary;
 }
 </style>
