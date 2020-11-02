@@ -3,6 +3,9 @@ module.exports = {
   important: true,
   theme: {
     extend: {
+      margin: {
+       '-1': '-0.25rem' 
+      },
       zIndex: {
         "-1": "-1",
       },
