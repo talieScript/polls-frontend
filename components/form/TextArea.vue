@@ -1,45 +1,55 @@
 <template>
-  <div
-    :class="[
-      'relative',
-      'mt-5',
-      `${width ? `w-${width}` : ''}`,
-      outline ? 'rounded' : 'rounded-t-sm',
-      outline ? 'border' : 'border-b-2',
-      { outline },
-      'focus-within:border-primary',
-    ]"
-  >
-    <textarea
-      id="text-input"
-      :placeholder="' '"
-      type="text"
-      :aria-describedby="ariaDescribedby"
+  <div :class="['z-10 mt-5 mb-4 relative', { error: localError }]">
+    <div
       :class="[
-        'input p-1 text-black block w-full appearance-none focus:outline-none z-10',
-        { 'p-2': outline },
+        'input-div',
+        'z-10',
+        'relative',
+        'focus-within:border-primary',
+        `${width ? `w-${width}` : ''}`,
         outline ? 'rounded' : 'rounded-t-sm',
-        `bg-${bgColor}`,
-      ]"
-      @input="emitInput($event.target.value)"
-      :value="value"
-      :required="required"
-    />
-    <label
-      v-if="label"
-      for="text-input"
-      :class="[
-        'label absolute top-0 px-1z-0 duration-300 origin-0',
-        outline ? 'mt-2' : 'mt-0',
-        outline ? 'ml-2' : 'ml-1',
+        outline ? 'border' : 'border-b-2',
+        { outline },
+        { error: localError },
       ]"
     >
-      {{ label }}
-    </label>
+      <textarea
+        id="text-area"
+        :placeholder="' '"
+        type="text"
+        :aria-describedby="ariaDescribedby"
+        :class="[
+          'input p-1 text-black block w-full appearance-none focus:outline-none z-10',
+          { 'p-2': outline },
+          outline ? 'rounded' : 'rounded-t-sm',
+          `bg-${bgColor}`,
+        ]"
+        @input="handleInput($event.target.value)"
+        :value="value"
+        :required="required"
+      />
+      <label
+        v-if="label"
+        for="text-area"
+        :class="[
+          'label absolute top-0 px-1z-0 duration-300 origin-0',
+          outline ? 'mt-2' : 'mt-0',
+          outline ? 'ml-2' : 'ml-1',
+        ]"
+      >
+        {{ label }}
+      </label>
+    </div>
+    <div
+      class="error-message absolute bottom-0 z-0 text-red text-xs duration-300"
+    >
+      {{ localError }}
+    </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { PropOptions } from 'vue'
 export default {
   name: 'TextInput',
   props: {
@@ -76,12 +86,34 @@ export default {
     required: {
       type: Boolean,
       required: false,
-    }
+    },
+    rules: {
+      type: Array,
+      default: [],
+    } as PropOptions<((input: string) => {})[]>,
+    error: {
+      type: String,
+      required: false,
+    } as PropOptions<string | boolean>,
+  },
+  computed: {
+    localError: {
+      get(): boolean | string {
+        return this.error
+      },
+      set(value: any) {
+        this.$emit('update:error', value)
+      },
+    },
   },
   methods: {
-    emitInput(input) {
+    handleInput(input: string) {
+      this.rules.forEach((rule) => {
+        this.localError = rule(input)
+      })
+      console.log(this.localError)
       this.$emit('input', input)
-    }
+    },
   },
 }
 </script>
@@ -108,5 +140,17 @@ export default {
 .input:focus-within ~ label,
 .outline input:focus-within ~ label {
   @apply text-primary;
+}
+
+.error {
+  @apply border-red  #{!important};
+
+  & .input-div .label {
+    @apply text-red  #{!important};
+  }
+
+  & .error-message {
+    @apply transform translate-y-4;
+  }
 }
 </style>
