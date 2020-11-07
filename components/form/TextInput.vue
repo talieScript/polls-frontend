@@ -53,6 +53,9 @@
 import { PropOptions } from 'vue'
 export default {
   name: 'TextInput',
+  data(): any {
+    return {}
+  },
   props: {
     placeholder: {
       type: String,
@@ -105,16 +108,16 @@ export default {
       set(value: any) {
         this.$emit('update:error', value)
       },
-    },
+    } as any,
   },
   methods: {
     handleInput(input: string) {
-      this.rules.forEach((rule) => {
+      this.rules.forEach((rule: any) => {
         this.localError = rule(input)
       })
       this.$emit('input', input)
     },
-  },
+  } as any,
 }
 </script>
 

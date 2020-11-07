@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit">
     <div>
-      <!-- <TextInput
+      <TextInput
         v-model="input"
         label="Title"
         bgColor="secondary"
@@ -13,7 +13,7 @@
           },
         ]"
         :error.sync="errors['title']"
-      /> -->
+      />
       <TextArea
         v-model="input"
         label="Question"
