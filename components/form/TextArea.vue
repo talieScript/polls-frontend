@@ -53,7 +53,7 @@ import { PropOptions } from 'vue'
 export default {
   name: 'TextInput',
   data(): any {
-    return {}
+    return {} as any
   },
   props: {
     placeholder: {
@@ -107,7 +107,7 @@ export default {
       set(value: boolean | string): void {
         this.$emit('update:error', value)
       },
-    },
+    } as any,
   },
   methods: {
     handleInput(input: string): void {
@@ -125,7 +125,7 @@ export default {
       }
       this.$emit('input', input)
     },
-  },
+  } as any,
 }
 </script>
 
