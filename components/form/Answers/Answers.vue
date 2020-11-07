@@ -1,19 +1,15 @@
 <template>
-  <div>
-    <draggable
-      v-model="answers"
-      @start="dragging = true"
-      @end="dragging = false"
+  <draggable v-model="answers" class="max-w-lg">
+    <div
+      class="mt-1 cursor-move"
+      v-for="element in answers"
+      :key="element.text"
     >
-      <div
-        class="list-group-item"
-        v-for="element in answers"
-        :key="element.text"
-      >
+      <div class="bg-white rounded">
         {{ element.text }}
       </div>
-    </draggable>
-  </div>
+    </div>
+  </draggable>
 </template>
 
 <script lang="ts">
@@ -28,7 +24,6 @@ export default Vue.extend({
   data() {
     return {
       answers: [{ text: 'here1' }, { text: 'here2' }, { text: 'here3' }],
-      dragging: false,
     }
   },
 })
