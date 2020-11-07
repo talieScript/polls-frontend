@@ -24,7 +24,7 @@
             return input ? '' : 'Required'
           },
         ]"
-        :error.sync="errors['title']"
+        :error.sync="errors['question']"
       />
     </div>
     <button>submit</button>
@@ -35,7 +35,7 @@
 export default {
   data() {
     return {
-      input: 'hello',
+      input: '',
       errors: {},
     }
   },
