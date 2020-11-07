@@ -1,33 +1,9 @@
 <template>
   <form @submit.prevent="submit">
     <div>
-      <TextInput
-        v-model="input"
-        label="Title"
-        bgColor="secondary"
-        required
-        outline
-        :rules="[
-          (input) => {
-            return input ? '' : 'Required'
-          },
-        ]"
-        :error.sync="errors['title']"
-      />
-      <TextArea
-        v-model="input"
-        label="Question"
-        bgColor="white"
-        outline
-        :rules="[
-          (input) => {
-            return input ? '' : 'Required'
-          },
-        ]"
-        :error.sync="errors['question']"
-      />
+      <Answers v-model="answers" />
     </div>
-    <button>submit</button>
+    <!-- <button>submit</button> -->
   </form>
 </template>
 
@@ -37,6 +13,7 @@ export default {
     return {
       input: '',
       errors: {},
+      answers: [],
     }
   },
   methods: {
