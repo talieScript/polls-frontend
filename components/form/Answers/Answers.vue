@@ -1,12 +1,8 @@
 <template>
   <draggable v-model="answers" class="max-w-lg">
-    <div
-      class="mt-1 cursor-move"
-      v-for="element in answers"
-      :key="element.text"
-    >
-      <div class="bg-white rounded">
-        {{ element.text }}
+    <div class="mt-1" v-for="answer in answers" :key="answer.text">
+      <div class="cursor-move bg-white rounded">
+        {{ answer.text }}
       </div>
     </div>
   </draggable>
@@ -20,6 +16,11 @@ export default Vue.extend({
   name: 'Answers',
   components: {
     draggable,
+  },
+  props: {
+    value: {
+      type: Array,
+    },
   },
   data() {
     return {

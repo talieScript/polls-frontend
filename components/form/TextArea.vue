@@ -19,7 +19,7 @@
         type="text"
         :aria-describedby="ariaDescribedby"
         :class="[
-          'input p-1 text-black block w-full appearance-none focus:outline-none z-10',
+          'input p-1 text-black block w-full appearance-none focus:outline-none z-10 resize-none',
           { 'p-2': outline },
           outline ? 'rounded' : 'rounded-t-sm',
           `bg-${bgColor}`,

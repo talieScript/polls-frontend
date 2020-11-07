@@ -28,7 +28,7 @@
       />
       <Answers v-model="answers" />
     </div>
-    <!-- <button>submit</button> -->
+    <button>submit</button>
   </form>
 </template>
 
@@ -40,6 +40,11 @@ export default {
       errors: {},
       answers: [],
     }
+  },
+  watch: {
+    answers(alie) {
+      console.log(alie)
+    },
   },
   methods: {
     submit(poll: object) {
