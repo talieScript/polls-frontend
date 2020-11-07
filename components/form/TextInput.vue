@@ -111,10 +111,19 @@ export default {
     } as any,
   },
   methods: {
-    handleInput(input: string) {
-      this.rules.forEach((rule: any) => {
-        this.localError = rule(input)
-      })
+    handleInput(input: string): void {
+      // handle rule validation
+      const ruleBroken: boolean = this.rules.some((rule: any) => rule(input))
+      if (ruleBroken) {
+        this.rules.forEach((rule: any) => {
+          const ruleOutput = rule(input)
+          if (ruleOutput) {
+            this.localError = ruleOutput
+          }
+        })
+      } else {
+        this.localError = false
+      }
       this.$emit('input', input)
     },
   } as any,
