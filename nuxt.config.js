@@ -41,10 +41,11 @@ export default {
             imports: [
               {
                 set: '@fortawesome/free-solid-svg-icons',
-                icons: ['faGripLines']
-              }
+                icons: ['faGripLines', 'faTrash']
+              },
             ]
-          }]
+          }
+      ]
   ],
 
   axios: {},

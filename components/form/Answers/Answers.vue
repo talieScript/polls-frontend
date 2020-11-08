@@ -1,11 +1,28 @@
 <template>
-  <draggable v-model="answers" class="max-w-lg">
-    <div class="mt-1" v-for="answer in answers" :key="answer.text">
-      <div class="cursor-move bg-white rounded px-2 py-2 text-right">
+  <draggable
+    v-model="answers"
+    class="max-w-lg"
+    ghost-class="ghost"
+    @start="startDrag"
+    @end="endDrag"
+  >
+    <div
+      class="mt-1 flex items-center answer-div"
+      @mousedown="startDrag"
+      v-for="answer in answers"
+      :key="answer.text"
+    >
+      <div
+        class="cursor-move bg-white rounded flex-grow px-2 py-2 flex justify-between items-center ml-3"
+      >
         <fa :icon="['fa', 'grip-lines']" />
-        <!-- <i class="fas fa-address-card"></i>x -->
-        {{ answer.text }}
+        <span class="text-right ml-6">{{ answer.text }}</span>
       </div>
+      <fa
+        ref="trash"
+        :icon="['fa', 'trash']"
+        class="trash ml-1 text-sm hover:text-red transition-colors duration-200 opacity-0 cursor-pointer"
+      />
     </div>
   </draggable>
 </template>
@@ -24,17 +41,36 @@ export default Vue.extend({
       type: Array,
     },
   },
-  data() {
+  data(): any {
     return {
-      answers: [{ text: 'here1' }, { text: 'here2' }, { text: 'here3' }],
+      answers: [
+        {
+          text:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean',
+        },
+        { text: 'here2' },
+        { text: 'here3' },
+      ],
     }
+  },
+  methods: {
+    startDrag() {
+      this.$refs.trash.forEach((el: any) => el.classList.add('opacity-0'))
+    },
   },
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
+  opacity: 0.4;
+}
+
+.answer-div:hover .trash {
+  @apply opacity-100;
+}
+
+.sortable-chosen .trash {
+  @apply opacity-0 #{!important};
 }
 </style>
