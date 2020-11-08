@@ -1,7 +1,9 @@
 <template>
   <draggable v-model="answers" class="max-w-lg">
     <div class="mt-1" v-for="answer in answers" :key="answer.text">
-      <div class="cursor-move bg-white rounded">
+      <div class="cursor-move bg-white rounded px-2 py-2 text-right">
+        <fa :icon="['fa', 'grip-lines']" />
+        <!-- <i class="fas fa-address-card"></i>x -->
         {{ answer.text }}
       </div>
     </div>
