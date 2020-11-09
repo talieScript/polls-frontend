@@ -28,7 +28,8 @@
           v-if="!dragging"
           ref="trash"
           :icon="['fa', 'trash']"
-          class="trash ml-1 text-sm hover:text-red transition duration-200 cursor-pointer"
+          class="trash ml-1 text-sm hover:text-red transition duration-200 cursor-pointer z-10"
+          @mousedown="deleteAnswer(index)"
         />
       </div>
     </draggable>
@@ -67,8 +68,10 @@ export default Vue.extend({
       this.$refs.trash.forEach((el: any) => (el.style.opacity = 0))
     },
     showTrash() {
-      console.log('here')
       this.$refs.trash.forEach((el: any) => (el.style.opacity = null))
+    },
+    deleteAnswer(index) {
+      this.answers.splice(index, 1)
     },
   },
 })
