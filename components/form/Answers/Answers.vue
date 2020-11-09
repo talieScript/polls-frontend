@@ -17,18 +17,18 @@
         v-for="(answer, index) in answers"
         :key="answer.text"
       >
+        {{ index + 1 }}
         <div
           class="cursor-move bg-white rounded flex-grow px-2 py-2 flex justify-between items-center ml-3"
         >
-          <!-- <fa :icon="['fa', 'grip-lines']" /> -->
-          {{ index + 1 }}
+          <fa :icon="['fa', 'grip-lines']" />
           <span class="text-right ml-6">{{ answer.text }}</span>
         </div>
         <fa
           v-if="!dragging"
           ref="trash"
           :icon="['fa', 'trash']"
-          class="trash ml-1 text-sm hover:text-red transition duration-200 cursor-pointer z-10"
+          class="trash ml-1 text-sm hover:text-red transition-color duration-200 cursor-pointer z-10"
           @mousedown="deleteAnswer(index)"
         />
       </div>
@@ -72,6 +72,7 @@ export default Vue.extend({
     },
     deleteAnswer(index) {
       this.answers.splice(index, 1)
+      this.dragging = false
     },
   },
 })
@@ -80,13 +81,5 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .ghost {
   opacity: 0.4;
-}
-
-.answer-div:hover .trash {
-  @apply opacity-100;
-}
-
-.trash {
-  @apply opacity-0;
 }
 </style>

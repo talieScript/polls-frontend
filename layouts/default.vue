@@ -2,7 +2,7 @@
   <div class="font-sans bg-secondary h-screen text-gray-600">
     <AppHeader />
     <div class="flex align-center max-w-lg w-full mx-auto">
-      <Nuxt class="pt-16 sm:pt-16 px-12" />
+      <Nuxt class="pt-16 sm:pt-16 sm:px-12 px-8" />
     </div>
   </div>
 </template>
