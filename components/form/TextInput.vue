@@ -96,7 +96,7 @@ export default {
       required: false,
     },
     error: {
-      type: String,
+      type: Boolean,
       required: false,
     } as PropOptions<string | boolean>,
   },
