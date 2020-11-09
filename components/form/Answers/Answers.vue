@@ -67,7 +67,7 @@ export default Vue.extend({
 }
 
 .answer-div:hover .trash {
-  @apply opacity-100;
+  @apply opacity-100 #{!important};
 }
 
 .sortable-chosen .trash {
