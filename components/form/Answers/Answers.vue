@@ -6,25 +6,29 @@
       id="answers"
       class="max-w-lg"
       ghost-class="ghost"
-      @end="showTrash"
+      @end="dragging = false"
+      @start="dragging = true"
     >
       <div
         class="mt-1 flex items-center answer-div"
-        @mousedown="hideTrash"
-        @mouseup="showTrash"
-        v-for="answer in answers"
+        @mousedown="dragging = true"
+        @mouseup="dragging = false"
+        :class="{ 'pr-4': dragging }"
+        v-for="(answer, index) in answers"
         :key="answer.text"
       >
         <div
           class="cursor-move bg-white rounded flex-grow px-2 py-2 flex justify-between items-center ml-3"
         >
-          <fa :icon="['fa', 'grip-lines']" />
+          <!-- <fa :icon="['fa', 'grip-lines']" /> -->
+          {{ index + 1 }}
           <span class="text-right ml-6">{{ answer.text }}</span>
         </div>
         <fa
+          v-if="!dragging"
           ref="trash"
           :icon="['fa', 'trash']"
-          class="trash ml-1 text-sm hover:text-red transition-colors duration-200 cursor-pointer"
+          class="trash ml-1 text-sm hover:text-red transition duration-200 cursor-pointer"
         />
       </div>
     </draggable>
@@ -47,6 +51,7 @@ export default Vue.extend({
   },
   data(): any {
     return {
+      dragging: false,
       answers: [
         {
           text:
