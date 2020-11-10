@@ -15,7 +15,7 @@
     >
       <input
         id="text-input"
-        :placeholder="' '"
+        :placeholder="placeholder || ' '"
         type="text"
         :aria-describedby="ariaDescribedby"
         :class="[
@@ -96,7 +96,7 @@ export default {
       required: false,
     },
     error: {
-      type: Boolean,
+      type: String,
       required: false,
     } as PropOptions<string | boolean>,
   },
@@ -122,7 +122,7 @@ export default {
           }
         })
       } else {
-        this.localError = false
+        this.localError = ''
       }
       this.$emit('input', input)
     },

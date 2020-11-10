@@ -28,11 +28,23 @@
           v-if="!dragging"
           ref="trash"
           :icon="['fa', 'trash']"
+          :error="'Max 100 chrectors, sorry'"
           class="trash ml-1 text-sm hover:text-red transition-color duration-200 cursor-pointer z-10"
           @mousedown="deleteAnswer(index)"
         />
       </div>
     </draggable>
+    <TextInput
+      v-model="answerInput"
+      ariaDescribedby="add answer"
+      placeholder="add a answer"
+      :error.sync="inputError"
+      :rules="[
+        (input) => {
+          return input.length < 100 ? '' : 'Max 100 characters, sorry'
+        },
+      ]"
+    />
   </div>
 </template>
 
@@ -53,6 +65,8 @@ export default Vue.extend({
   data(): any {
     return {
       dragging: false,
+      answerInput: '',
+      inputError: undefined,
       answers: [
         {
           text:
@@ -73,6 +87,12 @@ export default Vue.extend({
     deleteAnswer(index) {
       this.answers.splice(index, 1)
       this.dragging = false
+    },
+    answerInputRule(input) {
+      console.log(input)
+      if (input.length < 100) {
+        return 'Max 100 chrectors, sorry'
+      }
     },
   },
 })

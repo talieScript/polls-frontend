@@ -121,7 +121,7 @@ export default {
           }
         })
       } else {
-        this.localError = false
+        this.localError = ''
       }
       this.$emit('input', input)
     },
