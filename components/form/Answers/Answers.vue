@@ -41,7 +41,7 @@
       :error.sync="inputError"
       :rules="[
         (input) => {
-          return input.length < 100 ? '' : 'Max 100 characters, sorry'
+          return input.length <= 100 ? '' : 'Max 100 characters, sorry'
         },
       ]"
       :maxCharacters="100"
