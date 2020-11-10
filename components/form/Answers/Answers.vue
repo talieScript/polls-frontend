@@ -37,13 +37,14 @@
     <TextInput
       v-model="answerInput"
       ariaDescribedby="add answer"
-      placeholder="add a answer"
+      placeholder="Add an answer"
       :error.sync="inputError"
       :rules="[
         (input) => {
           return input.length < 100 ? '' : 'Max 100 characters, sorry'
         },
       ]"
+      :maxCharacters="100"
     />
   </div>
 </template>

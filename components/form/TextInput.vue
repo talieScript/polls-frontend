@@ -46,6 +46,15 @@
     >
       {{ localError }}
     </div>
+    <div
+      v-if="maxCharacters"
+      :class="[
+        'absolute bottom-0 right-0 text-xs transform translate-y-4',
+        { 'text-red': value.length > maxCharacters },
+      ]"
+    >
+      {{ value.length }}/{{ maxCharacters }}
+    </div>
   </div>
 </template>
 
@@ -99,6 +108,10 @@ export default {
       type: String,
       required: false,
     } as PropOptions<string | boolean>,
+    maxCharacters: {
+      type: Number,
+      required: false,
+    },
   },
   computed: {
     localError: {
