@@ -9,37 +9,39 @@
     </p>
     <draggable
       v-model="answers"
-      v-else
       id="answers"
       class="max-w-lg mt-4"
       ghost-class="ghost"
+      :animation="0"
       @end="dragging = false"
       @start="dragging = true"
     >
-      <div
-        class="mt-1 flex items-center answer-div"
-        @mousedown="dragging = true"
-        @mouseup="dragging = false"
-        :class="{ 'pr-4': dragging }"
-        v-for="(answer, index) in answers"
-        :key="answer.text"
-      >
-        {{ index + 1 }}
+      <transition-group type="transition" name="flip-list">
         <div
-          class="cursor-move bg-white rounded flex-grow px-2 py-2 flex justify-between items-center ml-3"
+          class="mt-1 flex items-center answer-div"
+          @mousedown="dragging = true"
+          @mouseup="dragging = false"
+          :class="{ 'pr-4': dragging }"
+          v-for="(answer, index) in answers"
+          :key="answer.text"
         >
-          <fa :icon="['fa', 'grip-lines']" />
-          <span class="text-right ml-6">{{ answer.text }}</span>
+          {{ index + 1 }}
+          <div
+            class="cursor-move bg-white rounded flex-grow px-2 py-2 flex justify-between items-center ml-3"
+          >
+            <fa :icon="['fa', 'grip-lines']" />
+            <span class="text-right ml-6">{{ answer.text }}</span>
+          </div>
+          <fa
+            v-if="!dragging"
+            ref="trash"
+            :icon="['fa', 'trash']"
+            :error="'Max 100 chrectors, sorry'"
+            class="trash ml-1 text-sm hover:text-red transition-color duration-200 cursor-pointer z-10"
+            @mousedown="deleteAnswer(index)"
+          />
         </div>
-        <fa
-          v-if="!dragging"
-          ref="trash"
-          :icon="['fa', 'trash']"
-          :error="'Max 100 chrectors, sorry'"
-          class="trash ml-1 text-sm hover:text-red transition-color duration-200 cursor-pointer z-10"
-          @mousedown="deleteAnswer(index)"
-        />
-      </div>
+      </transition-group>
     </draggable>
     <div class="flex items-center jus w-full">
       <TextInput
@@ -126,5 +128,17 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .ghost {
   opacity: 0.4;
+}
+.flip-list-move {
+  transition: transform 0.3s;
+}
+
+.flip-list-enter-active,
+.flip-list-leave-active {
+  transition: opacity 0.4s;
+}
+.flip-list-enter,
+.flip-list-leave-to {
+  opacity: 0;
 }
 </style>
