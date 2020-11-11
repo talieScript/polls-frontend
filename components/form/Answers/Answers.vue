@@ -1,10 +1,17 @@
 <template>
   <div>
     <label for="answers">Answers</label>
+    <p
+      v-if="!answers.length"
+      class="text-sm font-light text-gray-500 text-center mt-2"
+    >
+      You have no answers 😯
+    </p>
     <draggable
       v-model="answers"
+      v-else
       id="answers"
-      class="max-w-lg"
+      class="max-w-lg mt-4"
       ghost-class="ghost"
       @end="dragging = false"
       @start="dragging = true"
@@ -37,7 +44,7 @@
     <div class="flex items-center jus w-full">
       <TextInput
         v-model="answerInput"
-        class="flex-1 ml-6"
+        class="flex-1"
         ariaDescribedby="add answer"
         placeholder="Add an answer"
         :error.sync="inputError"
