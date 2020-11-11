@@ -37,7 +37,7 @@
             ref="trash"
             :icon="['fa', 'trash']"
             :error="'Max 100 chrectors, sorry'"
-            class="trash ml-1 text-sm hover:text-red transition-color duration-200 cursor-pointer z-10"
+            class="trash ml-2 text-sm hover:text-red transition-color duration-200 cursor-pointer z-10"
             @mousedown="deleteAnswer(index)"
           />
         </div>
@@ -54,6 +54,7 @@
           (input) => {
             return input.length <= 100 ? '' : 'Max 100 characters, sorry'
           },
+          (input) => (!input ? 'Cannot be empty' : ''),
         ]"
         :maxCharacters="100"
       />
@@ -103,9 +104,6 @@ export default Vue.extend({
     hideTrash() {
       this.$refs.trash.forEach((el: any) => (el.style.opacity = 0))
     },
-    showTrash() {
-      this.$refs.trash.forEach((el: any) => (el.style.opacity = null))
-    },
     deleteAnswer(index) {
       this.answers.splice(index, 1)
       this.dragging = false
@@ -115,7 +113,11 @@ export default Vue.extend({
         return 'Max 100 chrectors, sorry'
       }
     },
-    addAnswer() {
+    addAnswer(): void | undefined {
+      if (!this.answerInput) {
+        this.inputError = 'Cannot be empty'
+        return
+      }
       this.answers.push({
         text: this.answerInput,
       })
