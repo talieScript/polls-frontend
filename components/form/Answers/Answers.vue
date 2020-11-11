@@ -34,18 +34,28 @@
         />
       </div>
     </draggable>
-    <TextInput
-      v-model="answerInput"
-      ariaDescribedby="add answer"
-      placeholder="Add an answer"
-      :error.sync="inputError"
-      :rules="[
-        (input) => {
-          return input.length <= 100 ? '' : 'Max 100 characters, sorry'
-        },
-      ]"
-      :maxCharacters="100"
-    />
+    <div class="flex items-center jus w-full">
+      <TextInput
+        v-model="answerInput"
+        class="flex-1 ml-6"
+        ariaDescribedby="add answer"
+        placeholder="Add an answer"
+        :error.sync="inputError"
+        :rules="[
+          (input) => {
+            return input.length <= 100 ? '' : 'Max 100 characters, sorry'
+          },
+        ]"
+        :maxCharacters="100"
+      />
+      <button
+        class="bg-blue-400 hover:bg-blue-300 rounded p-1 text-xs ml-3 text-white transition-colors duration-200 flex items-center mt-3"
+        @click.prevent="addAnswer"
+      >
+        <span>ADD</span> <fa class="ml-1" :icon="['fa', 'plus']" />
+      </button>
+      <!-- -->
+    </div>
   </div>
 </template>
 
@@ -68,15 +78,17 @@ export default Vue.extend({
       dragging: false,
       answerInput: '',
       inputError: undefined,
-      answers: [
-        {
-          text:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean',
-        },
-        { text: 'here2' },
-        { text: 'here3' },
-      ],
     }
+  },
+  computed: {
+    answers: {
+      get(): any[] {
+        return this.value
+      },
+      set(value) {
+        this.$emit('input', value)
+      },
+    } as any,
   },
   methods: {
     hideTrash() {
@@ -90,10 +102,15 @@ export default Vue.extend({
       this.dragging = false
     },
     answerInputRule(input) {
-      console.log(input)
       if (input.length < 100) {
         return 'Max 100 chrectors, sorry'
       }
+    },
+    addAnswer() {
+      this.answers.push({
+        text: this.answerInput,
+      })
+      this.answerInput = ''
     },
   },
 })
