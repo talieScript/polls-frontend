@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="">
     <div
-      class="mt-3 bg-white px-2 py-3 rounded text-right"
+      :class="[
+        'mt-3 bg-white px-2 py-3 rounded-md text-right cursor-pointer',
+        { active: selected === choice.value },
+      ]"
       v-for="choice in choices"
       :key="choice.value"
       @click="selected = choice.value"
@@ -14,8 +17,9 @@
         :name="groupName"
         class="hidden"
       />
-      <label class="label w-full" :for="choice.value">
-        {{ choice.text }}
+      <label class="label w-full cursor-pointer" :for="choice.value">
+        <div class="circle">&nbsp;</div>
+        <span>{{ choice.text }}</span>
       </label>
     </div>
   </div>
@@ -57,17 +61,22 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .label {
   @apply flex justify-between items-center;
+}
 
-  &::before {
-    content: '\00a0 ';
-    @apply border-gray-500 border-solid border-2 rounded-3xl w-5 h-5 relative;
+.circle {
+  @apply border-gray-500 border-solid border-2 rounded-3xl w-5 h-5 relative;
+}
 
-    &::after {
+.active {
+  .circle {
+    &::before {
       content: '\00a0 ';
-      @apply bg-red w-5 h-5;
+      @apply inline-block absolute bg-red w-3 h-3 rounded-3xl;
+      top: 0.1rem;
+      left: 0.1rem;
     }
   }
 }
