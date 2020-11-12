@@ -1,7 +1,7 @@
 <template>
-  <form class="w-full" @submit.prevent="submit">
+  <form class="w-full mt-3" @submit.prevent="submit">
     <div>
-      <TextInput
+      <!-- <TextInput
         v-model="input"
         label="Title"
         bgColor="secondary"
@@ -26,23 +26,45 @@
         ]"
         :error.sync="errors['question']"
       />
-      <Answers v-model="answers" />
+      <Answers v-model="answers" /> -->
+      <RadioGroup
+        v-model="voteValidation"
+        groupName="VoteValidation"
+        :choices="voteValidationChoices"
+      />
     </div>
-    <button>submit</button>
+    <!-- <button>submit</button> -->
   </form>
 </template>
 
 <script lang="ts">
+import RadioGroup from '~/components/form/RadioGroup.vue'
 export default {
+  components: { RadioGroup },
   data() {
     return {
       input: '',
       errors: {},
       answers: [],
+      voteValidation: 'validateEmail',
+      voteValidationChoices: [
+        {
+          text: 'Validate By Email',
+          value: 'validateEmail',
+        },
+        {
+          text: 'Varify by IP Address',
+          value: 'validateIp',
+        },
+        {
+          text: 'Varify by IP Address & Email',
+          value: 'validateBoth',
+        },
+      ],
     }
   },
   watch: {
-    answers(alie) {
+    voteValidation(alie) {
       console.log(alie)
     },
   },
