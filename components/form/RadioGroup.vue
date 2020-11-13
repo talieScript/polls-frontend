@@ -2,7 +2,7 @@
   <div class="">
     <div
       :class="[
-        'mt-3 bg-white px-2 py-3 rounded-md text-right cursor-pointer',
+        'mt-3 bg-white px-2 py-3 rounded-md text-right cursor-pointer transition-all duration-150',
         { active: selected === choice.value },
       ]"
       v-for="choice in choices"
@@ -63,20 +63,31 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .label {
-  @apply flex justify-between items-center;
+  @apply flex justify-between items-center transition-all duration-150;
 }
 
 .circle {
-  @apply border-gray-500 border-solid border-2 rounded-3xl w-5 h-5 relative;
+  @apply border-gray-500 border-solid border-2 rounded-3xl w-5 h-5 relative transition-all duration-150;
+  &::before {
+    content: '\00a0 ';
+    @apply w-3 h-3 inline-block absolute rounded-3xl transition-colors duration-150;
+    top: 0.1rem;
+    left: 0.1rem;
+  }
 }
 
 .active {
+  @apply text-primary;
+  box-shadow: 0 5px 17px -2px rgba(125, 131, 255, 0.2),
+    0 8px 3px -1px rgba(125, 131, 255, 0.1);
+
+  .circle {
+    @apply border-primary;
+  }
+
   .circle {
     &::before {
-      content: '\00a0 ';
-      @apply inline-block absolute bg-red w-3 h-3 rounded-3xl;
-      top: 0.1rem;
-      left: 0.1rem;
+      @apply bg-primary;
     }
   }
 }
