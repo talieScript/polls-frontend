@@ -72,7 +72,7 @@ export default Vue.extend({
     content: '\00a0 ';
     @apply w-3 h-3 inline-block absolute rounded-3xl transition-colors duration-150;
     top: 0.1rem;
-    left: 0.1rem;
+    left: 0.15rem;
   }
 }
 

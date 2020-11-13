@@ -27,11 +27,12 @@
         :error.sync="errors['question']"
       />
       <Answers v-model="answers" /> -->
-      <RadioGroup
+      <!-- <RadioGroup
         v-model="voteValidation"
         groupName="VoteValidation"
         :choices="voteValidationChoices"
-      />
+      /> -->
+      <SwitchCard name="End Date" />
     </div>
     <!-- <button>submit</button> -->
   </form>
