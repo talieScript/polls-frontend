@@ -1,10 +1,10 @@
 <template>
   <div class="container relative bg-white p-2">
-      <div class="flex justify-between align-middle">
-        <p>{{ name }}</p>
-        <ToggleButton v-model="active" />
-      </div>
+    <div class="flex justify-between items-center">
+      <p>{{ name }}</p>
+      <ToggleButton v-model="active" />
     </div>
+    <slot name="default"> </slot>
   </div>
 </template>
 
