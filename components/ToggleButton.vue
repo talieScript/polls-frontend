@@ -1,11 +1,11 @@
 <template>
-  <div
-    @click="localValue = !localValue"
+  <button
+    @click.prevent="localValue = !localValue"
     :class="[
-      'switch relative h-5 w-10 rounded-xl border cursor-pointer',
+      'switch relative h-5 w-10 rounded-xl border cursor-pointer outline-none',
       { on: localValue },
     ]"
-  ></div>
+  ></button>
 </template>
 
 <script lang="ts">

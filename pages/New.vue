@@ -32,7 +32,7 @@
         groupName="VoteValidation"
         :choices="voteValidationChoices"
       /> -->
-      <SwitchCard name="End Date" />
+      <SwitchCard name="End Date" v-model="card" />
     </div>
     <!-- <button>submit</button> -->
   </form>
@@ -62,10 +62,11 @@ export default {
           value: 'validateBoth',
         },
       ],
+      card: false,
     }
   },
   watch: {
-    voteValidation(alie) {
+    card(alie) {
       console.log(alie)
     },
   },

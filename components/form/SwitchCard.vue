@@ -13,14 +13,22 @@ import Vue from 'vue'
 
 export default Vue.extend({
   props: {
+    value: {
+      type: Boolean,
+    },
     name: {
       type: String,
     },
   },
-  data() {
-    return {
-      active: false,
-    }
+  computed: {
+    active: {
+      get(): boolean {
+        return this.value
+      },
+      set(value: boolean) {
+        this.$emit('input', value)
+      },
+    },
   },
 })
 </script>
