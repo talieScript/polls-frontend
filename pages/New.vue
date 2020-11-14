@@ -101,9 +101,7 @@
 </template>
 
 <script lang="ts">
-import RadioGroup from '~/components/form/RadioGroup.vue'
 export default {
-  components: { RadioGroup },
   data(): any {
     return {
       title: '',
@@ -147,15 +145,15 @@ export default {
       account: false,
       terms: false,
       termsError: false,
-    }
+    } as any
   },
   watch: {
-    answers(answers: any[]) {
-      this.answerError = !answers.length
+    answers(answers: any[]): void {
+      ;(this as any).answerError = !answers.length
     },
   },
   methods: {
-    submit(): void {
+    submit(): void | null {
       const {
         title,
         question,
@@ -163,7 +161,7 @@ export default {
         voteValidation,
         pollVisibility,
         terms,
-      } = this
+      } = this as any
       // validation
       if (!question) {
         this.errors.question = 'Required'
@@ -185,9 +183,8 @@ export default {
       if (!answers.length || !question) {
         return
       }
-      console.log({ title, question, answers, voteValidation, pollVisibility })
     },
-  },
+  } as any,
 }
 </script>
 
