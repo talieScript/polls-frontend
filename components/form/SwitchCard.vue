@@ -36,7 +36,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .container {
-  @apply rounded;
-  min-height: 5rem;
+  @apply rounded h-24;
 }
 </style>
