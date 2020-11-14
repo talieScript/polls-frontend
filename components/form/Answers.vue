@@ -82,6 +82,9 @@ export default Vue.extend({
     value: {
       type: Array,
     },
+    error: {
+      type: Boolean,
+    },
   },
   data(): any {
     return {

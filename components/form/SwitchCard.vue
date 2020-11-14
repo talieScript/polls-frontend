@@ -1,5 +1,5 @@
 <template>
-  <div class="container relative bg-white p-2">
+  <div :class="['container relative bg-white p-2', { 'shadow-sm': active }]">
     <div class="flex justify-between items-center">
       <p :class="{ 'text-gray-400': !value }">{{ name }}</p>
       <ToggleButton v-model="active" />

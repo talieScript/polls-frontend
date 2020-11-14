@@ -18,7 +18,7 @@
         class="hidden"
       />
       <label class="label w-full cursor-pointer" :for="choice.value">
-        <div class="circle">&nbsp;</div>
+        <div class="circle"></div>
         <span>{{ choice.text }}</span>
       </label>
     </div>
