@@ -1,12 +1,19 @@
 <template>
-  <div @click.stop>
+  <div class="w-full">
     <datetime
       type="datetime"
       v-model="date"
       format="dd/MM/yyyy - HH:mm"
       title="Pick a date"
-      :class="['border rounded p-1 theme-primary', { disabled }]"
+      :class="['border rounded p-1 theme-primary w-full', { disabled }]"
     ></datetime>
+    <fa
+      :icon="['fa', 'calendar-week']"
+      :class="[
+        'absolute top-0 right-0 mt-2 mr-6 pointer-events-none',
+        { disabled },
+      ]"
+    />
   </div>
 </template>
 
@@ -47,5 +54,9 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .disabled {
   @apply text-gray-300 border-gray-300 #{!important};
+}
+
+::v-deep .vdatetime-input {
+  @apply w-full;
 }
 </style>
