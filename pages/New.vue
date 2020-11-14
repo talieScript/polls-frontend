@@ -37,8 +37,16 @@
       <h3 class="text-lg">Vote Validation</h3>
       <RadioGroup
         v-model="voteValidation"
-        groupName="VoteValidation"
+        groupName="voteValidation"
         :choices="voteValidationChoices"
+        class="mt-8"
+      />
+      <hr class="my-8" />
+      <h3 class="text-lg">Vote Validation</h3>
+      <RadioGroup
+        v-model="pollVisibility"
+        groupName="visibility"
+        :choices="visibilityOptions"
         class="mt-8"
       />
       <!-- <SwitchCard name="End Date" v-model="card" /> -->
@@ -70,6 +78,17 @@ export default {
         {
           text: 'Varify by IP Address & Email',
           value: 'validateBoth',
+        },
+      ],
+      pollVisibility: 'public',
+      visibilityOptions: [
+        {
+          text: 'Public',
+          value: 'public',
+        },
+        {
+          text: 'Private',
+          value: 'private',
         },
       ],
       card: false,
