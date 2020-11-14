@@ -1,7 +1,7 @@
 <template>
   <div class="container relative bg-white p-2">
     <div class="flex justify-between items-center">
-      <p>{{ name }}</p>
+      <p :class="{ 'text-gray-400': !value }">{{ name }}</p>
       <ToggleButton v-model="active" />
     </div>
     <slot name="default"> </slot>
@@ -36,7 +36,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .container {
-  // min-width: 8rem;
   @apply rounded;
   min-height: 5rem;
 }

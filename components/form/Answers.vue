@@ -1,16 +1,16 @@
 <template>
   <div>
-    <label for="answers">Answers</label>
+    <h3 class="text-lg">Answers</h3>
     <p
       v-if="!answers.length"
-      class="text-sm font-light text-gray-500 text-center mt-2"
+      class="text-sm font-light text-gray-500 text-center mt-8"
     >
       You have no answers 😯
     </p>
     <draggable
       v-model="answers"
       id="answers"
-      class="max-w-lg mt-4"
+      class="max-w-lg mt-8"
       ghost-class="ghost"
       :animation="0"
       @end="dragging = false"
@@ -43,7 +43,7 @@
         </div>
       </transition-group>
     </draggable>
-    <div class="flex items-center jus w-full">
+    <div class="flex items-center jus w-full mt-2">
       <TextInput
         v-model="answerInput"
         class="flex-1"

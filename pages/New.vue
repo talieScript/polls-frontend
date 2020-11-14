@@ -1,41 +1,50 @@
 <template>
-  <form class="w-full mt-3" @submit.prevent="submit">
-    <div>
-      <!-- <TextInput
-        v-model="input"
-        label="Title"
-        bgColor="secondary"
-        required
-        outline
-        :rules="[
-          (input) => {
-            return input ? '' : 'Required'
-          },
-        ]"
-        :error.sync="errors['title']"
-      />
-      <TextArea
-        v-model="input"
-        label="Question"
-        bgColor="white"
-        outline
-        :rules="[
-          (input) => {
-            return input ? '' : 'Required'
-          },
-        ]"
-        :error.sync="errors['question']"
-      />
-      <Answers v-model="answers" /> -->
-      <!-- <RadioGroup
+  <div class="w-full">
+    <h1 class="font-semibold text-2xl text-gray-700 mb-8 mt-3">New Poll</h1>
+    <form class="w-full mt-3 px-2" @submit.prevent="submit">
+      <div>
+        <h3 class="text-lg">Details</h3>
+        <TextInput
+          v-model="title"
+          label="Title"
+          bgColor="white"
+          outline
+          :rules="[
+            (input) => {
+              return input ? '' : 'Required'
+            },
+          ]"
+          :error.sync="errors['title']"
+          class="shadow-sm"
+        />
+        <TextArea
+          v-model="question"
+          label="Question*"
+          bgColor="white"
+          outline
+          :rules="[
+            (input) => {
+              return input ? '' : 'Required'
+            },
+          ]"
+          :error.sync="errors['question']"
+          class="shadow-sm rounded"
+        />
+      </div>
+      <hr class="my-8" />
+      <Answers v-model="answers" />
+      <hr class="my-8" />
+      <h3 class="text-lg">Vote Validation</h3>
+      <RadioGroup
         v-model="voteValidation"
         groupName="VoteValidation"
         :choices="voteValidationChoices"
-      /> -->
-      <SwitchCard name="End Date" v-model="card" />
-    </div>
-    <!-- <button>submit</button> -->
-  </form>
+        class="mt-8"
+      />
+      <!-- <SwitchCard name="End Date" v-model="card" /> -->
+      <!-- <button>submit</button> -->
+    </form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -44,7 +53,8 @@ export default {
   components: { RadioGroup },
   data() {
     return {
-      input: '',
+      title: '',
+      question: '',
       errors: {},
       answers: [],
       voteValidation: 'validateEmail',
