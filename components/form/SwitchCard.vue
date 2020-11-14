@@ -4,7 +4,9 @@
       <p :class="{ 'text-gray-400': !value }">{{ name }}</p>
       <ToggleButton v-model="active" />
     </div>
-    <slot name="default"> </slot>
+    <div class="absolute bottom-0 mb-2 w-56">
+      <slot name="default"> </slot>
+    </div>
   </div>
 </template>
 

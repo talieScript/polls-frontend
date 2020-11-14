@@ -55,14 +55,15 @@
       <hr class="my-8" />
       <h3 class="text-lg">Additional Options</h3>
       <div class="card-container mt-8 flex flex-col sm:flex-row items-center">
-        <SwitchCard name="End Date" v-model="options.endDate" class="mr-3" />
+        <SwitchCard name="End Date" v-model="options.endDate" class="mr-3">
+          <DateTimePicker v-model="endDate" :disabled="!options.endDate" />
+        </SwitchCard>
         <SwitchCard
           name="Hide Results"
           v-model="options.hideResults"
           class="mt-3 sm:mt-0"
         />
       </div>
-      <!-- <button>submit</button> -->
       <div class="mt-16">
         <div class="flex items-center">
           <input id="account" type="checkbox" class="h-4 w-4" />
@@ -145,11 +146,15 @@ export default {
       account: false,
       terms: false,
       termsError: false,
+      endDate: new Date().toISOString(),
     } as any
   },
   watch: {
     answers(answers: any[]): void {
       ;(this as any).answerError = !answers.length
+    },
+    endDate(val) {
+      console.log(val)
     },
   },
   methods: {
