@@ -59,10 +59,12 @@
           <DateTimePicker v-model="endDate" :disabled="!options.endDate" />
         </SwitchCard>
         <SwitchCard
-          name="Hide Results"
+          name="Multiple Choice"
           v-model="options.hideResults"
           class="mt-3 sm:mt-0"
-        />
+        >
+          <Select v-model="multipleChoice" :options="choiceOptions" />
+        </SwitchCard>
       </div>
       <div class="mt-16">
         <div class="flex items-center">
@@ -147,6 +149,17 @@ export default {
       terms: false,
       termsError: false,
       endDate: new Date().toISOString(),
+      multipleChoice: 'upToo',
+      choiceOptions: [
+        {
+          text: 'Exact Number',
+          value: 'exact',
+        },
+        {
+          text: 'Up Too',
+          value: 'upToo',
+        },
+      ],
     } as any
   },
   watch: {
