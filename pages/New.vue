@@ -55,7 +55,7 @@
       <hr class="my-8" />
       <h3 class="text-lg">Additional Options</h3>
       <div class="card-container mt-8 flex flex-col sm:flex-row items-center">
-        <SwitchCard name="End Date" v-model="options.endDate" class="mr-3">
+        <SwitchCard name="End Date" v-model="options.endDate" class="sm:mr-3">
           <DateTimePicker v-model="endDate" :disabled="!options.endDate" />
         </SwitchCard>
         <SwitchCard
