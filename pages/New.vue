@@ -37,7 +37,7 @@
         Must have at least 1 answer
       </p>
       <hr class="my-8" />
-      <h3 class="text-lg">Vote Validation</h3>
+      <h2 class="text-lg">Vote Validation</h2>
       <RadioGroup
         v-model="voteValidation"
         groupName="voteValidation"
@@ -45,7 +45,7 @@
         class="mt-8"
       />
       <hr class="my-8" />
-      <h3 class="text-lg">Visibility</h3>
+      <h2 class="text-lg">Visibility</h2>
       <RadioGroup
         v-model="pollVisibility"
         groupName="visibility"
@@ -53,7 +53,7 @@
         class="mt-8"
       />
       <hr class="my-8" />
-      <h3 class="text-lg">Additional Options</h3>
+      <h2 class="text-lg">Additional Options</h2>
       <div class="card-container mt-8 flex flex-col sm:flex-row items-center">
         <SwitchCard name="End Date" v-model="options.endDate" class="sm:mr-3">
           <DateTimePicker v-model="endDate" :disabled="!options.endDate" />
@@ -72,6 +72,7 @@
           <label for="account" class="ml-2"
             >Create a
             <button
+              @click.prevent
               class="font-semibold text-primary hover:underline cursor-pointer outline-none"
             >
               Free Account
@@ -84,6 +85,7 @@
           <label for="terms" class="ml-2"
             >I agree to the
             <button
+              @click.prevent
               class="font-semibold text-primary hover:underline cursor-pointer outline-none"
             >
               Terms and conditions
@@ -122,11 +124,11 @@ export default {
           value: 'validateEmail',
         },
         {
-          text: 'Varify by IP Address',
+          text: 'Verify by IP Address',
           value: 'validateIp',
         },
         {
-          text: 'Varify by IP Address & Email',
+          text: 'Verify by IP Address & Email',
           value: 'validateBoth',
         },
       ],

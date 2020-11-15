@@ -1,6 +1,7 @@
 <template>
   <button
     @click.prevent="localValue = !localValue"
+    aria-label="Toggle button"
     :class="[
       'switch relative h-5 w-10 rounded-xl border cursor-pointer outline-none',
       { on: localValue },

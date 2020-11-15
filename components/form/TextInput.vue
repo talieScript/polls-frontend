@@ -14,7 +14,7 @@
       ]"
     >
       <input
-        id="text-input"
+        :id="`${label}-text-input`"
         :placeholder="placeholder || ' '"
         type="text"
         :aria-describedby="ariaDescribedby"
@@ -31,9 +31,10 @@
       />
       <label
         v-if="label"
-        for="text-input"
+        :for="`${label}-text-input`"
         :class="[
           'label absolute top-0 duration-300 origin-0',
+          placeholder ? 'hidden' : '',
           outline ? 'mt-2' : 'mt-1',
           outline ? 'ml-2' : 'ml-0',
         ]"

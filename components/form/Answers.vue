@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-lg">Answers</h3>
+    <h2 class="text-lg">Answers</h2>
     <p
       v-if="!answers.length"
       class="text-sm font-light text-gray-500 text-center mt-8"
@@ -46,6 +46,7 @@
     <div class="flex items-center jus w-full mt-2">
       <TextInput
         v-model="answerInput"
+        label="answer input"
         class="flex-1"
         ariaDescribedby="add answer"
         placeholder="Add an answer"

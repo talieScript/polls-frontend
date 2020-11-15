@@ -5,6 +5,9 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'polls-frontend',
+    htmlAttrs: {
+      lang: 'en'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -41,7 +44,7 @@ export default {
             imports: [
               {
                 set: '@fortawesome/free-solid-svg-icons',
-                icons: ['faGripLines', 'faTrash', 'faPlus', 'faLongArrowAltRight', 'faCalendarWeek']
+                icons: ['faGripLines', 'faTrash', 'faPlus', 'faLongArrowAltRight', 'faCalendarWeek', 'faChevronDown']
               },
             ]
           }
