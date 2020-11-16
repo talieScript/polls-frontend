@@ -45,7 +45,15 @@
         class="mt-8"
       />
       <hr class="my-8" />
-      <h2 class="text-lg">Visibility</h2>
+      <h2 class="text-lg">Results Visibility</h2>
+      <RadioGroup
+        v-model="results"
+        groupName="results"
+        :choices="resultsOptions"
+        class="mt-8"
+      />
+      <hr class="my-8" />
+      <h2 class="text-lg">Poll Visibility</h2>
       <RadioGroup
         v-model="pollVisibility"
         groupName="visibility"
@@ -134,6 +142,21 @@ export default {
         {
           text: 'Verify by IP Address & Email',
           value: 'validateBoth',
+        },
+      ],
+      results: 'alwaysShow',
+      resultsOptions: [
+        {
+          text: 'Can Always Be viewed',
+          value: 'alwaysShow',
+        },
+        {
+          text: 'Only After Voting',
+          value: 'afterVote',
+        },
+        {
+          text: 'After Poll Has Ended',
+          value: 'pollEnd',
         },
       ],
       pollVisibility: 'public',
