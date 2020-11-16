@@ -158,11 +158,11 @@ export default {
       multipleChoice: 'upToo',
       choiceOptions: [
         {
-          text: 'Exact Number',
+          text: 'Exact number',
           value: 'exact',
         },
         {
-          text: 'Up Too',
+          text: 'Up too',
           value: 'upToo',
         },
       ],
