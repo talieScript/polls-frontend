@@ -1,5 +1,8 @@
 <template>
-  <div :class="[{ disabled, open }, 'relative']">
+  <div
+    :class="[{ disabled, open }, 'relative']"
+    v-click-outside="onClickOutside"
+  >
     <button
       @click.prevent="open = !open"
       aria-label="Drop down toggle"
@@ -41,6 +44,7 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
+import ClickOutside from 'vue-click-outside'
 
 export default Vue.extend({
   name: 'Select',
@@ -57,6 +61,9 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+  },
+  directives: {
+    ClickOutside,
   },
   data() {
     return {
@@ -76,6 +83,9 @@ export default Vue.extend({
   methods: {
     handleSelect(value) {
       this.selected = value
+      this.open = false
+    },
+    onClickOutside() {
       this.open = false
     },
   },
