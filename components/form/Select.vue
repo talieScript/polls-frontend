@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div :class="[{ disabled }]">
     <button
       @click.prevent
-      class="rounded border px-2 py-1 flex justify-between items-center cursor-pointer w-full outline-none"
+      class="button rounded border px-2 py-1 flex justify-between items-center cursor-pointer w-full outline-none"
     >
       <span>{{ selected }}</span
       ><fa :icon="['fa', 'chevron-down']" />
@@ -24,6 +24,10 @@ export default Vue.extend({
       type: Array,
       required: true,
     } as PropOptions<{ text: string; value: string }[]>,
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     selected: {
@@ -38,5 +42,8 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.disabled {
+  @apply text-gray-300;
+}
 </style>

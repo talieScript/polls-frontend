@@ -60,10 +60,14 @@
         </SwitchCard>
         <SwitchCard
           name="Multiple Choice"
-          v-model="options.hideResults"
+          v-model="options.multipleChoice"
           class="mt-3 sm:mt-0"
         >
-          <Select v-model="multipleChoice" :options="choiceOptions" />
+          <Select
+            v-model="multipleChoice"
+            :options="choiceOptions"
+            :disabled="!options.multipleChoice"
+          />
         </SwitchCard>
       </div>
       <div class="mt-16">
@@ -145,7 +149,7 @@ export default {
       ],
       options: {
         endDate: true,
-        hideResults: false,
+        multipleChoice: false,
       },
       account: false,
       terms: false,
