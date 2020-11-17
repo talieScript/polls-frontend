@@ -118,7 +118,7 @@
       <button
         class="absolute right-0 px-5 py-2 bg-secondary rounded hover:bg-green-400 hover:text-white transition-colors duration-150 text-lg outline-none"
       >
-        Create <fa class="ml-1" :icon="['fa', 'long-arrow-alt-right']" />
+        Next <fa class="ml-1" :icon="['fa', 'long-arrow-alt-right']" />
       </button>
     </form>
   </div>
