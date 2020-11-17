@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[{ disabled, open }, 'relative']"
+    :class="[{ disabled, open }, 'relative select']"
     v-click-outside="onClickOutside"
   >
     <button
@@ -113,5 +113,9 @@ export default Vue.extend({
     max-height: 15rem;
     @apply border border-t-0;
   }
+}
+
+.select {
+  min-width: 10rem;
 }
 </style>
