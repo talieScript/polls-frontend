@@ -14,7 +14,7 @@
             },
           ]"
           :error.sync="errors['title']"
-          class="shadow-sm"
+          class="shadow-sm mb-8"
         />
         <TextArea
           v-model="pollData.question"
