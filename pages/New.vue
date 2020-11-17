@@ -79,8 +79,8 @@
             />
             <NumberInput
               v-model="multipleChoice.number"
-              :max="answers.length"
-              :disabled="options.multipleChoice"
+              :max="answers.length - 1"
+              :disabled="!options.multipleChoice"
             />
           </div>
         </SwitchCard>

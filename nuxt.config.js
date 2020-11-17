@@ -44,7 +44,7 @@ export default {
             imports: [
               {
                 set: '@fortawesome/free-solid-svg-icons',
-                icons: ['faGripLines', 'faTrash', 'faPlus', 'faLongArrowAltRight', 'faCalendarWeek', 'faChevronDown']
+                icons: ['faGripLines', 'faTrash', 'faPlus', 'faLongArrowAltRight', 'faCalendarWeek', 'faChevronDown', 'faAngleUp', 'faAngleDown' ]
               },
             ]
           }

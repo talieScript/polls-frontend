@@ -12,7 +12,7 @@
       ><fa
         :icon="['fa', 'chevron-down']"
         :class="[
-          'transform -rotate-0 transition-all duration-200',
+          'transform -rotate-0 transition-transform duration-200',
           {
             'rotate-180': open,
           },
