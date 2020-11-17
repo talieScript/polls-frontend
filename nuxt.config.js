@@ -39,6 +39,7 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
+    'dayjs',
      ['nuxt-fontawesome', {
             component: 'fa',
             imports: [

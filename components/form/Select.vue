@@ -73,7 +73,7 @@ export default Vue.extend({
   computed: {
     selected: {
       get(): string {
-        return this.options.find((o) => o.value === this.value).text
+        return this.options.find((o) => o.value === this.value)?.text
       },
       set(value: string) {
         this.$emit('input', value)
