@@ -214,13 +214,11 @@ export default {
     answers(answers: any[]): void {
       ;(this as any).answerError = !answers.length
     },
-    endDate(val) {
-      console.log(val)
-    },
   },
   created() {
-    this.pollData = this.activePoll
-    ;(this as any).pollData.endDate = dayjs().add(1, 'week').toISOString()
+    const self = this as any
+    self.pollData = self.activePoll
+    self.pollData.endDate = dayjs().add(1, 'week').toISOString()
   },
   methods: {
     submit(): void | null {
