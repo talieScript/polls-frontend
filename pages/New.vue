@@ -71,11 +71,18 @@
           v-model="options.multipleChoice"
           class="mt-3 sm:mt-0"
         >
-          <Select
-            v-model="multipleChoice"
-            :options="choiceOptions"
-            :disabled="!options.multipleChoice"
-          />
+          <div class="flex items-center justify-between">
+            <Select
+              v-model="multipleChoice.option"
+              :options="choiceOptions"
+              :disabled="!options.multipleChoice"
+            />
+            <NumberInput
+              v-model="multipleChoice.number"
+              :max="answers.length"
+              :disabled="options.multipleChoice"
+            />
+          </div>
         </SwitchCard>
       </div>
       <div class="mt-16">
@@ -172,13 +179,16 @@ export default {
       ],
       options: {
         endDate: true,
-        multipleChoice: false,
+        multipleChoice: true,
       },
       account: false,
       terms: false,
       termsError: false,
       endDate: new Date().toISOString(),
-      multipleChoice: 'upToo',
+      multipleChoice: {
+        option: 'upToo',
+        number: 2,
+      },
       choiceOptions: [
         {
           text: 'Exact number',

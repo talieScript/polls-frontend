@@ -34,7 +34,7 @@
         :for="`${label}-text-input`"
         :class="[
           'label absolute top-0 duration-300 origin-0',
-          placeholder ? 'hidden' : '',
+          placeholder ? 'hidden-label' : '',
           outline ? 'mt-2' : 'mt-1',
           outline ? 'ml-2' : 'ml-0',
         ]"
@@ -178,5 +178,16 @@ input:focus-within ~ label,
   & .error-message {
     @apply transform translate-y-4;
   }
+}
+
+.hidden-label {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
 </style>
