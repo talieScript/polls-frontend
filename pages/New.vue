@@ -218,7 +218,7 @@ export default {
   created() {
     const self = this as any
     self.pollData = self.activePoll
-    this.$store.commit('newPoll/updatePoll', {
+    self.$store.commit('newPoll/updatePoll', {
       ...self.pollData,
       endDate: dayjs().add(1, 'week').toISOString(),
     })
