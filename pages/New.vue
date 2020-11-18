@@ -136,6 +136,7 @@ import dayjs from 'dayjs'
 export default {
   data(): any {
     return {
+      answerError: false,
       errors: {
         title: '',
         question: '',
@@ -196,7 +197,6 @@ export default {
         title: '',
         question: '',
         answers: [],
-        answerError: false,
         results: '',
         pollVisibility: '',
         options: {},
@@ -207,7 +207,7 @@ export default {
   },
   computed: {
     activePoll(): object {
-      return this.$store.state.poll.activePoll
+      return this.$store.state.newPoll.active
     },
   } as any,
   watch: {
@@ -218,7 +218,10 @@ export default {
   created() {
     const self = this as any
     self.pollData = self.activePoll
-    self.pollData.endDate = dayjs().add(1, 'week').toISOString()
+    this.$store.commit('newPoll/updatePoll', {
+      ...self.pollData,
+      endDate: dayjs().add(1, 'week').toISOString(),
+    })
   },
   methods: {
     submit(): void | null {

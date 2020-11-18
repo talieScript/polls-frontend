@@ -1,5 +1,5 @@
 export const state = () => ({
-  activePoll: {
+  active: {
     title: '',
     question: '',
     answers: [],
@@ -20,7 +20,7 @@ export const state = () => ({
 
 export const mutations = {
   updatePoll(state, updatedPoll) {
-    state.activePoll = updatedPoll
+    state.active = updatedPoll
   }
 }
 
