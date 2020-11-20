@@ -29,7 +29,12 @@
       :error.sync="passTwoError"
       password
     />
-    <button @click="finish">finish</button>
+    <button
+      @click="finish"
+      class="block px-2 py-1 rounded border outline-none focus:shadow-outline ml-auto w-auto"
+    >
+      Create with password
+    </button>
   </div>
 </template>
 
@@ -57,7 +62,22 @@ export default Vue.extend({
     },
   },
   methods: {
+    checkPassword(password: string): string {
+      if (!password) {
+        return 'Cannot be empty'
+      }
+      if (password.length < 8) {
+        return 'Must be more the 8 charentors'
+      }
+      return ''
+    },
     finish() {
+      const { passOne, passTwo } = this
+      this.passOneError = this.checkPassword(passOne)
+      this.passTwoError = this.checkPassword(passTwo)
+      if (this.passOneError || this.passTwoError) {
+        return
+      }
       if (this.passOne !== this.passTwo) {
         this.passTwoError = 'Passwords do not match'
       }
