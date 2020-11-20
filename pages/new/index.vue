@@ -32,7 +32,11 @@
         />
       </div>
       <hr class="my-8" />
-      <Answers v-model="pollData.answers" ref="answers" />
+      <Answers
+        @updated="checkAnswers"
+        v-model="pollData.answers"
+        ref="answers"
+      />
       <p v-if="answerError" class="text-red font-light text-sm">
         Must have at least 1 answer
       </p>
@@ -210,29 +214,27 @@ export default {
       return this.$store.state.newPoll.active
     },
   } as any,
-  watch: {
-    answers(answers: any[]): void {
-      ;(this as any).answerError = !answers.length
-    },
-  },
   created() {
     const self = this as any
-    self.pollData = self.activePoll
-    self.$store.commit('newPoll/updatePoll', {
-      ...self.pollData,
-      endDate: dayjs().add(1, 'week').toISOString(),
-    })
+    if (!this.activePoll.endDate) {
+      self.$store.commit('newPoll/updatePoll', {
+        ...this.activePoll,
+        endDate: dayjs().add(1, 'week').toISOString(),
+      })
+    }
+    self.pollData = {
+      ...self.activePoll,
+      answers: [...self.activePoll.answers],
+      options: { ...self.activePoll.options },
+      multipleChoice: { ...self.activePoll.multipleChoice },
+    }
   },
   methods: {
+    checkAnswers() {
+      ;(this as any).answerError = !this.pollData.answers.length
+    },
     submit(): void | null {
-      const {
-        title,
-        question,
-        answers,
-        voteValidation,
-        pollVisibility,
-        terms,
-      } = this as any
+      const { question, answers } = this.pollData
       if (!question) {
         this.errors.question = 'Required'
         this.$refs.question.$el.scrollIntoView({
@@ -247,12 +249,16 @@ export default {
           block: 'center',
         })
       }
-      if (!terms) {
+      if (!this.terms) {
         this.termsError = true
       }
-      if (!answers.length || !question) {
+      if (!answers.length || !question || !this.terms) {
         return
       }
+
+      debugger
+
+      this.$store.commit('newPoll/updatePoll', this.pollData)
     },
   } as any,
 }
