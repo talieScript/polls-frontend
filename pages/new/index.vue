@@ -97,19 +97,6 @@
         </SwitchCard>
       </div>
       <div class="mt-16">
-        <div class="flex items-center">
-          <input id="account" type="checkbox" class="h-4 w-4" />
-          <label for="account" class="ml-2"
-            >Create a
-            <button
-              @click.prevent
-              class="font-semibold text-primary hover:underline cursor-pointer outline-none"
-            >
-              Free Account
-            </button>
-            on the next page</label
-          >
-        </div>
         <div class="flex items-center mt-2">
           <input v-model="terms" id="terms" type="checkbox" class="h-4 w-4" />
           <label for="terms" class="ml-2"
@@ -256,9 +243,8 @@ export default {
         return
       }
 
-      debugger
-
       this.$store.commit('newPoll/updatePoll', this.pollData)
+      this.$router.push('/new/finish')
     },
   } as any,
 }
