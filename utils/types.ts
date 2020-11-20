@@ -16,6 +16,16 @@ export interface LocalPoll {
   }
 }
 
+export interface ApiPoll {
+  title: string;
+  question: string;
+  answers: string[];
+  // stringify json
+  options: string;
+  // iso string
+  endDate: string;
+}
+
 export interface Answer {
   text: string;
 }

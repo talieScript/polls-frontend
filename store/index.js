@@ -10,7 +10,7 @@ export const mutations = {
 
 export const actions = {
   async getIP ({ commit }) {
-    const ip = await this.$axios.$get('http://icanhazip.com')
+    const ip = await this.$axios.$get(process.env.VUE_APP_IP_GETTER)
     commit('setIp', ip)
   }
 }

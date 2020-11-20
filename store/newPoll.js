@@ -1,3 +1,6 @@
+import { POLLS_API } from '@/utils/endpoints'
+import { createPostPayload } from '~/utils/helpers';
+
 export const state = () => ({
   active: {
     title: '',
@@ -25,8 +28,12 @@ export const mutations = {
 }
 
 export const actions = {
-  // submit() {
-    
-  // },
+  async submit({pollData, password}) {
+    const payload = createPostPayload(pollData);
+    this.$axios.$post(POLLS_API, {
+      ...payload,
+      password,
+    })
+  },
 }
 
