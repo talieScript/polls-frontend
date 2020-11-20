@@ -29,12 +29,7 @@
       :error.sync="passTwoError"
       password
     />
-    <button
-      @click="finish"
-      class="block px-2 py-1 rounded border outline-none focus:shadow-outline ml-auto w-auto"
-    >
-      Create with password
-    </button>
+    <BasicButton text="Create with password" @click="finish" />
   </div>
 </template>
 

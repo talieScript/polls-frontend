@@ -96,7 +96,7 @@
           </div>
         </SwitchCard>
       </div>
-      <div class="mt-16">
+      <div class="mt-12">
         <div class="flex items-center mt-2">
           <input v-model="terms" id="terms" type="checkbox" class="h-4 w-4" />
           <label for="terms" class="ml-2"
@@ -113,11 +113,9 @@
           Please accept terms and conditions to continue
         </p>
       </div>
-      <button
-        class="absolute right-0 px-5 py-2 bg-secondary rounded hover:bg-green-400 hover:text-white transition-colors duration-150 text-lg outline-none"
-      >
+      <BasicButton>
         Next <fa class="ml-1" :icon="['fa', 'long-arrow-alt-right']" />
-      </button>
+      </BasicButton>
     </form>
   </div>
 </template>
