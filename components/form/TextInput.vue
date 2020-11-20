@@ -16,7 +16,7 @@
       <input
         :id="`${label}-text-input`"
         :placeholder="placeholder || ' '"
-        type="text"
+        :type="password ? 'password' : 'text'"
         :aria-describedby="ariaDescribedby"
         :class="[
           'input text-black block w-full appearance-none focus:outline-none z-10 rounded',
@@ -96,7 +96,7 @@ export default {
     },
     rules: {
       type: Array,
-      default: [],
+      default: [] as ((input: string) => {})[],
     } as PropOptions<((input: string) => {})[]>,
     value: {
       type: String,
@@ -112,6 +112,10 @@ export default {
     maxCharacters: {
       type: Number,
       required: false,
+    },
+    password: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

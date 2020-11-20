@@ -111,6 +111,7 @@ export default Vue.extend({
     deleteAnswer(index) {
       this.answers.splice(index, 1)
       this.dragging = false
+      this.$emit('updated')
     },
     answerInputRule(input) {
       if (input.length < 100) {
@@ -126,6 +127,7 @@ export default Vue.extend({
         text: this.answerInput,
       })
       this.answerInput = ''
+      this.$emit('updated')
     },
   },
 })

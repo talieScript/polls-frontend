@@ -32,7 +32,11 @@
         />
       </div>
       <hr class="my-8" />
-      <Answers v-model="pollData.answers" ref="answers" />
+      <Answers
+        @updated="checkAnswers"
+        v-model="pollData.answers"
+        ref="answers"
+      />
       <p v-if="answerError" class="text-red font-light text-sm">
         Must have at least 1 answer
       </p>
@@ -92,20 +96,7 @@
           </div>
         </SwitchCard>
       </div>
-      <div class="mt-16">
-        <div class="flex items-center">
-          <input id="account" type="checkbox" class="h-4 w-4" />
-          <label for="account" class="ml-2"
-            >Create a
-            <button
-              @click.prevent
-              class="font-semibold text-primary hover:underline cursor-pointer outline-none"
-            >
-              Free Account
-            </button>
-            on the next page</label
-          >
-        </div>
+      <div class="mt-12">
         <div class="flex items-center mt-2">
           <input v-model="terms" id="terms" type="checkbox" class="h-4 w-4" />
           <label for="terms" class="ml-2"
@@ -122,11 +113,9 @@
           Please accept terms and conditions to continue
         </p>
       </div>
-      <button
-        class="absolute right-0 px-5 py-2 bg-secondary rounded hover:bg-green-400 hover:text-white transition-colors duration-150 text-lg outline-none"
-      >
+      <BasicButton>
         Next <fa class="ml-1" :icon="['fa', 'long-arrow-alt-right']" />
-      </button>
+      </BasicButton>
     </form>
   </div>
 </template>
@@ -210,29 +199,27 @@ export default {
       return this.$store.state.newPoll.active
     },
   } as any,
-  watch: {
-    answers(answers: any[]): void {
-      ;(this as any).answerError = !answers.length
-    },
-  },
   created() {
     const self = this as any
-    self.pollData = self.activePoll
-    self.$store.commit('newPoll/updatePoll', {
-      ...self.pollData,
-      endDate: dayjs().add(1, 'week').toISOString(),
-    })
+    if (!self.activePoll.endDate) {
+      self.$store.commit('newPoll/updatePoll', {
+        ...self.activePoll,
+        endDate: dayjs().add(1, 'week').toISOString(),
+      })
+    }
+    self.pollData = {
+      ...self.activePoll,
+      answers: [...self.activePoll.answers],
+      options: { ...self.activePoll.options },
+      multipleChoice: { ...self.activePoll.multipleChoice },
+    }
   },
   methods: {
+    checkAnswers() {
+      ;(this as any).answerError = !this.pollData.answers.length
+    },
     submit(): void | null {
-      const {
-        title,
-        question,
-        answers,
-        voteValidation,
-        pollVisibility,
-        terms,
-      } = this as any
+      const { question, answers } = this.pollData
       if (!question) {
         this.errors.question = 'Required'
         this.$refs.question.$el.scrollIntoView({
@@ -247,12 +234,15 @@ export default {
           block: 'center',
         })
       }
-      if (!terms) {
+      if (!this.terms) {
         this.termsError = true
       }
-      if (!answers.length || !question) {
+      if (!answers.length || !question || !this.terms) {
         return
       }
+
+      this.$store.commit('newPoll/updatePoll', this.pollData)
+      this.$router.push('/new/finish')
     },
   } as any,
 }
