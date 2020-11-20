@@ -1,6 +1,6 @@
 <template>
   <button
-    class="block px-2 py-1 rounded border outline-none focus:shadow-outline ml-auto w-auto"
+    class="block px-2 py-1 rounded-2xl border outline-none focus:shadow-outline ml-auto w-auto text-primary uppercase border-primary"
     @click="$emit('click')"
   >
     {{ text }}
