@@ -201,9 +201,9 @@ export default {
   } as any,
   created() {
     const self = this as any
-    if (!this.activePoll.endDate) {
+    if (!self.activePoll.endDate) {
       self.$store.commit('newPoll/updatePoll', {
-        ...this.activePoll,
+        ...self.activePoll,
         endDate: dayjs().add(1, 'week').toISOString(),
       })
     }
