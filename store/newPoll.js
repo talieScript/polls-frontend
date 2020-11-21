@@ -7,8 +7,8 @@ export const state = () => ({
     question: '',
     answers: [],
     voteValidation: 'validateEmail',
-    results: 'alwaysShow',
-    pollvisibility: 'public',
+    resultsVisibility: 'alwaysShow',
+    pollVisibility: 'public',
     options: {
       endDate: true,
       multipleChoice: false,
@@ -32,11 +32,13 @@ export const mutations = {
 export const actions = {
   async submit({state}, password) {
     const payload = createPostPayload(state.active);
+    console.log(payload)
     this.$axios.$post('/polls', {
       ...payload,
       password,
-    }).then((cratedPoll) => {
+    }).then((createdPoll) => {
       console.log('Poll created! 🥳');
+      console.log({createdPoll})
       // this.$router.push()
     }).catch(error => {
       console.log('here')

@@ -1,13 +1,13 @@
-import { LocalPoll, ApiPoll } from './types';
+import { LocalPoll, ApiPoll, pollOptions } from './types';
 
 export const processPollOptions = (pollData: LocalPoll): string => {
-  const { voteValidation, options, multipleChoice, results } = pollData;
+  const { voteValidation, options, multipleChoice, resultsVisibility } = pollData;
   let processedOptions = {
     validateEmail: true,
     validateIp: true,
     choiceNoStrict: true,
     choiceNo: 1,
-    results,
+    resultsVisibility,
   };
   if (voteValidation === 'validateEmail') { 
     processedOptions.validateEmail = true;
@@ -26,13 +26,15 @@ export const processPollOptions = (pollData: LocalPoll): string => {
 }
 
 export const createPostPayload = (pollData: LocalPoll): ApiPoll => {
-  const { title, question, answers, endDate, options } = pollData;
+  const { title, question, answers, endDate, pollVisibility, options } = pollData;
   const apiEndDate = options.endDate ? endDate : '';
+  console.log(pollData)
   return {
     title,
     question,
     answers: answers.map(a => a.text),
     endDate: apiEndDate,
     options: processPollOptions(pollData),
+    visibility: pollVisibility,
   }
 }

@@ -51,7 +51,7 @@
       <hr class="my-8" />
       <h2 class="text-lg">Results Visibility</h2>
       <RadioGroup
-        v-model="pollData.results"
+        v-model="pollData.resultsVisibility"
         groupName="results"
         :choices="resultsOptions"
         class="mt-8"
@@ -186,7 +186,7 @@ export default {
         title: '',
         question: '',
         answers: [],
-        results: '',
+        resultsVisibility: '',
         pollVisibility: '',
         options: {},
         endDate: '',
