@@ -16,6 +16,7 @@
           :error.sync="errors['title']"
           class="shadow-sm mb-8"
         />
+        <InfoToolTip text="here" />
         <TextArea
           v-model="pollData.question"
           label="Question*"
