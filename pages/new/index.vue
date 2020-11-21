@@ -3,36 +3,45 @@
     <h1 class="font-semibold text-2xl text-gray-700 mb-8 mt-3">New Poll</h1>
     <form class="w-full mt-3 px-2" @submit.prevent="submit">
       <div>
-        <TextInput
-          v-model="pollData.title"
-          label="Title"
-          bgColor="white"
-          outline
-          :rules="[
-            (input) => {
-              return input ? '' : 'Required'
-            },
-          ]"
-          :error.sync="errors['title']"
-          class="shadow-sm mb-8"
-        />
-        <InfoToolTip
-          text="here super long tool tip that takes up more space then before and is really annoying"
-        />
-        <TextArea
-          v-model="pollData.question"
-          label="Question*"
-          bgColor="white"
-          outline
-          :rules="[
-            (input) => {
-              return input ? '' : 'Required'
-            },
-          ]"
-          :error.sync="errors['question']"
-          class="shadow-sm rounded"
-          ref="question"
-        />
+        <div class="flex w-full items-center justify-center">
+          <TextInput
+            v-model="pollData.title"
+            label="Title"
+            bgColor="white"
+            outline
+            :rules="[
+              (input) => {
+                return input ? '' : 'Required'
+              },
+            ]"
+            :error.sync="errors['title']"
+            class="shadow-sm mb-8 w-full"
+          />
+          <InfoToolTip
+            text="here super long tool tip that takes up more space then before and is really annoying"
+            class="mb-3 ml-3"
+          />
+        </div>
+        <div class="flex w-full items-center justify-center">
+          <TextArea
+            v-model="pollData.question"
+            label="Question*"
+            bgColor="white"
+            outline
+            :rules="[
+              (input) => {
+                return input ? '' : 'Required'
+              },
+            ]"
+            :error.sync="errors['question']"
+            class="shadow-sm rounded w-full"
+            ref="question"
+          />
+          <InfoToolTip
+            text="here super long tool tip that takes up more space then before and is really annoying"
+            class="ml-3"
+          />
+        </div>
       </div>
       <hr class="my-8" />
       <Answers
@@ -44,7 +53,13 @@
         Must have at least 1 answer
       </p>
       <hr class="my-8" />
-      <h2 class="text-lg">Vote Validation</h2>
+      <div class="flex items-center">
+        <h2 class="text-lg">Vote Validation</h2>
+        <InfoToolTip
+          text="here super long tool tip that takes up more space then before and is really annoying"
+          class="ml-3"
+        />
+      </div>
       <RadioGroup
         v-model="pollData.voteValidation"
         groupName="voteValidation"
@@ -52,7 +67,13 @@
         class="mt-8"
       />
       <hr class="my-8" />
-      <h2 class="text-lg">Results Visibility</h2>
+      <div class="flex items-center">
+        <h2 class="text-lg">Results Visibility</h2>
+        <InfoToolTip
+          text="here super long tool tip that takes up more space then before and is really annoying"
+          class="ml-3"
+        />
+      </div>
       <RadioGroup
         v-model="pollData.resultsVisibility"
         groupName="results"
@@ -60,7 +81,13 @@
         class="mt-8"
       />
       <hr class="my-8" />
-      <h2 class="text-lg">Poll Visibility</h2>
+      <div class="flex items-center">
+        <h2 class="text-lg">Poll Visibility</h2>
+        <InfoToolTip
+          text="here super long tool tip that takes up more space then before and is really annoying"
+          class="ml-3"
+        />
+      </div>
       <RadioGroup
         v-model="pollData.pollVisibility"
         groupName="visibility"

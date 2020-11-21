@@ -5,17 +5,18 @@
       :content="text"
       tabindex="-1"
       v-tippy="{
-        trigger: 'focus',
+        trigger: 'mouseenter focus',
         hideOnClick: false,
         arrowType: 'sharp',
         arrow: true,
         placement: 'top',
       }"
+      class="focus:text-primary hover:text-primary transition-colors duration-200"
     >
       <slot name="deafult">
         <fa
           :icon="['fa', 'question-circle']"
-          class="hover:text-primary focus:text-primary transition-colors duration-200"
+          class="transition-colors duration-200"
         />
       </slot>
     </button>
