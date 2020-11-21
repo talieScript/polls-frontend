@@ -12,10 +12,12 @@
         placement: 'top',
       }"
     >
-      <fa
-        :icon="['fa', 'question-circle']"
-        class="hover:text-primary focus:text-primary transition-colors duration-200"
-      />
+      <slot name="deafult">
+        <fa
+          :icon="['fa', 'question-circle']"
+          class="hover:text-primary focus:text-primary transition-colors duration-200"
+        />
+      </slot>
     </button>
   </div>
 </template>
