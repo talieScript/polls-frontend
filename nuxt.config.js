@@ -14,7 +14,7 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto:wght@300;400;500&display=swap'
@@ -61,17 +61,11 @@ export default {
     baseURL: 'http://localhost:3000',
   },
 
-  // publicRuntimeConfig: {
-  //   axios: {
-  //     browserBaseURL: process.env.BROWSER_BASE_URL
-  //   }
-  // },
-
-  // privateRuntimeConfig: {
-  //   axios: {
-  //     baseURL: process.env.VUE_APP_POLLS_API
-  //   }
-  // },
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.VUE_APP_POLLS_API
+    }
+  },
 
   build: {
   },
