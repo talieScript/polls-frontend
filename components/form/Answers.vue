@@ -122,6 +122,13 @@ export default Vue.extend({
         this.inputError = 'Cannot be empty'
         return
       }
+      const answerMatch = this.answers.some(
+        (a) => a.text.toLowerCase() === this.answerInput.toLowerCase()
+      )
+      if (answerMatch) {
+        this.inputError = 'Cannot match another answer'
+        return
+      }
       this.answers.push({
         text: this.answerInput,
       })
