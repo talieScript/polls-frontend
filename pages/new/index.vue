@@ -16,7 +16,9 @@
           :error.sync="errors['title']"
           class="shadow-sm mb-8"
         />
-        <InfoToolTip text="here" />
+        <InfoToolTip
+          text="here super long tool tip that takes up more space then before and is really annoying"
+        />
         <TextArea
           v-model="pollData.question"
           label="Question*"
