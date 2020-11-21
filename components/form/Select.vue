@@ -1,6 +1,7 @@
 <template>
   <div
     :class="[{ disabled, open }, 'relative select']"
+    class="transition duration-200"
     v-click-outside="onClickOutside"
   >
     <button

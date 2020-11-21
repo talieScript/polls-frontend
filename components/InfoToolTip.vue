@@ -11,12 +11,13 @@
         arrow: true,
         placement: 'top',
       }"
-      class="focus:text-primary hover:text-primary transition-colors duration-200"
+      class="focus:text-primary hover:text-primary transition-colors duration-100"
+      :class="{ disabled }"
     >
       <slot name="deafult">
         <fa
           :icon="['fa', 'question-circle']"
-          class="transition-colors duration-200"
+          class="transition-colors duration-100"
         />
       </slot>
     </button>
@@ -34,9 +35,16 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.disabled {
+  @apply text-gray-300 #{!important};
+}
 </style>
