@@ -14,7 +14,7 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto:wght@300;400;500&display=swap'
@@ -44,6 +44,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     'dayjs',
+    '@nuxtjs/dotenv',
      ['nuxt-fontawesome', {
             component: 'fa',
             imports: [
@@ -56,8 +57,22 @@ export default {
       ]
   ],
 
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:3000',
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.VUE_APP_POLLS_API
+    }
+  },
 
   build: {
+  },
+
+  server: {
+    port: 8000,
+    host: '0.0.0.0',
   }
 }
+

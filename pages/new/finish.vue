@@ -45,7 +45,6 @@ export default Vue.extend({
       passTwoError: '',
       passRules: [
         (input) => {
-          console.log(input.length < 20)
           return input.length < 20 ? '' : 'Max 20 characters, sorry'
         },
       ],
@@ -55,6 +54,12 @@ export default Vue.extend({
     poll() {
       return this.$store.state.newPoll.active
     },
+  },
+  mounted() {
+    // check user has updated poll
+    if (this.$store.state.newPoll.initEdit) {
+      this.$router.replace('/new')
+    }
   },
   methods: {
     checkPassword(password: string): string {
@@ -76,6 +81,8 @@ export default Vue.extend({
       if (this.passOne !== this.passTwo) {
         this.passTwoError = 'Passwords do not match'
       }
+
+      this.$store.dispatch('newPoll/submit', passOne)
     },
   },
 })
