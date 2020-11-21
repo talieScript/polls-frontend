@@ -18,21 +18,29 @@ export const state = () => ({
       option: 'upToo',
       number: 2,
     }
-  }
+  },
+  initEdit: true,
 });
 
 export const mutations = {
   updatePoll(state, updatedPoll) {
     state.active = updatedPoll
+    state.initEdit = false
   }
 }
 
 export const actions = {
-  async submit({pollData, password}) {
-    const payload = createPostPayload(pollData);
-    this.$axios.$post(POLLS_API, {
+  async submit({state}, password) {
+    const payload = createPostPayload(state.active);
+    this.$axios.$post('/polls', {
       ...payload,
       password,
+    }).then((cratedPoll) => {
+      console.log('Poll created! 🥳');
+      // this.$router.push()
+    }).catch(error => {
+      console.log('here')
+      console.log(error);
     })
   },
 }

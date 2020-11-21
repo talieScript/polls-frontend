@@ -44,6 +44,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     'dayjs',
+    '@nuxtjs/dotenv',
      ['nuxt-fontawesome', {
             component: 'fa',
             imports: [
@@ -56,7 +57,21 @@ export default {
       ]
   ],
 
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:3000',
+  },
+
+  // publicRuntimeConfig: {
+  //   axios: {
+  //     browserBaseURL: process.env.BROWSER_BASE_URL
+  //   }
+  // },
+
+  // privateRuntimeConfig: {
+  //   axios: {
+  //     baseURL: process.env.VUE_APP_POLLS_API
+  //   }
+  // },
 
   build: {
   },

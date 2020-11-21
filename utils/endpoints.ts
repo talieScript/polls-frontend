@@ -1,1 +1,1 @@
-export const POLLS_API = `${process.env.VUE_APP_POLLS_API}/polls`
+export const POLLS_API = `/polls`
