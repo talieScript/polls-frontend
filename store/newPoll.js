@@ -38,10 +38,8 @@ export const actions = {
       password,
     }).then((createdPoll) => {
       console.log('Poll created! 🥳');
-      console.log({createdPoll})
-      // this.$router.push()
+      this.$router.push()
     }).catch(error => {
-      console.log('here')
       console.log(error);
     })
   },
