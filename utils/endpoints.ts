@@ -1,1 +1,0 @@
-export const POLLS_API = `/polls`

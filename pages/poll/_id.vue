@@ -12,6 +12,11 @@ export default Vue.extend({
       id,
     }
   },
+  data() {
+    return {
+      poll: {},
+    }
+  },
 })
 </script>
 
