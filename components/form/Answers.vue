@@ -43,7 +43,7 @@
         </div>
       </transition-group>
     </draggable>
-    <form @submit.prevent="addAnswer" class="flex items-center jus w-full mt-2">
+    <div @keyup.enter="addAnswer" class="flex items-center jus w-full mt-2">
       <TextInput
         v-model="answerInput"
         label="answer input"
@@ -65,7 +65,7 @@
       >
         <span>ADD</span> <fa class="ml-1" :icon="['fa', 'plus']" />
       </button>
-    </form>
+    </div>
   </div>
 </template>
 
