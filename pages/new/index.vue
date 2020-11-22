@@ -3,33 +3,39 @@
     <h1 class="font-semibold text-2xl text-gray-700 mb-8 mt-3">New Poll</h1>
     <form class="w-full mt-3 px-2" @submit.prevent="submit">
       <div>
-        <TextInput
-          v-model="pollData.title"
-          label="Title"
-          bgColor="white"
-          outline
-          :rules="[
-            (input) => {
-              return input ? '' : 'Required'
-            },
-          ]"
-          :error.sync="errors['title']"
-          class="shadow-sm mb-8"
-        />
-        <TextArea
-          v-model="pollData.question"
-          label="Question*"
-          bgColor="white"
-          outline
-          :rules="[
-            (input) => {
-              return input ? '' : 'Required'
-            },
-          ]"
-          :error.sync="errors['question']"
-          class="shadow-sm rounded"
-          ref="question"
-        />
+        <div class="flex w-full items-center justify-center">
+          <TextInput
+            v-model="pollData.title"
+            label="Title"
+            bgColor="white"
+            outline
+            :rules="[
+              (input) => {
+                return input ? '' : 'Required'
+              },
+            ]"
+            :error.sync="errors['title']"
+            class="shadow-sm mb-8 w-full"
+          />
+          <InfoToolTip :text="tipText.title" class="mb-3 ml-3" />
+        </div>
+        <div class="flex w-full items-center justify-center">
+          <TextArea
+            v-model="pollData.question"
+            label="Question*"
+            bgColor="white"
+            outline
+            :rules="[
+              (input) => {
+                return input ? '' : 'Required'
+              },
+            ]"
+            :error.sync="errors['question']"
+            class="shadow-sm rounded w-full"
+            ref="question"
+          />
+          <InfoToolTip :text="tipText.question" class="ml-3" />
+        </div>
       </div>
       <hr class="my-8" />
       <Answers
@@ -41,7 +47,10 @@
         Must have at least 1 answer
       </p>
       <hr class="my-8" />
-      <h2 class="text-lg">Vote Validation</h2>
+      <div class="flex items-center">
+        <h2 class="text-lg">Vote Validation</h2>
+        <InfoToolTip :text="tipText.voteValidation" class="ml-3" />
+      </div>
       <RadioGroup
         v-model="pollData.voteValidation"
         groupName="voteValidation"
@@ -49,7 +58,10 @@
         class="mt-8"
       />
       <hr class="my-8" />
-      <h2 class="text-lg">Results Visibility</h2>
+      <div class="flex items-center">
+        <h2 class="text-lg">Results Visibility</h2>
+        <InfoToolTip :text="tipText.resultsVisibility" class="ml-3" />
+      </div>
       <RadioGroup
         v-model="pollData.resultsVisibility"
         groupName="results"
@@ -57,7 +69,10 @@
         class="mt-8"
       />
       <hr class="my-8" />
-      <h2 class="text-lg">Poll Visibility</h2>
+      <div class="flex items-center">
+        <h2 class="text-lg">Poll Visibility</h2>
+        <InfoToolTip :text="tipText.pollVisibility" class="ml-3" />
+      </div>
       <RadioGroup
         v-model="pollData.pollVisibility"
         groupName="visibility"
@@ -70,6 +85,7 @@
         <SwitchCard
           name="End Date"
           v-model="pollData.options.endDate"
+          :tipText="tipText.endDate"
           class="sm:mr-3"
         >
           <DateTimePicker
@@ -80,6 +96,7 @@
         <SwitchCard
           name="Multiple Choice"
           v-model="pollData.options.multipleChoice"
+          :tipText="tipText.multipleChoice"
           class="mt-3 sm:mt-0"
         >
           <div class="flex items-center justify-between">
@@ -122,9 +139,12 @@
 
 <script lang="ts">
 import dayjs from 'dayjs'
+import helpTipsText from '@/utils/helpTipsText'
+
 export default {
   data(): any {
     return {
+      tipText: helpTipsText.newPoll,
       answerError: false,
       errors: {
         title: '',

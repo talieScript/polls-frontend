@@ -6,6 +6,7 @@
       format="dd/MM/yyyy - HH:mm"
       title="Pick a date"
       :class="['border rounded p-1 theme-primary w-full', { disabled }]"
+      class="transition duration-200"
     ></datetime>
     <fa
       :icon="['fa', 'calendar-week']"
@@ -13,6 +14,7 @@
         'absolute top-0 right-0 mt-2 mr-6 pointer-events-none',
         { disabled },
       ]"
+      class="transition duration-200"
     />
   </div>
 </template>

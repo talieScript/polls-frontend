@@ -1,8 +1,23 @@
 <template>
-  <div :class="['container relative bg-white p-2', { 'shadow-sm': active }]">
+  <div
+    :class="[
+      'container relative bg-white p-2 transition-colors duration-300',
+      { 'shadow-sm': active },
+    ]"
+  >
     <div v-if="!active" class="absolute top-0 left-0 h-full w-full z-10"></div>
     <div class="flex justify-between items-center">
-      <p :class="{ 'text-gray-400': !value }">{{ name }}</p>
+      <div class="flex items-center">
+        <p class="transition duration-200" :class="{ 'text-gray-400': !value }">
+          {{ name }}
+        </p>
+        <InfoToolTip
+          v-if="tipText"
+          :text="tipText"
+          class="ml-3"
+          :disabled="!active"
+        />
+      </div>
       <ToggleButton v-model="active" class="z-20" />
     </div>
     <div class="absolute bottom-0 mb-2 w-full pr-4">
@@ -21,6 +36,10 @@ export default Vue.extend({
     },
     name: {
       type: String,
+    },
+    tipText: {
+      type: String,
+      required: false,
     },
   },
   computed: {

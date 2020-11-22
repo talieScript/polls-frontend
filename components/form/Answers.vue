@@ -43,7 +43,7 @@
         </div>
       </transition-group>
     </draggable>
-    <div class="flex items-center jus w-full mt-2">
+    <form @submit.prevent="addAnswer" class="flex items-center jus w-full mt-2">
       <TextInput
         v-model="answerInput"
         label="answer input"
@@ -65,8 +65,7 @@
       >
         <span>ADD</span> <fa class="ml-1" :icon="['fa', 'plus']" />
       </button>
-      <!-- -->
-    </div>
+    </form>
   </div>
 </template>
 
@@ -121,6 +120,13 @@ export default Vue.extend({
     addAnswer(): void | undefined {
       if (!this.answerInput) {
         this.inputError = 'Cannot be empty'
+        return
+      }
+      const answerMatch = this.answers.some(
+        (a) => a.text.toLowerCase() === this.answerInput.toLowerCase()
+      )
+      if (answerMatch) {
+        this.inputError = 'Cannot match another answer'
         return
       }
       this.answers.push({
