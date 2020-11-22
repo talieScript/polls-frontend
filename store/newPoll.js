@@ -1,4 +1,3 @@
-import { POLLS_API } from '@/utils/endpoints'
 import { createPostPayload } from '~/utils/helpers';
 
 export const state = () => ({
