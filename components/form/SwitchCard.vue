@@ -12,7 +12,8 @@
           {{ name }}
         </p>
         <InfoToolTip
-          text="here super long tool tip that takes up more space then before and is really annoying"
+          v-if="tipText"
+          :text="tipText"
           class="ml-3"
           :disabled="!active"
         />
@@ -35,6 +36,10 @@ export default Vue.extend({
     },
     name: {
       type: String,
+    },
+    tipText: {
+      type: String,
+      required: false,
     },
   },
   computed: {
