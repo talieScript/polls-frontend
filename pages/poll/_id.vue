@@ -1,8 +1,19 @@
 <template>
   <div>
-    {{ id }}
-
-    <div v-if="res.name === 'Error'">404</div>
+    <div class="w-full" v-if="res.name === 'Error'">
+      <div
+        class="h-screen flex w-full items-center justify-center text-center text-lg flex-col"
+      >
+        Poll not found 😬
+        <nuxt-link class="block" to="/">
+          <fa
+            class="transform rotate-180"
+            :icon="['fa', 'long-arrow-alt-right']"
+          />
+          <span class="underline"> back </span>
+        </nuxt-link>
+      </div>
+    </div>
     <div v-else>found</div>
   </div>
 </template>
