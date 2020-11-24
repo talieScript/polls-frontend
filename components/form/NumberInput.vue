@@ -71,7 +71,6 @@ export default Vue.extend({
   },
   methods: {
     add() {
-      console.log(this.max)
       if (this.value >= this.max) {
         return
       }
