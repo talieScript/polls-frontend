@@ -14,9 +14,10 @@
         </nuxt-link>
       </div>
     </div>
-    <div class="pt-10" v-else>
+    <div class="pt-10" v-else-if="poll">
       <h1 class="text-2xl">{{ poll.question }}</h1>
-      <div class="">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
+      <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
+      <AnswerSelect :answers="poll.answers" />
     </div>
   </div>
 </template>
@@ -40,6 +41,11 @@ export default Vue.extend({
       .catch((error) => {
         poll = error
       })
+    poll = {
+      ...poll,
+      answers: poll.Answer,
+    }
+    delete poll.Answer
     return {
       id,
       poll,
