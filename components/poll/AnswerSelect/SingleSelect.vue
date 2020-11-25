@@ -1,5 +1,5 @@
 <template>
-  <div>{{ answerText }}</div>
+  <div>single</div>
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'SingleSelect',
   props: {
-    answerText: {
+    answers: {
       type: String,
       required: true,
     },

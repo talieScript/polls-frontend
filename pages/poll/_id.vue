@@ -18,6 +18,7 @@
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
       <AnswerSelect
+        v-model="chosen"
         :answerNumber="pollConfig.choiceNo"
         :exact="pollConfig.choiceNoStrict"
         :answers="poll.Answer"
@@ -50,12 +51,9 @@ export default Vue.extend({
   },
   data(): any {
     return {
-      loading: false,
       dayjs,
+      chosen: [] as string[],
     }
-  },
-  mounted() {
-    console.log(this.pollConfig)
   },
   computed: {
     pollConfig(): PollOptions {
