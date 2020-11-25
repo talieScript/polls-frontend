@@ -9,13 +9,22 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropOptions } from 'vue'
+import { Answer } from '@/utils/types'
 
 export default Vue.extend({
   name: 'AnswerSelect',
   props: {
     answers: {
       type: Array,
+      required: true,
+    } as PropOptions<Answer[]>,
+    answerNumber: {
+      type: Number,
+      required: true,
+    },
+    exact: {
+      type: Boolean,
       required: true,
     },
   },

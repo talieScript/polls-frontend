@@ -17,7 +17,11 @@
     <div class="pt-10" v-else-if="poll">
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
-      <AnswerSelect :answers="poll.Answer" />
+      <AnswerSelect
+        :answerNumber="pollConfig.choiceNo"
+        :exact="pollConfig.choiceNoStrict"
+        :answers="poll.Answer"
+      />
     </div>
   </div>
 </template>
@@ -50,9 +54,12 @@ export default Vue.extend({
       dayjs,
     }
   },
+  mounted() {
+    console.log(this.pollConfig)
+  },
   computed: {
     pollConfig(): PollOptions {
-      return JSON.parse(this.poll.options)
+      return JSON.parse(JSON.parse(this.poll.options))
     },
   },
 })
