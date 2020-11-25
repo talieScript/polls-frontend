@@ -1,6 +1,11 @@
 <template>
   <div>
-    <component v-model="chosen" :is="answerCompoent" :answers="answers" />
+    <component
+      v-model="chosen"
+      :is="answerCompoent"
+      :answers="answers"
+      :answerNumber="answerNumber"
+    />
   </div>
 </template>
 

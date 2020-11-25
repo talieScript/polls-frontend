@@ -1,5 +1,10 @@
 <template>
-  <div>multi {{ answers }}</div>
+  <fieldset>
+    <div v-for="answer in answers" :key="answer.id" class="">
+      <input :id="answer.id" type="checkbox" />
+      <label :for="answer.id">{{ answer.answer_string }}</label>
+    </div>
+  </fieldset>
 </template>
 
 <script lang="ts">
@@ -14,6 +19,10 @@ export default Vue.extend({
     },
     value: {
       type: Array,
+      required: true,
+    },
+    answerNumber: {
+      type: Number,
       required: true,
     },
   },
