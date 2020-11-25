@@ -39,6 +39,13 @@ export interface Answer {
   text: string;
 }
 
+export interface ApiAnswer {
+  Poll: string;
+  answer_string: string;
+  id: string;
+  votes: number;
+}
+
 export interface PollOptions {
   validateEmail: boolean;
   validateIp: boolean;

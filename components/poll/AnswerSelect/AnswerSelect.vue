@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { Answer } from '@/utils/types'
+import { ApiAnswer } from '@/utils/types'
 import SingleSelect from './SingleSelect.vue'
 import MultiSelect from './MultiSelect.vue'
 
@@ -25,7 +25,7 @@ export default Vue.extend({
     answers: {
       type: Array,
       required: true,
-    } as PropOptions<Answer[]>,
+    } as PropOptions<ApiAnswer[]>,
     answerNumber: {
       type: Number,
       required: true,
