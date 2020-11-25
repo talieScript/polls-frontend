@@ -26,6 +26,7 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { PollOptions } from '@/utils/types'
 
 dayjs.extend(relativeTime)
 
@@ -49,7 +50,11 @@ export default Vue.extend({
       dayjs,
     }
   },
-  computed: {} as any,
+  computed: {
+    pollConfig(): PollOptions {
+      return JSON.parse(this.poll.options)
+    },
+  },
 })
 </script>
 

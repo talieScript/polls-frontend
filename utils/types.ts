@@ -39,3 +39,11 @@ export interface Answer {
   text: string;
 }
 
+export interface PollOptions {
+  validateEmail: boolean;
+  validateIp: boolean;
+  choiceNoStrict: boolean;
+  choiceNo: number;
+  resultsVisibility: string;
+}
+
