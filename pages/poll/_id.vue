@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full" v-if="poll.name === 'Error'">
+    <div class="w-full" v-if="error">
       <div
         class="h-screen flex w-full items-center justify-center text-center text-lg flex-col"
       >
@@ -17,7 +17,7 @@
     <div class="pt-10" v-else-if="poll">
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
-      <AnswerSelect :answers="poll.answers" />
+      <AnswerSelect :answers="poll.Answer" />
     </div>
   </div>
 </template>
@@ -32,24 +32,16 @@ dayjs.extend(relativeTime)
 export default Vue.extend({
   async asyncData({ params, $axios }) {
     const id = params.id
-    let poll = null
-    await $axios
+    return await $axios
       .get(`${process.env.VUE_APP_POLLS_API}/polls/${id}`)
-      .then((response) => {
-        poll = response.data
-      })
-      .catch((error) => {
-        poll = error
-      })
-    poll = {
-      ...poll,
-      answers: poll.Answer,
-    }
-    delete poll.Answer
-    return {
-      id,
-      poll,
-    }
+      .then((response) => ({
+        error: false,
+        poll: response.data,
+      }))
+      .catch((error) => ({
+        error,
+        poll: null,
+      }))
   },
   data(): any {
     return {
