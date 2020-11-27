@@ -1,6 +1,11 @@
 <template>
   <fieldset>
-    <div v-for="answer in answers" :key="answer.id" class="flex mt-5">
+    <div
+      v-for="answer in answers"
+      :key="answer.id"
+      class="flex mt-5 transition-all duration-200"
+      :class="{ checked: checkedAnswers.includes(answer.id) }"
+    >
       <input
         v-model="checkedAnswers"
         :id="answer.id"
@@ -17,7 +22,15 @@
           {{ answer.answer_string }}
           {{ checkedAnswers.includes(answer.id) ? 'here' : 'no' }}
         </label>
-        <span class="w-6 h-6 border rounded bg-gray-100"></span>
+        <span
+          class="flex justify-center align-middle checkBox w-6 h-6 border rounded bg-gray-100 transition-all duration-200"
+        >
+          <fa
+            class="text-primary opacity-0 duration-100 transition-opacity mt-1"
+            :class="{ 'opacity-100': checkedAnswers.includes(answer.id) }"
+            :icon="['fa', 'check']"
+          />
+        </span>
       </div>
     </div>
   </fieldset>
@@ -79,5 +92,15 @@ export default Vue.extend({
 
 input:focus + .box {
   @apply shadow-outline;
+}
+
+.checked {
+  box-shadow: 0px 5px 20px -2px rgba(125, 131, 255, 0.1),
+    0px 5px 3px -1px rgba(125, 131, 255, 0.1);
+  @apply text-primary;
+
+  .checkBox {
+    @apply bg-purple-100 border-primary #{!important};
+  }
 }
 </style>

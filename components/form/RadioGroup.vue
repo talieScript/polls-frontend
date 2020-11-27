@@ -34,7 +34,7 @@ interface Choice {
 }
 
 export default Vue.extend({
-  name: 'CheckBox',
+  name: 'RadioGroup',
   props: {
     choices: {
       type: Array,

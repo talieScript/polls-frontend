@@ -59,7 +59,8 @@ export default {
                   'faChevronDown',
                   'faAngleUp',
                   'faAngleDown',
-                  'faQuestionCircle'
+                  'faQuestionCircle',
+                  'faCheck'
                   ]
               },
             ]
