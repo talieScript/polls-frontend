@@ -1,11 +1,13 @@
 <template>
   <fieldset>
-    <div v-for="answer in answers" :key="answer.id" class="answer">
-      <input v-model="chosen" :id="answer.id" type="checkbox" class="hidden" />
-      <label :for="answer.id" class="label">
-        {{ answer.answer_string }}
-      </label>
-      <span class="w-6 h-6 border rounded bg-gray-100"></span>
+    <div v-for="answer in answers" :key="answer.id" class="flex mt-5">
+      <input v-model="chosen" :id="answer.id" type="checkbox" class="w-0 h-0" />
+      <div class="box transition-all duration-200">
+        <label :for="answer.id" class="label mr-auto">
+          {{ answer.answer_string }}
+        </label>
+        <span class="w-6 h-6 border rounded bg-gray-100"></span>
+      </div>
     </div>
   </fieldset>
 </template>
@@ -47,10 +49,14 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-div {
+.box {
   @apply px-3 py-3 bg-white w-full rounded flex justify-between align-middle cursor-pointer;
   &:not(:first-of-type) {
     @apply mt-6;
   }
+}
+
+input:focus + .box {
+  @apply shadow-outline;
 }
 </style>
