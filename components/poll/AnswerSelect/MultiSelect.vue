@@ -3,7 +3,7 @@
     <div
       v-for="answer in answers"
       :key="answer.id"
-      class="flex mt-5 transition-all duration-200"
+      class="flex answer transition-all duration-200"
       :class="{ checked: checkedAnswers.includes(answer.id) }"
     >
       <input
@@ -20,7 +20,6 @@
       >
         <label :for="answer.id" class="label mr-auto pointer-events-none">
           {{ answer.answer_string }}
-          {{ checkedAnswers.includes(answer.id) ? 'here' : 'no' }}
         </label>
         <span
           class="flex justify-center align-middle checkBox w-6 h-6 border rounded bg-gray-100 transition-all duration-200"
@@ -74,7 +73,7 @@ export default Vue.extend({
       const answerIndex = this.checkedAnswers.indexOf(id)
       if (answerIndex + 1) {
         this.checkedAnswers.splice(answerIndex, 1)
-      } else {
+      } else if (this.checkedAnswers.length < this.answerNumber) {
         this.checkedAnswers.push(id)
       }
     },
@@ -83,11 +82,11 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.answer:not(:first-of-type) {
+  @apply mt-6;
+}
 .box {
   @apply px-3 py-3 bg-white w-full rounded flex justify-between align-middle cursor-pointer;
-  &:not(:first-of-type) {
-    @apply mt-6;
-  }
 }
 
 input:focus + .box {

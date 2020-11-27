@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="text-right text-xs mb-1">{{ choiceNoHelp }}</div>
     <component
       v-model="chosen"
       :is="answerCompoent"
@@ -51,6 +52,13 @@ export default Vue.extend({
         this.$emit('input', value)
       },
     } as any,
+    choiceNoHelp() {
+      if (this.answerNumber < 2) {
+        return 'Choose 1 answer'
+      }
+      const exactText = this.exact ? 'Must choose' : 'Choose up to'
+      return `${exactText} ${this.answerNumber} answers`
+    },
   },
 })
 </script>
