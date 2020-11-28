@@ -17,15 +17,26 @@
     <div class="sm:pt-10" v-else-if="poll">
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
-      <div class="flex flex-col-reverse sm:flex-row">
+      <div
+        class="flex flex-col sm:flex-row-reverse sm:justify-between sm:items-basline"
+      >
+        <div
+          class="order-2 sm:w-1/5 flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline"
+        >
+          <CountDown :endDate="poll.end_date" />
+          <div class="sm:ml-0 mb-3 sm:mt-3">
+            <p class="text-xs">Total Votes</p>
+            <span class="text-xl text-black">{{ totalVotes }}</span>
+          </div>
+        </div>
         <AnswerSelect
           v-model="chosen"
-          class="sm:mr-2"
+          class="sm:mr-2 sm:w-4/5 order-3"
           :answerNumber="pollConfig.choiceNo"
           :exact="pollConfig.choiceNoStrict"
           :answers="poll.Answer"
         />
-        <CountDown class="w-1/3 sm:w-1/5" :endDate="poll.end_date" />
+        <div class="bg-white order-3">Share</div>
       </div>
     </div>
   </div>
@@ -65,6 +76,11 @@ export default Vue.extend({
   computed: {
     pollConfig(): PollOptions {
       return JSON.parse(JSON.parse(this.poll.options))
+    },
+    totalVotes(): number {
+      return this.poll.Answer.map((a) => a.votes).reduce(
+        (total, votes) => total + votes
+      )
     },
   },
 })
