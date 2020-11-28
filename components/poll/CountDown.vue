@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <p class="text-xs">Time Remaining</p>
+    <p class="hidden sm:block text-xs text-right">Time Remaining</p>
     <div
       class="flex item s-center justify-between text-lg"
       :class="`text-${color}`"

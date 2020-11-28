@@ -17,7 +17,7 @@
     <div class="sm:pt-10" v-else-if="poll">
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
-      <div class="flex">
+      <div class="flex flex-col-reverse sm:flex-row">
         <AnswerSelect
           v-model="chosen"
           class="sm:mr-2"
@@ -25,7 +25,7 @@
           :exact="pollConfig.choiceNoStrict"
           :answers="poll.Answer"
         />
-        <CountDown class="w-1/5" :endDate="poll.end_date" />
+        <CountDown class="w-1/3 sm:w-1/5" :endDate="poll.end_date" />
       </div>
     </div>
   </div>
