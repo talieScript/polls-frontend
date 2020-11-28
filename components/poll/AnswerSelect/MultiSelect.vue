@@ -15,21 +15,21 @@
         :checked="checkedAnswers.includes(answer.id)"
       />
       <div
-        class="box transition-all duration-200"
+        class="box transition-all duration-200 flex items-center justify-between"
         @click="toggleCheck(answer.id)"
       >
-        <label :for="answer.id" class="label mr-auto pointer-events-none">
+        <label :for="answer.id" class="label mr-auto pointer-events-none w-4/5">
           {{ answer.answer_string }}
         </label>
-        <span
-          class="flex justify-center align-middle checkBox w-6 h-6 border rounded bg-gray-100 transition-all duration-200"
+        <div
+          class="checkBox flex justify-center align-middle p-0 w-6 h-6 border rounded bg-gray-100 transition-all duration-200"
         >
           <fa
             class="text-primary opacity-0 duration-100 transition-opacity mt-1"
             :class="{ 'opacity-100': checkedAnswers.includes(answer.id) }"
             :icon="['fa', 'check']"
           />
-        </span>
+        </div>
       </div>
     </div>
   </fieldset>
