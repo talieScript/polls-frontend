@@ -14,15 +14,19 @@
         </nuxt-link>
       </div>
     </div>
-    <div class="pt-10" v-else-if="poll">
+    <div class="sm:pt-10" v-else-if="poll">
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
-      <AnswerSelect
-        v-model="chosen"
-        :answerNumber="pollConfig.choiceNo"
-        :exact="pollConfig.choiceNoStrict"
-        :answers="poll.Answer"
-      />
+      <div class="flex">
+        <AnswerSelect
+          v-model="chosen"
+          class="sm:mr-2"
+          :answerNumber="pollConfig.choiceNo"
+          :exact="pollConfig.choiceNoStrict"
+          :answers="poll.Answer"
+        />
+        <CountDown class="w-1/5" :endDate="poll.end_date" />
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +58,9 @@ export default Vue.extend({
       dayjs,
       chosen: [] as string[],
     }
+  },
+  mounted() {
+    console.log(this.poll.end_date)
   },
   computed: {
     pollConfig(): PollOptions {
