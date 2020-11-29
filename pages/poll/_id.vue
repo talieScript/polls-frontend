@@ -17,26 +17,25 @@
     <div class="sm:pt-10" v-else-if="poll">
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
-      <div
-        class="flex flex-col sm:flex-row-reverse sm:justify-between sm:items-basline"
-      >
+      <div class="flex flex-col sm:flex-row sm:flex-wrap justify-between">
+        <div class="bg-white order-3 h-full sm:hidden">Share</div>
+        <AnswerSelect
+          v-model="chosen"
+          class="sm:w-3/4 order-1"
+          :answerNumber="pollConfig.choiceNo"
+          :exact="pollConfig.choiceNoStrict"
+          :answers="poll.Answer"
+        />
         <div
-          class="order-2 sm:w-1/5 flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline"
+          class="sm:order-2 sm:w-32 w- flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
         >
           <CountDown :endDate="poll.end_date" />
           <div class="sm:ml-0 mb-3 sm:mt-3">
             <p class="text-xs">Total Votes</p>
             <span class="text-xl text-black">{{ totalVotes }}</span>
           </div>
+          <SharePoll :poll-id="poll.id" />
         </div>
-        <AnswerSelect
-          v-model="chosen"
-          class="sm:mr-2 sm:w-4/5 order-3"
-          :answerNumber="pollConfig.choiceNo"
-          :exact="pollConfig.choiceNoStrict"
-          :answers="poll.Answer"
-        />
-        <div class="bg-white order-3">Share</div>
       </div>
     </div>
   </div>

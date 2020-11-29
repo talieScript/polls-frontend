@@ -60,9 +60,21 @@ export default {
                   'faAngleUp',
                   'faAngleDown',
                   'faQuestionCircle',
-                  'faCheck'
+                  'faCheck',
+                  'faLink',
+                  'faQrcode'
                   ]
               },
+              {
+                set: '@fortawesome/free-brands-svg-icons',
+                icons: [
+                  'faFacebook',
+                  'faTwitter',
+                  'faWhatsapp',
+                  'faLine',
+                  'faFacebookMessenger'
+                ]
+              }
             ]
           }
       ]
