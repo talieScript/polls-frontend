@@ -34,7 +34,7 @@
             <p class="text-xs">Total Votes</p>
             <span class="text-xl text-black">{{ totalVotes }}</span>
           </div>
-          <SharePoll :poll-id="poll.id" />
+          <SharePoll :poll-id="poll.id" :question="poll.question" />
         </div>
       </div>
     </div>
