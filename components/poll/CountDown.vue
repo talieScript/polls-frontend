@@ -1,5 +1,5 @@
 <template>
-  <div class="h-18 w-full">
+  <div class="h-18">
     <p class="text-xs">Time Remaining</p>
     <div
       class="flex item s-center justify-between text-lg"
