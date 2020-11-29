@@ -69,9 +69,6 @@ export default Vue.extend({
       chosen: [] as string[],
     }
   },
-  mounted() {
-    console.log(this.poll.end_date)
-  },
   computed: {
     pollConfig(): PollOptions {
       return JSON.parse(JSON.parse(this.poll.options))
