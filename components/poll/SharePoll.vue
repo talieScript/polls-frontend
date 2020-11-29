@@ -71,6 +71,7 @@
       <li class="text-primary">
         <button
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
+          @click="showQrCode"
         >
           <span class="w-8">
             <fa class="text-lg mr-2" :icon="['fa', 'qrcode']" />
@@ -79,12 +80,22 @@
         </button>
       </li>
     </ul>
+    <div
+      class="bg-opacity-25 bg-black h-screen w-screen fixed top-0 left-0 z-50 flex items-center justify-center"
+      :class="{ hidden: !showQr }"
+      @click="showQr = false"
+    >
+      <div @click.stop class="bg-white rounded">
+        <canvas ref="qrCode"></canvas>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import VueTippy from 'vue-tippy/dist/vue-tippy.esm'
+import qrcode from 'qrcode'
 Vue.use(VueTippy)
 
 export default Vue.extend({
@@ -102,6 +113,7 @@ export default Vue.extend({
   data() {
     return {
       URL: '',
+      showQr: false,
     }
   },
   mounted() {
@@ -127,9 +139,17 @@ export default Vue.extend({
         document.getSelection().removeAllRanges()
         document.getSelection().addRange(selected)
       }
-      this.showCopied()
     },
-    showCopied() {},
+    showQrCode() {
+      this.showQr = true
+      const canvas = this.$refs.qrCode
+      qrcode.toCanvas(canvas, this.URL, (error) => {
+        if (error) {
+          console.log(error)
+        }
+        console.log('done')
+      })
+    },
   },
 })
 </script>
