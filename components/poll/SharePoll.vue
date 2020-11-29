@@ -71,7 +71,7 @@
       <li class="text-primary">
         <button
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
-          @click="showQrCode"
+          @click="showQr = true"
         >
           <span class="w-8">
             <fa class="text-lg mr-2" :icon="['fa', 'qrcode']" />
@@ -85,8 +85,26 @@
       :class="{ hidden: !showQr }"
       @click="showQr = false"
     >
-      <div @click.stop class="bg-white rounded">
-        <canvas ref="qrCode"></canvas>
+      <div
+        @click.stop
+        class="bg-white rounded p-5 w-4/5 sm:w-auto flex flex-col items-center relative"
+      >
+        <button
+          class="absolute top-0 right-0 mt-2 ml-1 hover:text-red flex"
+          aria-label="Close"
+          @click="showQr = false"
+        >
+          <fa class="text-lg mr-2" :icon="['fa', 'times-circle']" />
+        </button>
+        <p class="text-lg">QR Code</p>
+        <p class="mt-2">
+          This can be printed and posted IRL (in real life).<br />
+          If scanned they will be taken to this page.
+        </p>
+        <canvas class="mx-8" ref="qrCode"></canvas>
+        <a href="#" ref="qrDownload">
+          <BasicButton class="mt-3"> Download </BasicButton>
+        </a>
       </div>
     </div>
   </div>
@@ -118,6 +136,19 @@ export default Vue.extend({
   },
   mounted() {
     this.URL = document.URL
+    // create qr dowloader
+    const canvas = this.$refs.qrCode
+    qrcode.toCanvas(canvas, this.URL, (error) => {
+      if (error) {
+        console.log(error)
+      }
+    })
+    const link = this.$refs.qrDownload as any
+    var dataURL = canvas.toDataURL('png')
+    link.download = 'image.png'
+    link.addEventListener('click', () => {
+      link.href = dataURL
+    })
   },
   methods: {
     copyLink(): void {
@@ -139,16 +170,6 @@ export default Vue.extend({
         document.getSelection().removeAllRanges()
         document.getSelection().addRange(selected)
       }
-    },
-    showQrCode() {
-      this.showQr = true
-      const canvas = this.$refs.qrCode
-      qrcode.toCanvas(canvas, this.URL, (error) => {
-        if (error) {
-          console.log(error)
-        }
-        console.log('done')
-      })
     },
   },
 })

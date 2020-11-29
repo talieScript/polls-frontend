@@ -62,7 +62,8 @@ export default {
                   'faQuestionCircle',
                   'faCheck',
                   'faLink',
-                  'faQrcode'
+                  'faQrcode',
+                  'faTimesCircle'
                   ]
               },
               {
