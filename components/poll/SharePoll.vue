@@ -90,7 +90,7 @@
         class="bg-white rounded p-5 w-4/5 sm:w-auto flex flex-col items-center relative"
       >
         <button
-          class="absolute top-0 right-0 mt-2 ml-1 hover:text-red flex"
+          class="absolute top-0 right-0 mt-2 ml-1 text-gray-400 hover:text-gray-500 flex"
           aria-label="Close"
           @click="showQr = false"
         >
@@ -137,7 +137,7 @@ export default Vue.extend({
   mounted() {
     this.URL = document.URL
     // create qr dowloader
-    const canvas = this.$refs.qrCode
+    const canvas = this.$refs.qrCode as any
     qrcode.toCanvas(canvas, this.URL, (error) => {
       if (error) {
         console.log(error)

@@ -18,13 +18,21 @@
       <h1 class="text-2xl">{{ poll.question }}</h1>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
       <div class="flex flex-col sm:flex-row sm:flex-wrap justify-between">
-        <AnswerSelect
-          v-model="chosen"
-          class="sm:w-3/4 order-1"
-          :answerNumber="pollConfig.choiceNo"
-          :exact="pollConfig.choiceNoStrict"
-          :answers="poll.Answer"
-        />
+        <div class="sm:w-3/4 order-1 flex items-end flex-col">
+          <AnswerSelect
+            v-model="chosen"
+            class="w-full"
+            :answerNumber="pollConfig.choiceNo"
+            :exact="pollConfig.choiceNoStrict"
+            :answers="poll.Answer"
+          />
+          <SubmitButton
+            class="mt-2"
+            :requiredAnswers="requiredAnswers"
+            :selectedAnswersNo="chosen.length"
+            @click="handleSubmit"
+          />
+        </div>
         <div
           class="sm:order-2 sm:w-32 w- flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
         >
@@ -83,6 +91,15 @@ export default Vue.extend({
       return this.poll.Answer.map((a) => a.votes).reduce(
         (total, votes) => total + votes
       )
+    },
+    requiredAnswers() {
+      const { pollConfig } = this as any
+      return pollConfig.choiceNoStrict ? pollConfig.choiceNo : 1
+    },
+  },
+  methods: {
+    handleSubmit() {
+      console.log('submit')
     },
   },
 })

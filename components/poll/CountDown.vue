@@ -2,7 +2,7 @@
   <div class="h-18">
     <p class="text-xs">Time Remaining</p>
     <div
-      class="flex item s-center justify-between text-lg"
+      class="flex -ml-3 item s-center justify-between text-lg"
       :class="`text-${color}`"
     >
       <span class="text-center w-4/5 flex flex-col">
