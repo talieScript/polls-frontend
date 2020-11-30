@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-20">
     <div class="w-full" v-if="error">
       <div
         class="h-screen flex w-full items-center justify-center text-center text-lg flex-col"
@@ -27,7 +27,7 @@
             :answers="poll.Answer"
           />
           <SubmitButton
-            class="mt-2"
+            class="mt-2 hidden sm:inline-block"
             :requiredAnswers="requiredAnswers"
             :selectedAnswersNo="chosen.length"
             @click="handleSubmit"
@@ -51,6 +51,17 @@
           />
         </div>
       </div>
+    </div>
+    <div
+      class="bg-gray-100 fixed w-screen sm:hidden bottom-0 left-0 pb-12 pt-1 flex flex-col items-end"
+    >
+      <SmallShare :poll-id="poll.id" :question="poll.question" />
+      <SubmitButton
+        class="mt-2 w-screen rounded-none border-none absolute bottom-0"
+        :requiredAnswers="requiredAnswers"
+        :selectedAnswersNo="chosen.length"
+        @click="handleSubmit"
+      />
     </div>
   </div>
 </template>
