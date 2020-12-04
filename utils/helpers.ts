@@ -1,6 +1,6 @@
 import { LocalPoll, ApiPoll, pollOptions } from './types';
 
-export const processPollOptions = (pollData: LocalPoll): string => {
+export const processPollOptions = (pollData: LocalPoll): pollOptions => {
   const { voteValidation, options, multipleChoice, resultsVisibility } = pollData;
   let processedOptions = {
     validateEmail: true,
@@ -22,7 +22,7 @@ export const processPollOptions = (pollData: LocalPoll): string => {
     }
     processedOptions.choiceNo = multipleChoice.number;
   }
-  return JSON.stringify(processedOptions);
+  return processedOptions;
 }
 
 export const createPostPayload = (pollData: LocalPoll): ApiPoll => {

@@ -28,7 +28,7 @@
           />
           <SubmitButton
             class="mt-2 hidden sm:inline-block"
-            :requiredAnswers="requiredAnswers"
+            :requiredAnswers="requiredAnswersNo"
             :selectedAnswersNo="chosen.length"
             @click="handleSubmit"
           />
@@ -58,11 +58,12 @@
       <SmallShare :poll-id="poll.id" :question="poll.question" />
       <SubmitButton
         class="mt-2 w-screen rounded-none border-none absolute bottom-0"
-        :requiredAnswers="requiredAnswers"
+        :requiredAnswers="requiredAnswersNo"
         :selectedAnswersNo="chosen.length"
         @click="handleSubmit"
       />
     </div>
+    <!-- <ValidationDialog /> -->
   </div>
 </template>
 
@@ -96,22 +97,20 @@ export default Vue.extend({
   },
   computed: {
     pollConfig(): PollOptions {
-      return JSON.parse(JSON.parse(this.poll.options))
+      return JSON.parse(this.poll.options)
     },
     totalVotes(): number {
       return this.poll.Answer.map((a) => a.votes).reduce(
         (total, votes) => total + votes
       )
     },
-    requiredAnswers() {
+    requiredAnswersNo() {
       const { pollConfig } = this as any
       return pollConfig.choiceNoStrict ? pollConfig.choiceNo : 1
     },
   },
   methods: {
-    handleSubmit() {
-      console.log('submit')
-    },
+    handleSubmit() {},
   },
 })
 </script>
