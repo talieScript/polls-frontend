@@ -6,19 +6,20 @@
       :class="`text-${color}`"
     >
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakdown.days }}
+        {{ timeBreakdown.days | emptyDash }}
         <span class="text-xs text-gray-500">D</span>
       </span>
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakdown.hours }}
+        {{ timeBreakdown.hours | emptyDash }}
         <span class="text-xs text-gray-500">H</span>
       </span>
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakdown.minutes }}
+        {{ timeBreakdown.minutes | emptyDash }}
         <span class="text-xs text-gray-500">M</span>
       </span>
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakdown.seconds }}
+        <span v-if="!ended">{{ timeBreakdown.seconds }}</span>
+        <span v-else>-</span>
         <span class="text-xs h-full text-gray-500">S</span>
       </span>
     </div>
@@ -58,6 +59,11 @@ export default Vue.extend({
   beforeDestroy() {
     clearInterval(this.interval)
   },
+  filters: {
+    emptyDash: (value) => {
+      return value ? value : '-'
+    },
+  },
   methods: {
     counter(): void {
       const days = this.getDiff('d')
@@ -68,8 +74,6 @@ export default Vue.extend({
           (days * 86400000 + hours * 3600000 + minutes * 60000)) /
           1000
       )
-      console.log('=', days * 86400000 + hours * 3600000 + minutes * 60000)
-      console.log('milli', dayjs(this.endDate).diff(dayjs()))
       this.timeBreakdown = {
         days,
         hours,
@@ -82,6 +86,16 @@ export default Vue.extend({
     },
   },
   computed: {
+    ended(): boolean {
+      const sum = Object.values(this.timeBreakdown).reduce(
+        (a: number, b: number) => a + b,
+        0
+      )
+      if (!sum) {
+        return true
+      }
+      return false
+    },
     color() {
       const { timeBreakdown } = this
       let color = ''
