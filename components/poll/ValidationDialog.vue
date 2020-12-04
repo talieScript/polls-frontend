@@ -1,17 +1,17 @@
 <template>
-  <div>single</div>
+  <div></div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'SingleSelect',
+  name: 'ValidationDialog',
   props: {
-    // answers: {
-    //   type: String,
-    //   required: true,
-    // },
+    open: {
+      type: Boolean,
+      required: true,
+    },
   },
 })
 </script>
