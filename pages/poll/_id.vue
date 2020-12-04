@@ -79,10 +79,13 @@ export default Vue.extend({
     const id = params.id
     return await $axios
       .get(`${process.env.VUE_APP_POLLS_API}/polls/${id}`)
-      .then((response) => ({
-        error: false,
-        poll: response.data,
-      }))
+      .then(
+        (response) =>
+          console.log(response.data) || {
+            error: false,
+            poll: response.data,
+          }
+      )
       .catch((error) => ({
         error,
         poll: null,

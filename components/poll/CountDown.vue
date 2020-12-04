@@ -6,19 +6,19 @@
       :class="`text-${color}`"
     >
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakDown.days }}
+        {{ timeBreakdown.days }}
         <span class="text-xs text-gray-500">D</span>
       </span>
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakDown.hours }}
+        {{ timeBreakdown.hours }}
         <span class="text-xs text-gray-500">H</span>
       </span>
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakDown.minutes }}
+        {{ timeBreakdown.minutes }}
         <span class="text-xs text-gray-500">M</span>
       </span>
       <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakDown.seconds }}
+        {{ timeBreakdown.seconds }}
         <span class="text-xs h-full text-gray-500">S</span>
       </span>
     </div>
@@ -42,42 +42,56 @@ export default Vue.extend({
   data() {
     return {
       timeTo: 0,
+      timeBreakdown: {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      } as any,
+      interval: null,
       dayjs,
     }
   },
   mounted() {
-    setInterval(this.counter, 1000)
-    // this.timeTo = 1081640000
+    this.interval = setInterval(this.counter, 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.interval)
   },
   methods: {
     counter(): void {
-      this.timeTo = dayjs(this.endDate).diff(dayjs())
-    },
-  },
-  computed: {
-    timeBreakDown(): any {
-      const { timeTo } = this
-      const days = dayjs(timeTo).get('day')
-      const hours = dayjs(timeTo).get('hour')
-      const minutes = dayjs(timeTo).get('minute')
-      const seconds = dayjs(timeTo).get('second')
-      return {
+      const days = this.getDiff('d')
+      const hours = this.getDiff('h') - days * 24
+      const minutes = this.getDiff('m') - (days * 1440 + hours * 60)
+      const seconds = Math.floor(
+        (dayjs(this.endDate).diff(dayjs()) -
+          (days * 86400000 + hours * 3600000 + minutes * 60000)) /
+          1000
+      )
+      console.log('=', days * 86400000 + hours * 3600000 + minutes * 60000)
+      console.log('milli', dayjs(this.endDate).diff(dayjs()))
+      this.timeBreakdown = {
         days,
         hours,
         minutes,
         seconds,
       }
     },
+    getDiff(unit: any): number {
+      return dayjs(this.endDate).diff(dayjs(), unit)
+    },
+  },
+  computed: {
     color() {
-      const { timeTo } = this
+      const { timeBreakdown } = this
       let color = ''
       switch (true) {
         // less then a day
-        case timeTo < 86400000:
+        case timeBreakdown.days < 1:
           color = 'yellow-500'
           break
         // less then an hour
-        case timeTo < 3600000:
+        case timeBreakdown.hours < 1:
           color = 'red'
           break
         default:
