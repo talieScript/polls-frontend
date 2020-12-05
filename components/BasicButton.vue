@@ -1,6 +1,12 @@
 <template>
   <button
-    class="block px-2 py-1 rounded-2xl border outline-none focus:shadow-outline ml-auto w-auto text-primary uppercase border-primary"
+    class="block px-2 py-1 border outline-none focus:shadow-outline w-auto uppercase"
+    :class="[
+      `text-${color}`,
+      `border-${color}`,
+      `text-${textSize}`,
+      `rounded-${rounded}`,
+    ]"
     @click="$emit('click')"
   >
     {{ text }}
@@ -16,6 +22,18 @@ export default Vue.extend({
   props: {
     text: {
       type: String,
+    },
+    color: {
+      type: String,
+      default: 'primary',
+    },
+    textSize: {
+      type: String,
+      default: 'base',
+    },
+    rounded: {
+      type: String,
+      default: '2xl',
     },
   },
 })

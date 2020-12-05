@@ -22,8 +22,8 @@
           <AnswerSelect
             v-model="chosen"
             class="w-full"
-            :answerNumber="pollConfig.choiceNo"
-            :exact="pollConfig.choiceNoStrict"
+            :answerNumber="pollOptions.choiceNo"
+            :exact="pollOptions.choiceNoStrict"
             :answers="poll.Answer"
           />
           <SubmitButton
@@ -63,7 +63,10 @@
         @click="handleSubmit"
       />
     </div>
-    <!-- <ValidationDialog /> -->
+    <ValidationDialog
+      :open="validationDialogOpen"
+      :poll-options="pollOptions"
+    />
   </div>
 </template>
 
@@ -93,10 +96,11 @@ export default Vue.extend({
     return {
       dayjs,
       chosen: [] as string[],
+      validationDialogOpen: true,
     }
   },
   computed: {
-    pollConfig(): PollOptions {
+    pollOptions(): PollOptions {
       return JSON.parse(this.poll.options)
     },
     totalVotes(): number {
@@ -105,8 +109,8 @@ export default Vue.extend({
       )
     },
     requiredAnswersNo() {
-      const { pollConfig } = this as any
-      return pollConfig.choiceNoStrict ? pollConfig.choiceNo : 1
+      const { pollOptions } = this as any
+      return pollOptions.choiceNoStrict ? pollOptions.choiceNo : 1
     },
   },
   methods: {
