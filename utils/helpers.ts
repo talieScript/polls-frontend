@@ -28,7 +28,6 @@ export const processPollOptions = (pollData: LocalPoll): pollOptions => {
 export const createPostPayload = (pollData: LocalPoll): ApiPoll => {
   const { title, question, answers, endDate, pollVisibility, options } = pollData;
   const apiEndDate = options.endDate ? endDate : '';
-  console.log(pollData)
   return {
     title,
     question,
