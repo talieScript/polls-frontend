@@ -87,7 +87,7 @@
       />
     </div>
     <ValidationDialog
-      :open="validationDialogOpen"
+      v-model="validationDialogOpen"
       :poll-options="pollOptions"
       @close="validationDialogOpen = false"
       @confirm="sendVote($event)"

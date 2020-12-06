@@ -1,5 +1,10 @@
 <template>
-  <Dialog v-model="open" buttonText="confirm" title="Confoirm Vote">
+  <Dialog
+    v-model="open"
+    buttonText="confirm"
+    title="Confoirm Vote"
+    @submit="handleConfirm"
+  >
     <template slot="icon">
       <fa :icon="['fa', 'check-circle']" class="mr-2 text-lg" />
     </template>
@@ -36,7 +41,7 @@ export default Vue.extend({
     }
   },
   props: {
-    open: {
+    value: {
       type: Boolean,
       required: true,
     },
@@ -44,6 +49,16 @@ export default Vue.extend({
       type: Object,
       required: true,
     } as PropOptions<pollOptions>,
+  },
+  computed: {
+    open: {
+      get(): boolean {
+        return this.value
+      },
+      set(value: boolean) {
+        this.$emit('input', value)
+      },
+    },
   },
   methods: {
     close() {
