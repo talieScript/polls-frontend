@@ -4,10 +4,9 @@
     :class="{ active: selectedAnswersNo >= requiredAnswers }"
     @click="$emit('click')"
   >
-    <transition name="fade">
-      <span v-if="selectedAnswersNo >= requiredAnswers">Submit Answers</span>
-      <span v-else>Choose {{ requiredAnswers - selectedAnswersNo }} More</span>
-    </transition>
+    <LoadingSpinner v-if="loading" />
+    <span v-else-if="selectedAnswersNo >= requiredAnswers">Submit Answers</span>
+    <span v-else>Choose {{ requiredAnswers - selectedAnswersNo }} More</span>
   </button>
 </template>
 
@@ -25,6 +24,10 @@ export default Vue.extend({
       type: Number,
       required: true,
     },
+    loading: {
+      type: Boolean,
+      required: true,
+    },
   },
 })
 </script>
@@ -38,7 +41,7 @@ export default Vue.extend({
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s;
+  transition: opacity 0.2s;
 }
 .fade-enter,
 .fade-leave-to {

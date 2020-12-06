@@ -30,6 +30,7 @@
             class="mt-2 hidden sm:inline-block"
             :requiredAnswers="requiredAnswersNo"
             :selectedAnswersNo="chosen.length"
+            :loading="voteLoading"
             @click="handleSubmitClick"
           />
         </div>
@@ -60,6 +61,7 @@
         class="mt-2 w-screen rounded-none border-none absolute bottom-0"
         :requiredAnswers="requiredAnswersNo"
         :selectedAnswersNo="chosen.length"
+        :loading="voteLoading"
         @click="handleSubmitClick"
       />
     </div>
@@ -100,6 +102,7 @@ export default Vue.extend({
       chosen: [] as string[],
       validationDialogOpen: false,
       voteLoading: false,
+      hasVoted: false,
     }
   },
   computed: {
@@ -129,14 +132,21 @@ export default Vue.extend({
       const { chosen } = this
       await this.$store.dispatch('getIP')
       const ipAddress = this.$store.state.userIp
-      this.$axios.post(
-        `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}`,
-        {
+      this.$axios
+        .post(`${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}`, {
           answers: chosen,
           email: email || '',
           ipAddress,
-        }
-      )
+        })
+        .then((res) => {
+          this.submitRes = res.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => {
+          this.voteLoading = false
+        })
     },
   },
 })

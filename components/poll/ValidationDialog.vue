@@ -29,7 +29,7 @@
       </div>
       <div class="mt-3 flex">
         <BasicButton
-          @click.prevent="close"
+          @click="close"
           class="ml-auto"
           color="red"
           textSize="sm"
