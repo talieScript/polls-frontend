@@ -30,7 +30,7 @@
             class="mt-2 hidden sm:inline-block"
             :requiredAnswers="requiredAnswersNo"
             :selectedAnswersNo="chosen.length"
-            @click="handleSubmit"
+            @click="handleSubmitClick"
           />
         </div>
         <div
@@ -60,12 +60,14 @@
         class="mt-2 w-screen rounded-none border-none absolute bottom-0"
         :requiredAnswers="requiredAnswersNo"
         :selectedAnswersNo="chosen.length"
-        @click="handleSubmit"
+        @click="handleSubmitClick"
       />
     </div>
     <ValidationDialog
       :open="validationDialogOpen"
       :poll-options="pollOptions"
+      @close="validationDialogOpen = false"
+      @confirm="sendVote($event)"
     />
   </div>
 </template>
@@ -96,7 +98,8 @@ export default Vue.extend({
     return {
       dayjs,
       chosen: [] as string[],
-      validationDialogOpen: true,
+      validationDialogOpen: false,
+      voteLoading: false,
     }
   },
   computed: {
@@ -114,7 +117,27 @@ export default Vue.extend({
     },
   },
   methods: {
-    handleSubmit() {},
+    handleSubmitClick() {
+      if (this.pollOptions.validateEmail) {
+        this.validationDialogOpen = true
+      } else {
+        this.sendVote()
+      }
+    },
+    async sendVote(email?) {
+      this.voteLoading = true
+      const { chosen } = this
+      await this.$store.dispatch('getIP')
+      const ipAddress = this.$store.state.userIp
+      this.$axios.post(
+        `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}`,
+        {
+          answers: chosen,
+          email: email || '',
+          ipAddress,
+        }
+      )
+    },
   },
 })
 </script>

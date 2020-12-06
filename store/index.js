@@ -4,7 +4,7 @@ export const state = () => ({
 
 export const mutations = {
   setIp(state, ipAddress) {
-    state.userIp = ipAddress;
+    state.userIp = ipAddress.replace(/(\r\n|\n|\r)/gm, '');
   }
 }
 

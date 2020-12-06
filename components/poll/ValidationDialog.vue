@@ -2,10 +2,12 @@
   <div
     class="w-screen h-screen fixed top-0 left-0 bg-black bg-opacity-25 z-50 flex items-center justify-center"
     :class="{ hidden: !open }"
+    @click="close"
   >
     <dialog
       class="bg-white px-5 py-3 w-4/5 sm:w-auto sm:max-w-lg text-gray-600 rounded"
       :open="open"
+      @click.stop
     >
       <h5 class="text-xl font-bold">Confirm Vote</h5>
       <div class="text-sm mt-2 px-2">
@@ -26,10 +28,21 @@
         <!-- <hr class="mx-5" /> -->
       </div>
       <div class="mt-3 flex">
-        <BasicButton class="ml-auto" color="red" textSize="sm" rounded="md">
+        <BasicButton
+          @click.prevent="close"
+          class="ml-auto"
+          color="red"
+          textSize="sm"
+          rounded="md"
+        >
           cancel
         </BasicButton>
-        <BasicButton class="ml-3" textSize="sm" rounded="md">
+        <BasicButton
+          @click="handleConfirm"
+          class="ml-3"
+          textSize="sm"
+          rounded="md"
+        >
           confirm
         </BasicButton>
       </div>
@@ -63,12 +76,27 @@ export default Vue.extend({
     } as PropOptions<pollOptions>,
   },
   methods: {
+    close() {
+      this.$emit('close')
+    },
     emailInputValidate(email) {
       if (!email) {
         return ''
       }
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(String(email).toLowerCase()) ? '' : 'Please enter an email'
+    },
+    handleConfirm(): any {
+      const { email } = this
+      if (!email) {
+        this.emailError = 'Cannot be empty'
+      }
+      this.emailInputValidate(email)
+      if (this.emailError) {
+        return
+      }
+      this.$emit('confirm', email)
+      this.$emit('close')
     },
   },
 })

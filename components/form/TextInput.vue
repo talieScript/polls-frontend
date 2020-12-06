@@ -153,6 +153,9 @@ export default {
       }
     },
     handleInput(input: string): void {
+      if ((this.localError = 'Cannot be empty')) {
+        this.localError = ''
+      }
       // handle rule validation
       if (!this.validateOnBlur) {
         this.validate(input)
