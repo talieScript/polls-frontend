@@ -35,6 +35,24 @@
             :loading="voteLoading"
             @click="handleSubmitClick"
           />
+          <div v-else-if="submitRes.voteStatus === 'pendingEmail'" class="">
+            Your vote is pending email validation
+            <button
+              class="block ml-auto text-xs underline"
+              @click="showVoteDialog"
+            >
+              Didnt recive an email?
+            </button>
+          </div>
+          <div v-else>
+            Your vote has been counted! 👌
+            <button
+              class="block ml-auto text-xs underline"
+              @click="showVoteDialog"
+            >
+              I haven't voted
+            </button>
+          </div>
         </div>
         <div
           class="sm:order-2 sm:w-32 w- flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
@@ -74,6 +92,7 @@
       @close="validationDialogOpen = false"
       @confirm="sendVote($event)"
     />
+    <VoteInfoDialog />
   </div>
 </template>
 
@@ -106,7 +125,7 @@ export default Vue.extend({
       chosen: [] as string[],
       validationDialogOpen: false,
       voteLoading: false,
-      submitRes: null as VoteStatusRes,
+      submitRes: {} as VoteStatusRes,
       hasVoted: false,
     }
   },
