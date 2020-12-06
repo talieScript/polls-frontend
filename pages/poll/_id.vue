@@ -27,31 +27,36 @@
             :answers="poll.Answer"
             :disabled="hasVoted"
           />
-          <SubmitButton
-            v-if="!hasVoted"
-            class="mt-2 hidden sm:inline-block"
-            :requiredAnswers="requiredAnswersNo"
-            :selectedAnswersNo="chosen.length"
-            :loading="voteLoading"
-            @click="handleSubmitClick"
-          />
-          <div v-else-if="submitRes.voteStatus === 'pendingEmail'" class="">
-            Your vote is pending email validation
-            <button
-              class="block ml-auto text-xs underline"
-              @click="showVoteDialog"
+          <div class="hidden sm:inline-block">
+            <SubmitButton
+              v-if="!hasVoted"
+              class="mt-2"
+              :requiredAnswers="requiredAnswersNo"
+              :selectedAnswersNo="chosen.length"
+              :loading="voteLoading"
+              @click="handleSubmitClick"
+            />
+            <div
+              v-else-if="submitRes.voteStatus === 'pendingEmail'"
+              class="mt-2"
             >
-              Didnt recive an email?
-            </button>
-          </div>
-          <div v-else>
-            Your vote has been counted! 👌
-            <button
-              class="block ml-auto text-xs underline"
-              @click="showVoteDialog"
-            >
-              I haven't voted
-            </button>
+              Your vote is pending email validation
+              <button
+                class="block ml-auto text-xs underline"
+                @click="voteInfoDialogOpen = true"
+              >
+                Didnt recive an email?
+              </button>
+            </div>
+            <div class="mt-2" v-else>
+              Your vote has been counted! 👌
+              <button
+                class="block ml-auto text-xs underline"
+                @click="voteInfoDialogOpen = true"
+              >
+                I haven't voted
+              </button>
+            </div>
           </div>
         </div>
         <div
@@ -92,7 +97,10 @@
       @close="validationDialogOpen = false"
       @confirm="sendVote($event)"
     />
-    <VoteInfoDialog />
+    <VoteInfoDialog
+      v-model="voteInfoDialogOpen"
+      :voteStatus="submitRes.voteStatus"
+    />
   </div>
 </template>
 
@@ -124,8 +132,12 @@ export default Vue.extend({
       dayjs,
       chosen: [] as string[],
       validationDialogOpen: false,
+      voteInfoDialogOpen: false,
       voteLoading: false,
-      submitRes: {} as VoteStatusRes,
+      submitRes: {
+        voteStatus: 'alreadyVoted',
+        voterId: '',
+      } as VoteStatusRes,
       hasVoted: false,
     }
   },
@@ -183,6 +195,7 @@ export default Vue.extend({
         this.chosen = voterAnswers
         this.hasVoted = true
         this.voteLoading = false
+        this.voteInfoDialogOpen = true
       }
     },
   },
