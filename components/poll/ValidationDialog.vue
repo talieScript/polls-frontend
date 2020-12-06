@@ -1,64 +1,23 @@
 <template>
-  <div
-    class="w-screen h-screen fixed top-0 left-0 bg-black bg-opacity-25 z-50 flex items-center justify-center"
-    :class="{ hidden: !open }"
-    @click="close"
-  >
-    <dialog
-      class="bg-white p-0 w-4/5 sm:w-auto sm:max-w-lg text-gray-600 rounded"
-      :open="open"
-      @click.stop
-    >
-      <div
-        class="bg-primary w-full py-1 px-2 rounded-t flex items-center justify-start text-white"
-      >
-        <fa :icon="['fa', 'check-circle']" class="mr-2 text-lg" />
-        <h5 class="text-xl">Confirm Vote</h5>
-        <button
-          class="ml-auto hover:text-gray-300"
-          aria-label="Close"
-          @click="close"
-        >
-          <fa :icon="['fa', 'times-circle']" />
-        </button>
-      </div>
-      <div class="text-sm mt-2 px-2">
-        <p class="">This poll requires an email for vote validation</p>
-        <div class="mt-2 mx-auto flex justify-center items-center">
-          <TextInput
-            v-model="email"
-            label="Validate with email"
-            ariaDescribedby="email"
-            width="full"
-            bgColor="white"
-            outline
-            :rules="[emailInputValidate]"
-            :error.sync="emailError"
-            validate-on-blur
-          />
-        </div>
-      </div>
-      <div class="mt-3 flex p-2">
-        <BasicButton
-          @click="close"
-          class="ml-auto"
-          color="red"
-          textSize="sm"
-          rounded="md"
-        >
-          cancel
-        </BasicButton>
-        <BasicButton
-          @click="handleConfirm"
-          class="ml-3"
-          textSize="sm"
-          rounded="md"
-        >
-          confirm
-        </BasicButton>
-      </div>
-    </dialog>
-  </div>
+  <Dialog v-model="open" buttonText="confirm" title="Confoirm Vote">
+    <template slot="icon">
+      <fa :icon="['fa', 'check-circle']" class="mr-2 text-lg" />
+    </template>
+    <p class="">This poll requires an email for vote validation</p>
+    <div class="mt-2 mx-auto flex justify-center items-center">
+      <TextInput
+        v-model="email"
+        label="Validate with email"
+        ariaDescribedby="email"
+        width="full"
+        bgColor="white"
+        outline
+        :rules="[emailInputValidate]"
+        :error.sync="emailError"
+        validate-on-blur
+      />
+    </div>
+  </Dialog>
 </template>
 
 <script lang="ts">

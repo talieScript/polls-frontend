@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="text-right text-xs mb-1">{{ choiceNoHelp }}</div>
+    <div class="text-right text-xs mb-1 h-5">
+      <span v-if="!disabled">{{ choiceNoHelp }}</span>
+    </div>
     <component
       v-model="chosen"
       :is="answerCompoent"
