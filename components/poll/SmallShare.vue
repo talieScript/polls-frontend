@@ -5,36 +5,44 @@
       <li class="text-blue-600">
         <a
           target="_blank"
+          rel="noreferrer"
           :href="`https://www.facebook.com/sharer/sharer.php?u=${URL}`"
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
         >
+          <span class="visually-hidden">Share to facebook</span>
           <fa class="mr-3 text-2xl" :icon="['fab', 'facebook']" />
         </a>
       </li>
       <li class="text-green-500">
         <a
           target="_blank"
+          rel="noreferrer"
           :href="`https://api.whatsapp.com/send?text=${question} - Vote now at: ${URL}`"
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
         >
+          <span class="visually-hidden">Share on whatsapp</span>
           <fa class="mr-3 text-2xl" :icon="['fab', 'whatsapp']" />
         </a>
       </li>
       <li class="text-blue-400">
         <a
           target="_blank"
+          rel="noreferrer"
           :href="`https://twitter.com/intent/tweet?url=${URL}`"
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
         >
+          <span class="visually-hidden">Share to twitter</span>
           <fa class="mr-3 text-2xl" :icon="['fab', 'twitter']" />
         </a>
       </li>
       <li class="text-green-300">
         <a
           target="_blank"
+          rel="noreferrer"
           :href="`https://access.line.me/oauth2/v2.1/login?loginState=PqORalVGHiT5jReCaJkJyh&loginChannelId=1446101138&returnUri=%2Foauth2%2Fv2.1%2Fauthorize%2Fconsent%3Fscope%3Dopenid%2Bprofile%2Bfriends%2Bgroups%2Btimeline.post%2Bmessage.write%26response_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Fsocial-plugins.line.me%252Flineit%252FloginCallback%253FreturnUrl%253Dhttps%25253A%25252F%25252Fsocial-plugins.line.me%25252Flineit%25252Fshare%25253Furl%25253Dhttp%2525253A%2525252F%2525252F${URL}%26state%3Df4284b46d7c4d572854c9b4a64a579%26client_id%3D1446101138#/`"
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
         >
+          <span class="visually-hidden">Share to line</span>
           <fa class="mr-3 text-2xl" :icon="['fab', 'line']" />
         </a>
       </li>
@@ -43,6 +51,7 @@
           @click="copyLink"
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
           content="Copied!"
+          aria-label="Copy link to clipboard"
           v-tippy="{
             trigger: 'click',
             arrowType: 'sharp',
@@ -56,6 +65,7 @@
       <li class="text-primary">
         <button
           class="outline-none flex items-center justify-between rounded-sm focus:shadow-outline"
+          aria-label="show qr code"
           @click="showQr = true"
         >
           <fa class="text-2xl mr-2" :icon="['fa', 'qrcode']" />
@@ -158,4 +168,12 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.visually-hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 </style>
