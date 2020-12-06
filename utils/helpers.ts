@@ -1,4 +1,5 @@
-import { LocalPoll, ApiPoll, pollOptions } from './types';
+import { LocalPoll, ApiPoll, pollOptions, VoteStatusRes } from './types';
+import axios from 'axios'
 
 export const processPollOptions = (pollData: LocalPoll): pollOptions => {
   const { voteValidation, options, multipleChoice, resultsVisibility } = pollData;
@@ -36,4 +37,11 @@ export const createPostPayload = (pollData: LocalPoll): ApiPoll => {
     options: processPollOptions(pollData),
     visibility: pollVisibility,
   }
+}
+
+export const getVoterAnswers = async (res, pollId): Promise<string[]> => {
+  // get voter answers
+  const allVoterAnswers = (await axios.get(`${process.env.VUE_APP_POLLS_API}/voter/answers/${res.voterId}/${pollId}`)).data
+  // filter out answers related to poll
+  return allVoterAnswers
 }

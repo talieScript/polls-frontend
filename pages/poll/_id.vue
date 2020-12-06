@@ -27,6 +27,7 @@
             :answers="poll.Answer"
           />
           <SubmitButton
+            v-if="!hasVoted"
             class="mt-2 hidden sm:inline-block"
             :requiredAnswers="requiredAnswersNo"
             :selectedAnswersNo="chosen.length"
@@ -58,6 +59,7 @@
     >
       <SmallShare class="mb-2" :poll-id="poll.id" :question="poll.question" />
       <SubmitButton
+        v-if="!hasVoted"
         class="mx-auto my-2 w-4/5 border-none absolute bottom-0"
         :requiredAnswers="requiredAnswersNo"
         :selectedAnswersNo="chosen.length"
@@ -78,7 +80,8 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { PollOptions } from '@/utils/types'
+import { PollOptions, VoteStatusRes } from '@/utils/types'
+import { getVoterAnswers } from '@/utils/helpers'
 
 dayjs.extend(relativeTime)
 
@@ -102,7 +105,7 @@ export default Vue.extend({
       chosen: [] as string[],
       validationDialogOpen: false,
       voteLoading: false,
-      submitRes: null,
+      submitRes: null as VoteStatusRes,
       hasVoted: false,
     }
   },
@@ -141,13 +144,26 @@ export default Vue.extend({
         })
         .then((res) => {
           this.submitRes = res.data
+          this.handleVoteRes()
         })
         .catch((error) => {
+          // TODO: better error handeling
           console.log(error)
-        })
-        .finally(() => {
           this.voteLoading = false
         })
+    },
+    openAlert(alert) {
+      this.activeAlert = alert
+      this.alertOpen = true
+    },
+    async handleVoteRes() {
+      const { submitRes } = this
+      if (submitRes.voteStatus === 'alreadyVoted') {
+        const voterAnswers = await getVoterAnswers(submitRes, this.poll.id)
+        this.chosen = voterAnswers
+        this.hasVoted = true
+        this.voteLoading = false
+      }
     },
   },
 })

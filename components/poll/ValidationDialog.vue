@@ -12,8 +12,8 @@
       <div
         class="bg-primary w-full py-1 px-2 rounded-t flex items-center justify-start text-white"
       >
-        <fa :icon="['fa', 'check-circle']" class="mr-2" />
-        <h5 class="text-xl font-bold">Confirm Vote</h5>
+        <fa :icon="['fa', 'check-circle']" class="mr-2 text-lg" />
+        <h5 class="text-xl">Confirm Vote</h5>
         <button
           class="ml-auto hover:text-gray-300"
           aria-label="Close"
@@ -37,7 +37,6 @@
             validate-on-blur
           />
         </div>
-        <!-- <hr class="mx-5" /> -->
       </div>
       <div class="mt-3 flex p-2">
         <BasicButton
