@@ -102,6 +102,7 @@ export default Vue.extend({
       chosen: [] as string[],
       validationDialogOpen: false,
       voteLoading: false,
+      submitRes: null,
       hasVoted: false,
     }
   },

@@ -5,11 +5,23 @@
     @click="close"
   >
     <dialog
-      class="bg-white px-5 py-3 w-4/5 sm:w-auto sm:max-w-lg text-gray-600 rounded"
+      class="bg-white p-0 w-4/5 sm:w-auto sm:max-w-lg text-gray-600 rounded"
       :open="open"
       @click.stop
     >
-      <h5 class="text-xl font-bold">Confirm Vote</h5>
+      <div
+        class="bg-primary w-full py-1 px-2 rounded-t flex items-center justify-start text-white"
+      >
+        <fa :icon="['fa', 'check-circle']" class="mr-2" />
+        <h5 class="text-xl font-bold">Confirm Vote</h5>
+        <button
+          class="ml-auto hover:text-gray-300"
+          aria-label="Close"
+          @click="close"
+        >
+          <fa :icon="['fa', 'times-circle']" />
+        </button>
+      </div>
       <div class="text-sm mt-2 px-2">
         <p class="">This poll requires an email for vote validation</p>
         <div class="mt-2 mx-auto flex justify-center items-center">
@@ -27,7 +39,7 @@
         </div>
         <!-- <hr class="mx-5" /> -->
       </div>
-      <div class="mt-3 flex">
+      <div class="mt-3 flex p-2">
         <BasicButton
           @click="close"
           class="ml-auto"

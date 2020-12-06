@@ -65,6 +65,7 @@ export default {
                   'faQrcode',
                   'faTimesCircle',
                   'faSpinner',
+                  'faCheckCircle',
                   ]
               },
               {
