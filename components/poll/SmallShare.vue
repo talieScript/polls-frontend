@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 rounded text-sm">
+  <div class="bg-gray-200 text-center rounded text-sm">
     Share
     <ul class="text-xs link-list flex">
       <li class="text-blue-600">
