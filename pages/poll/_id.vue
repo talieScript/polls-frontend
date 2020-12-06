@@ -25,6 +25,7 @@
             :answerNumber="pollOptions.choiceNo"
             :exact="pollOptions.choiceNoStrict"
             :answers="poll.Answer"
+            :disabled="hasVoted"
           />
           <SubmitButton
             v-if="!hasVoted"

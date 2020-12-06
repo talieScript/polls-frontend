@@ -4,7 +4,7 @@
       v-for="answer in answers"
       :key="answer.id"
       class="flex answer transition-all duration-200"
-      :class="{ checked: checkedAnswers.includes(answer.id) }"
+      :class="[{ checked: checkedAnswers.includes(answer.id) }, { disabled }]"
     >
       <input
         v-model="checkedAnswers"
@@ -13,9 +13,11 @@
         class="w-0 h-0"
         :value="answer.id"
         :checked="checkedAnswers.includes(answer.id)"
+        :disabled="disabled"
       />
       <div
         class="box transition-all duration-200 flex items-center justify-between"
+        :class="{ 'cursor-pointer': !disabled }"
         @click="toggleCheck(answer.id)"
       >
         <label :for="answer.id" class="label mr-auto pointer-events-none w-4/5">
@@ -25,8 +27,11 @@
           class="checkBox flex justify-center align-middle p-0 w-6 h-6 border rounded bg-gray-100 transition-all duration-200"
         >
           <fa
-            class="text-primary opacity-0 duration-100 transition-opacity mt-1"
-            :class="{ 'opacity-100': checkedAnswers.includes(answer.id) }"
+            class="opacity-0 duration-100 transition-opacity mt-1"
+            :class="[
+              { 'opacity-100': checkedAnswers.includes(answer.id) },
+              { 'text-gray-400': disabled },
+            ]"
             :icon="['fa', 'check']"
           />
         </div>
@@ -57,6 +62,10 @@ export default Vue.extend({
       type: Number,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     checkedAnswers: {
@@ -70,6 +79,9 @@ export default Vue.extend({
   },
   methods: {
     toggleCheck(id): void {
+      if (this.disabled) {
+        return
+      }
       const answerIndex = this.checkedAnswers.indexOf(id)
       if (answerIndex + 1) {
         this.checkedAnswers.splice(answerIndex, 1)
@@ -86,7 +98,7 @@ export default Vue.extend({
   @apply mt-6;
 }
 .box {
-  @apply px-3 py-3 bg-white w-full rounded flex justify-between align-middle cursor-pointer;
+  @apply px-3 py-3 bg-white w-full rounded flex justify-between align-middle;
 }
 
 input:focus + .box {
@@ -100,6 +112,12 @@ input:focus + .box {
 
   .checkBox {
     @apply bg-purple-100 border-primary #{!important};
+  }
+}
+
+.disabled {
+  .checkBox {
+    @apply border-gray-500 #{!important};
   }
 }
 </style>

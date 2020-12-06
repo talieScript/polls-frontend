@@ -6,6 +6,7 @@
       :is="answerCompoent"
       :answers="answers"
       :answerNumber="answerNumber"
+      :disabled="disabled"
     />
   </div>
 </template>
@@ -37,6 +38,10 @@ export default Vue.extend({
     },
     value: {
       type: Array,
+      required: true,
+    },
+    disabled: {
+      type: Boolean,
       required: true,
     },
   },
