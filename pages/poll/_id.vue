@@ -114,23 +114,35 @@ import { getVoterAnswers } from '@/utils/helpers'
 dayjs.extend(relativeTime)
 
 export default Vue.extend({
-  async asyncData({ params, $axios }) {
+  async asyncData({ params, $axios, store }) {
     const id = params.id
-    return await $axios
-      .get(`${process.env.VUE_APP_POLLS_API}/polls/${id}`)
-      .then((response) => ({
-        error: false,
-        poll: response.data,
-      }))
-      .catch((error) => ({
-        error,
-        poll: null,
-      }))
+    let error
+    await store.dispatch('getIP')
+    const ip = store.state.userIp
+
+    const pollAndAnswers = await $axios
+      .get(`${process.env.VUE_APP_POLLS_API}/polls/${id}?ip=${ip}`)
+      .then((response) => {
+        error = false
+        return response.data
+      })
+      .catch((error) => {
+        error = true
+        return null
+      })
+
+    const { userAnswers, poll } = pollAndAnswers
+
+    return {
+      poll,
+      chosen: userAnswers,
+      error,
+      hasVoted: !!userAnswers.length,
+    }
   },
   data(): any {
     return {
       dayjs,
-      chosen: [] as string[],
       validationDialogOpen: false,
       voteInfoDialogOpen: false,
       voteLoading: false,
@@ -138,7 +150,6 @@ export default Vue.extend({
         voteStatus: 'alreadyVoted',
         voterId: '',
       } as VoteStatusRes,
-      hasVoted: false,
     }
   },
   computed: {
