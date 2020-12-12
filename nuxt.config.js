@@ -45,6 +45,8 @@ export default {
     '@nuxtjs/axios',
     'dayjs',
     '@nuxtjs/dotenv',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
      ['nuxt-fontawesome', {
             component: 'fa',
             imports: [
@@ -82,6 +84,10 @@ export default {
           }
       ]
   ],
+
+  auth: {
+    
+  }
 
   axios: {
     baseURL: process.env.VUE_APP_POLLS_API,
