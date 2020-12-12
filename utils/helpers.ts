@@ -1,6 +1,7 @@
-import { LocalPoll, ApiPoll, pollOptions } from './types';
+import { LocalPoll, ApiPoll, pollOptions, VoteStatusRes } from './types';
+import axios from 'axios'
 
-export const processPollOptions = (pollData: LocalPoll): string => {
+export const processPollOptions = (pollData: LocalPoll): pollOptions => {
   const { voteValidation, options, multipleChoice, resultsVisibility } = pollData;
   let processedOptions = {
     validateEmail: true,
@@ -22,13 +23,12 @@ export const processPollOptions = (pollData: LocalPoll): string => {
     }
     processedOptions.choiceNo = multipleChoice.number;
   }
-  return JSON.stringify(processedOptions);
+  return processedOptions;
 }
 
 export const createPostPayload = (pollData: LocalPoll): ApiPoll => {
   const { title, question, answers, endDate, pollVisibility, options } = pollData;
   const apiEndDate = options.endDate ? endDate : '';
-  console.log(pollData)
   return {
     title,
     question,
@@ -37,4 +37,11 @@ export const createPostPayload = (pollData: LocalPoll): ApiPoll => {
     options: processPollOptions(pollData),
     visibility: pollVisibility,
   }
+}
+
+export const getVoterAnswers = async (res, pollId): Promise<string[]> => {
+  // get voter answers
+  const allVoterAnswers = (await axios.get(`${process.env.VUE_APP_POLLS_API}/voter/answers/${res.voterId}/${pollId}`)).data
+  // filter out answers related to poll
+  return allVoterAnswers
 }

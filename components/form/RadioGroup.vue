@@ -18,7 +18,7 @@
         class="hidden"
       />
       <label class="label w-full cursor-pointer" :for="choice.value">
-        <div class="circle"></div>
+        <span class="circle"></span>
         <span>{{ choice.text }}</span>
       </label>
     </div>
@@ -34,7 +34,7 @@ interface Choice {
 }
 
 export default Vue.extend({
-  name: 'CheckBox',
+  name: 'RadioGroup',
   props: {
     choices: {
       type: Array,

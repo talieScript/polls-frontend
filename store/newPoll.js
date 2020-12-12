@@ -1,4 +1,3 @@
-import { POLLS_API } from '@/utils/endpoints'
 import { createPostPayload } from '~/utils/helpers';
 
 export const state = () => ({
@@ -32,13 +31,12 @@ export const mutations = {
 export const actions = {
   async submit({state}, password) {
     const payload = createPostPayload(state.active);
-    console.log(payload)
     this.$axios.$post('/polls', {
       ...payload,
       password,
     }).then((createdPoll) => {
       console.log('Poll created! 🥳');
-      this.$router.push()
+      this.$router.push('/poll/' + createdPoll)
     }).catch(error => {
       console.log(error);
     })

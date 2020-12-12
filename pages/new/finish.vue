@@ -29,7 +29,7 @@
       :error.sync="passTwoError"
       password
     />
-    <BasicButton text="Create with password" @click="finish" />
+    <BasicButton text="Create with password" @click="submitWithPassword" />
   </div>
 </template>
 
@@ -71,7 +71,7 @@ export default Vue.extend({
       }
       return ''
     },
-    finish() {
+    async submitWithPassword() {
       const { passOne, passTwo } = this
       this.passOneError = this.checkPassword(passOne)
       this.passTwoError = this.checkPassword(passTwo)

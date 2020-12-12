@@ -1,12 +1,17 @@
 <template>
-  <div :class="['z-10 mt-5 mb-4 relative', { error: localError }]">
+  <div
+    :class="[
+      'z-10 mt-5 mb-4 relative',
+      { error: localError },
+      `${width ? `w-${width}` : ''}`,
+    ]"
+  >
     <div
       :class="[
         'input-div',
         'z-10',
         'relative',
         'focus-within:border-primary',
-        `${width ? `w-${width}` : ''}`,
         outline ? 'border' : 'border-b-2',
         { rounded: outline },
         { outline },
@@ -26,6 +31,7 @@
           `bg-${bgColor}`,
         ]"
         @input="handleInput($event.target.value)"
+        @blur="validate(value)"
         :value="value"
         :required="required"
       />
@@ -117,6 +123,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    validateOnBlur: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     localError: {
@@ -129,8 +139,7 @@ export default {
     } as any,
   },
   methods: {
-    handleInput(input: string): void {
-      // handle rule validation
+    validate(input) {
       const ruleBroken: boolean = this.rules.some((rule: any) => rule(input))
       if (ruleBroken) {
         this.rules.forEach((rule: any) => {
@@ -141,6 +150,15 @@ export default {
         })
       } else {
         this.localError = ''
+      }
+    },
+    handleInput(input: string): void {
+      if ((this.localError = 'Cannot be empty')) {
+        this.localError = ''
+      }
+      // handle rule validation
+      if (!this.validateOnBlur) {
+        this.validate(input)
       }
       this.$emit('input', input)
     },

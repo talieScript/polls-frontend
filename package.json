@@ -9,6 +9,7 @@
     "generate": "nuxt-ts generate"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^2.0.0",
     "@nuxt/typescript-runtime": "^2.0.0",
@@ -19,6 +20,7 @@
     "luxon": "^1.25.0",
     "nuxt": "^2.14.6",
     "nuxt-fontawesome": "^0.4.0",
+    "qrcode": "^1.4.4",
     "vue-click-outside": "^1.1.0",
     "vue-datetime": "^1.0.0-beta.14",
     "vue-tippy": "^4.7.2",

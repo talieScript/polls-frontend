@@ -59,16 +59,32 @@ export default {
                   'faChevronDown',
                   'faAngleUp',
                   'faAngleDown',
-                  'faQuestionCircle'
+                  'faQuestionCircle',
+                  'faCheck',
+                  'faLink',
+                  'faQrcode',
+                  'faTimesCircle',
+                  'faSpinner',
+                  'faCheckCircle',
                   ]
               },
+              {
+                set: '@fortawesome/free-brands-svg-icons',
+                icons: [
+                  'faFacebook',
+                  'faTwitter',
+                  'faWhatsapp',
+                  'faLine',
+                  'faFacebookMessenger'
+                ]
+              }
             ]
           }
       ]
   ],
 
   axios: {
-    baseURL: 'http://localhost:3000',
+    baseURL: process.env.VUE_APP_POLLS_API,
   },
 
   privateRuntimeConfig: {

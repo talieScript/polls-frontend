@@ -1,3 +1,30 @@
+export interface pollOptions {
+  validateEmail: boolean,
+  validateIp: boolean,
+  choiceNoStrict: boolean,
+  choiceNo: number,
+  resultsVisibility: string,
+}
+
+export interface Answer {
+  text: string;
+}
+
+export interface ApiAnswer {
+  Poll: string;
+  answer_string: string;
+  id: string;
+  votes: number;
+}
+
+export interface PollOptions {
+  validateEmail: boolean;
+  validateIp: boolean;
+  choiceNoStrict: boolean;
+  choiceNo: number;
+  resultsVisibility: string;
+}
+
 export interface LocalPoll {
   title: string;
   question: string;
@@ -21,21 +48,15 @@ export interface ApiPoll {
   question: string;
   answers: string[];
   // stringified json
-  options: string;
+  options: pollOptions;
   // iso string
   endDate: string;
   visibility: string;
 }
 
-export interface pollOptions {
-  validateEmail: boolean,
-  validateIp: boolean,
-  choiceNoStrict: boolean,
-  choiceNo: number,
-  resultsVisibility: string,
-}
 
-export interface Answer {
-  text: string;
+export interface VoteStatusRes {
+  voteStatus: 'alreadyVoted' | 'emailPending' | 'emailError' | 'emailSent' | 'votePassed',
+  voterId: string,
 }
 
