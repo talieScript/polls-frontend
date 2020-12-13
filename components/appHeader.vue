@@ -7,7 +7,9 @@
       to="/"
       class="w-30 w-xp font-bold text-xl justify-self-start text-black mr-6"
     >
-      <h1>Poll <span class="text-primary">Simply</span></h1>
+      <button @click="toggle">
+        <h1>Poll <span class="text-primary">Simply</span></h1>
+      </button>
     </NuxtLink>
 
     <div class="block sm:hidden">
@@ -41,24 +43,26 @@
         'sm:opacity-100',
       ]"
     >
-      <div class="content sm:transform sm:-translate-y-0 sm:flex-grow">
+      <div
+        class="content sm:transform sm:-translate-y-0 sm:flex-grow flex flex-col sm:flex-row"
+      >
         <NuxtLink
-          class="mr-3 hover:text-gray-500 transition-colors duration-200 block mt-4 sm:inline-block sm:mt-0"
+          class="mr-3 hover:text-gray-500 transition-colors duration-200 mt-4 sm:mt-0"
           to="/poll-list"
         >
-          Poll List
+          <button @click="toggle">Poll List</button>
         </NuxtLink>
         <NuxtLink
           to="/new"
-          class="text-green-400 hover:text-green-300 transition-colors duration-200 inline-block mt-2 sm:mt-0"
+          class="text-green-400 hover:text-green-300 transition-colors duration-200 mt-2 sm:mt-0"
         >
-          Create New
+          <button @click="toggle">Create New</button>
         </NuxtLink>
       </div>
       <div
         class="content sm:transform sm:-translate-y-0 sm:translate-y-0 border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
       >
-        <User />
+        <User @click="toggle" />
       </div>
     </div>
   </nav>
@@ -110,7 +114,7 @@ export default {
 
   &--open {
     opacity: 1;
-    height: 135px;
+    height: 145px;
     & .content {
       transform: translateY(0);
     }

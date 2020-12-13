@@ -1,29 +1,41 @@
 <template>
   <client-only>
-    <div class="ralative" v-click-outside="closeDropdown">
-      <NuxtLink
-        v-if="!user"
-        to="/login"
-        class="outline-none focus:shadow-outline rounded"
-        @click="$emit('openModal')"
-      >
-        login | signup
+    <div
+      class="ralative"
+      v-click-outside="closeDropdown"
+      @click="$emit('click')"
+    >
+      <NuxtLink v-if="!user" to="/login">
+        <button class="outline-none focus:shadow-outline rounded p-1">
+          Login/Sign Up
+        </button>
       </NuxtLink>
-      <button
-        v-else
-        class="outline-none focus:shadow-outline rounded flex justify-center items-center ml-1"
-        to="/dashboard"
-        @click="openDropdown = true"
-      >
-        <div class="flex justify-center items-center">
-          <img
-            class="h-10 w-10 rounded-full mr-3 sm:mr-0"
-            :src="user.picture"
-            :alt="`Profile picture for ${user.given_name}`"
-          />
-          <fa :icon="['fa', 'angle-down']" class="mx-1 text-2xl" />
+      <div v-else>
+        <div class="hidden sm:block">
+          <button
+            class="outline-none focus:shadow-outline rounded flex justify-center items-center ml-1 p-1"
+            to="/dashboard"
+            @click="openDropdown = true"
+          >
+            <div class="flex justify-center items-center">
+              <img
+                class="h-10 w-10 rounded-full mr-3 sm:mr-0"
+                :src="user.picture"
+                :alt="`Profile picture for ${user.given_name}`"
+              />
+              <fa :icon="['fa', 'angle-down']" class="mx-1 text-2xl" />
+            </div>
+          </button>
         </div>
-      </button>
+        <div class="sm:hidden flex-col flex items-start">
+          <NuxtLink to="/dashboard" class="hover:text-primary">
+            My Dashboard
+          </NuxtLink>
+          <button @click="$auth.logout()" class="mt-2 hover:text-red">
+            Logout
+          </button>
+        </div>
+      </div>
       <transition name="fade">
         <div
           v-if="openDropdown && user"
