@@ -93,9 +93,6 @@ export default {
       this.$auth.loginWith('google')
     },
   },
-  mounted() {
-    console.log(this.user)
-  },
   directives: {
     ClickOutside,
   },
