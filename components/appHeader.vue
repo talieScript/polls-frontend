@@ -3,12 +3,12 @@
     class="flex items-center justify-between flex-wrap bg-teal p-3 sm:p-4 bg-white h-14 fixed w-full z-50"
     v-click-outside="onClickOutside"
   >
-    <a
-      href="/"
+    <NuxtLink
+      to="/"
       class="w-30 w-xp font-bold text-xl justify-self-start text-black mr-6"
     >
       <h1>Poll <span class="text-primary">Simply</span></h1>
-    </a>
+    </NuxtLink>
 
     <div class="block sm:hidden">
       <button
@@ -42,25 +42,24 @@
       ]"
     >
       <div class="content sm:transform sm:-translate-y-0 sm:flex-grow">
-        <a
+        <NuxtLink
           class="mr-3 hover:text-gray-500 transition-colors duration-200 block mt-4 sm:inline-block sm:mt-0"
-          href="/poll-list"
+          to="/poll-list"
         >
           Poll List
-        </a>
-        <a
-          href="/new"
+        </NuxtLink>
+        <NuxtLink
+          to="/new"
           class="text-green-400 hover:text-green-300 transition-colors duration-200 inline-block mt-2 sm:mt-0"
         >
           Create New
-        </a>
+        </NuxtLink>
       </div>
       <div
         class="content sm:transform sm:-translate-y-0 sm:translate-y-0 border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
       >
-        <User @openModal="openLoginModal = true" />
+        <User />
       </div>
-      <LoginModal v-model="openLoginModal" />
     </div>
   </nav>
 </template>
@@ -74,7 +73,6 @@ export default {
   data() {
     return {
       open: false,
-      openLoginModal: false,
     }
   },
   computed: {
@@ -114,7 +112,7 @@ export default {
 
   &--open {
     opacity: 1;
-    height: 125px;
+    height: 130px;
     & .content {
       transform: translateY(0);
     }
