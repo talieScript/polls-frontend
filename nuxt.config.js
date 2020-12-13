@@ -42,9 +42,10 @@ export default {
   ],
 
   modules: [
-    '@nuxtjs/axios',
     'dayjs',
     '@nuxtjs/dotenv',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
      ['nuxt-fontawesome', {
             component: 'fa',
             imports: [
@@ -66,6 +67,7 @@ export default {
                   'faTimesCircle',
                   'faSpinner',
                   'faCheckCircle',
+                  'faUser',
                   ]
               },
               {
@@ -75,13 +77,28 @@ export default {
                   'faTwitter',
                   'faWhatsapp',
                   'faLine',
-                  'faFacebookMessenger'
+                  'faFacebookMessenger',
+                  'faGoogle',
                 ]
               }
             ]
           }
       ]
   ],
+
+  auth: {
+    strategies: {
+      google: {
+        clientId: '614997449484-e9qj6pkv1gice7itrhdmet9ne5d3qdj3.apps.googleusercontent.com',
+        scope: ['email', 'profile'],
+        codeChallengeMethod: ""
+      }
+    },
+  },
+
+  router: {
+
+  },
 
   axios: {
     baseURL: process.env.VUE_APP_POLLS_API,

@@ -3,12 +3,14 @@
     class="flex items-center justify-between flex-wrap bg-teal p-3 sm:p-4 bg-white h-14 fixed w-full z-50"
     v-click-outside="onClickOutside"
   >
-    <a
-      href="/"
+    <NuxtLink
+      to="/"
       class="w-30 w-xp font-bold text-xl justify-self-start text-black mr-6"
     >
-      <h1>Poll <span class="text-primary">Simply</span></h1>
-    </a>
+      <button @click="toggle">
+        <h1>Poll <span class="text-primary">Simply</span></h1>
+      </button>
+    </NuxtLink>
 
     <div class="block sm:hidden">
       <button
@@ -41,31 +43,26 @@
         'sm:opacity-100',
       ]"
     >
-      <div class="content sm:transform sm:-translate-y-0 sm:flex-grow">
-        <a
-          class="mr-3 hover:text-gray-500 transition-colors duration-200 block mt-4 sm:inline-block sm:mt-0"
-          href="/poll-list"
+      <div
+        class="content sm:transform sm:-translate-y-0 sm:flex-grow flex flex-col sm:flex-row"
+      >
+        <NuxtLink
+          class="mr-3 hover:text-gray-500 transition-colors duration-200 mt-4 sm:mt-0"
+          to="/poll-list"
         >
-          Poll List
-        </a>
-        <a
-          href="/new"
-          class="text-green-400 hover:text-green-300 transition-colors duration-200 inline-block mt-2 sm:mt-0"
+          <button @click="toggle">Poll List</button>
+        </NuxtLink>
+        <NuxtLink
+          to="/new"
+          class="text-green-400 hover:text-green-300 transition-colors duration-200 mt-2 sm:mt-0"
         >
-          Create New
-        </a>
+          <button @click="toggle">Create New</button>
+        </NuxtLink>
       </div>
       <div
         class="content sm:transform sm:-translate-y-0 sm:translate-y-0 border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
       >
-        <button class="mr-2 hover:text-gray-500 transition-colors duration-200">
-          Login
-        </button>
-        <button
-          class="bg-blue-500 hover:bg-blue-400 rounded p-1 px-2 text-white transition-colors duration-200"
-        >
-          Sign Up
-        </button>
+        <User @click="toggle" />
       </div>
     </div>
   </nav>
@@ -80,12 +77,20 @@ export default {
       open: false,
     }
   },
+  computed: {
+    user() {
+      return this.$auth.user
+    },
+  },
   methods: {
     toggle() {
       this.open = !this.open
     },
     onClickOutside() {
       this.open = false
+    },
+    googleLogin() {
+      this.$auth.loginWith('google')
     },
   },
   directives: {
@@ -109,7 +114,7 @@ export default {
 
   &--open {
     opacity: 1;
-    height: 125px;
+    height: 145px;
     & .content {
       transform: translateY(0);
     }
