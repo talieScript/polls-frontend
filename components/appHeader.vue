@@ -66,9 +66,7 @@
 
 <script>
 import ClickOutside from 'vue-click-outside'
-import user from './login/user.vue'
 export default {
-  components: { user },
   name: 'AppHeader',
   data() {
     return {
@@ -112,7 +110,7 @@ export default {
 
   &--open {
     opacity: 1;
-    height: 130px;
+    height: 135px;
     & .content {
       transform: translateY(0);
     }
