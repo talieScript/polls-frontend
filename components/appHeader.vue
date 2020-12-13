@@ -58,13 +58,11 @@
       <div
         class="content sm:transform sm:-translate-y-0 sm:translate-y-0 border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
       >
-        <button class="mr-2 hover:text-gray-500 transition-colors duration-200">
-          Login
-        </button>
         <button
-          class="bg-blue-500 hover:bg-blue-400 rounded p-1 px-2 text-white transition-colors duration-200"
+          @click="googleLogin"
+          class="mr-2 hover:text-gray-500 transition-colors duration-200"
         >
-          Sign Up
+          Login | Sign Up
         </button>
       </div>
     </div>
@@ -86,6 +84,9 @@ export default {
     },
     onClickOutside() {
       this.open = false
+    },
+    googleLogin() {
+      this.$auth.loginWith('google')
     },
   },
   directives: {
