@@ -1,24 +1,26 @@
 <template>
   <div>
-    <button
-      v-if="!user"
-      class="outline-none focus:shadow-outline rounded"
-      @click="openLoginModel = true"
-    >
-      login | signup
-    </button>
-    <button
-      v-else
-      class="outline-none focus:shadow-outline rounded flex flex-col justify-center items-center"
-    >
-      <img
-        class="h-8 w-8 rounded-full"
-        :src="user.picture"
-        :alt="`Profile picture for ${user.given_name}`"
-      />
-      <span>{{ user.given_name }}</span>
-    </button>
-    <LoginModal v-model="openLoginModel" />
+    <transition name="fade">
+      <button
+        v-if="!user"
+        class="outline-none focus:shadow-outline rounded"
+        @click="$emit('openModal')"
+      >
+        login | signup
+      </button>
+      <button
+        v-else
+        class="outline-none focus:shadow-outline rounded flex sm:flex-col justify-center items-center ml-1"
+        @click="logout"
+      >
+        <img
+          class="h-8 w-8 rounded-full mr-3 sm:mr-0"
+          :src="user.picture"
+          :alt="`Profile picture for ${user.given_name}`"
+        />
+        <span>{{ user.given_name }}</span>
+      </button>
+    </transition>
   </div>
 </template>
 
@@ -30,7 +32,7 @@ export default Vue.extend({
   name: 'User',
   data() {
     return {
-      openLoginModel: true,
+      openLoginModel: false,
     }
   },
   computed: {
@@ -38,8 +40,20 @@ export default Vue.extend({
       return this.$auth.user
     },
   },
+  methods: {
+    logout() {
+      this.$auth.logout()
+    },
+  },
 })
 </script>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

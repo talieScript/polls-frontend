@@ -55,9 +55,12 @@
           Create New
         </a>
       </div>
-      <div>
-        <User />
+      <div
+        class="content sm:transform sm:-translate-y-0 sm:translate-y-0 border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
+      >
+        <User @openModal="openLoginModal = true" />
       </div>
+      <LoginModal v-model="openLoginModal" />
     </div>
   </nav>
 </template>
@@ -71,6 +74,7 @@ export default {
   data() {
     return {
       open: false,
+      openLoginModal: false,
     }
   },
   computed: {

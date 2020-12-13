@@ -67,6 +67,7 @@ export default {
                   'faTimesCircle',
                   'faSpinner',
                   'faCheckCircle',
+                  'faUser',
                   ]
               },
               {
@@ -76,7 +77,8 @@ export default {
                   'faTwitter',
                   'faWhatsapp',
                   'faLine',
-                  'faFacebookMessenger'
+                  'faFacebookMessenger',
+                  'faGoogle',
                 ]
               }
             ]
