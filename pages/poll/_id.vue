@@ -1,6 +1,6 @@
 <template>
   <div class="pb-20">
-    <div class="w-full" v-if="error">
+    <div class="w-full" v-if="!poll">
       <div
         class="h-screen flex w-full items-center justify-center text-center text-lg flex-col"
       >
@@ -77,30 +77,30 @@
           />
         </div>
       </div>
-    </div>
-    <div
-      class="bg-gray-200 fixed w-screen sm:hidden bottom-0 left-0 pb-12 pt-1 flex flex-col items-center"
-    >
-      <SmallShare class="mb-2" :poll-id="poll.id" :question="poll.question" />
-      <SubmitButton
-        v-if="!hasVoted"
-        class="mx-auto my-2 w-4/5 border-none absolute bottom-0"
-        :requiredAnswers="requiredAnswersNo"
-        :selectedAnswersNo="chosen.length"
-        :loading="voteLoading"
-        @click="handleSubmitClick"
+      <div
+        class="bg-gray-200 fixed w-screen sm:hidden bottom-0 left-0 pb-12 pt-1 flex flex-col items-center"
+      >
+        <SmallShare class="mb-2" :poll-id="poll.id" :question="poll.question" />
+        <SubmitButton
+          v-if="!hasVoted"
+          class="mx-auto my-2 w-4/5 border-none absolute bottom-0"
+          :requiredAnswers="requiredAnswersNo"
+          :selectedAnswersNo="chosen.length"
+          :loading="voteLoading"
+          @click="handleSubmitClick"
+        />
+      </div>
+      <ValidationDialog
+        v-model="validationDialogOpen"
+        :poll-options="pollOptions"
+        @close="validationDialogOpen = false"
+        @confirm="sendVote($event)"
+      />
+      <VoteInfoDialog
+        v-model="voteInfoDialogOpen"
+        :voteStatus="submitRes.voteStatus"
       />
     </div>
-    <ValidationDialog
-      v-model="validationDialogOpen"
-      :poll-options="pollOptions"
-      @close="validationDialogOpen = false"
-      @confirm="sendVote($event)"
-    />
-    <VoteInfoDialog
-      v-model="voteInfoDialogOpen"
-      :voteStatus="submitRes.voteStatus"
-    />
   </div>
 </template>
 
@@ -114,6 +114,7 @@ import { getVoterAnswers } from '@/utils/helpers'
 dayjs.extend(relativeTime)
 
 export default Vue.extend({
+  loading: true,
   async asyncData({ params, $axios, store }) {
     const id = params.id
     let error
@@ -131,10 +132,19 @@ export default Vue.extend({
         return null
       })
 
-    const { userAnswers, poll } = pollAndAnswers
+    if (!pollAndAnswers) {
+      return {
+        poll: null,
+        userAnswers: [],
+        error,
+        hasVoted: false,
+      }
+    }
+
+    const { userAnswers = [], poll } = pollAndAnswers
 
     return {
-      poll,
+      poll: poll || pollAndAnswers,
       chosen: userAnswers,
       error,
       hasVoted: !!userAnswers.length,

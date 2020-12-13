@@ -66,7 +66,7 @@ import ClickOutside from 'vue-click-outside'
 
 export default Vue.extend({
   name: 'User',
-  data() {
+  data(): any {
     return {
       openDropdown: false,
     }
@@ -77,11 +77,11 @@ export default Vue.extend({
     },
   },
   methods: {
-    logout() {
+    logout(): void {
       this.$auth.logout()
     },
-    closeDropdown() {
-      this.openDropdown = false
+    closeDropdown(): void {
+      ;(this as any).openDropdown = false
     },
   },
   directives: {
