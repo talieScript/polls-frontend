@@ -55,15 +55,8 @@
           Create New
         </a>
       </div>
-      <div
-        class="content sm:transform sm:-translate-y-0 sm:translate-y-0 border-t border-gray-300 sm:border-none mt-2 sm:mt-0 pt-2 sm:pt-0"
-      >
-        <button
-          @click="googleLogin"
-          class="mr-2 hover:text-gray-500 transition-colors duration-200"
-        >
-          Login | Sign Up
-        </button>
+      <div>
+        <User />
       </div>
     </div>
   </nav>
@@ -71,12 +64,19 @@
 
 <script>
 import ClickOutside from 'vue-click-outside'
+import user from './login/user.vue'
 export default {
+  components: { user },
   name: 'AppHeader',
   data() {
     return {
       open: false,
     }
+  },
+  computed: {
+    user() {
+      return this.$auth.user
+    },
   },
   methods: {
     toggle() {
@@ -88,6 +88,9 @@ export default {
     googleLogin() {
       this.$auth.loginWith('google')
     },
+  },
+  mounted() {
+    console.log(this.user)
   },
   directives: {
     ClickOutside,

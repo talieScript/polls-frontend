@@ -5,7 +5,8 @@
     @click="open = false"
   >
     <dialog
-      class="bg-white p-0 w-4/5 sm:w-auto sm:max-w-lg text-gray-600 rounded"
+      class="bg-white p-0 w-4/5 sm:w-auto text-gray-600 rounded"
+      :class="`sm:max-w-${maxWidth}`"
       :open="open"
       @click.stop
     >
@@ -36,6 +37,7 @@
           cancel
         </BasicButton>
         <BasicButton
+          v-if="buttonText"
           @click="$emit('submit')"
           class="ml-3"
           textSize="sm"
@@ -64,7 +66,11 @@ export default Vue.extend({
     },
     buttonText: {
       type: String,
-      required: true,
+      required: false,
+    },
+    maxWidth: {
+      type: String,
+      default: 'lg',
     },
   },
   computed: {
