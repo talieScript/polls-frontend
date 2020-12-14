@@ -6,7 +6,10 @@
       @click="$emit('click')"
     >
       <NuxtLink v-if="!user" to="/login">
-        <button class="outline-none focus:shadow-outline rounded p-1">
+        <button
+          @click="setUrl"
+          class="outline-none focus:shadow-outline rounded p-1"
+        >
           Login/Sign Up
         </button>
       </NuxtLink>
@@ -82,6 +85,9 @@ export default Vue.extend({
     },
     closeDropdown(): void {
       ;(this as any).openDropdown = false
+    },
+    setUrl() {
+      localStorage.setItem('redirect', this.$route.path)
     },
   },
   directives: {
