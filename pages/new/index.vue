@@ -234,6 +234,9 @@ export default {
       multipleChoice: { ...self.activePoll.multipleChoice },
     }
   },
+  beforeDestroy() {
+    ;(this as any).$store.commit('newPoll/updatePoll', (this as any).pollData)
+  },
   methods: {
     checkAnswers() {
       ;(this as any).answerError = !this.pollData.answers.length
