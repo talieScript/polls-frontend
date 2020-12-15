@@ -10,9 +10,10 @@ import Vue from 'vue'
 
 export default Vue.extend({
   mounted() {
-    setTimeout(() => {
-      this.$router.push(localStorage.getItem('redirect'))
-    }, 1000)
+    if (!localStorage.getItem('redirect')) {
+      localStorage.setItem('redirect', '/')
+    }
+    this.$router.push(localStorage.getItem('redirect'))
   },
 })
 </script>

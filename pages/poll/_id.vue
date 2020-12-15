@@ -93,6 +93,7 @@
       <ValidationDialog
         v-model="validationDialogOpen"
         :poll-options="pollOptions"
+        :chosen="chosen"
         @close="validationDialogOpen = false"
         @confirm="sendVote($event)"
       />
