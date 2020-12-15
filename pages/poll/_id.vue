@@ -142,13 +142,24 @@ export default Vue.extend({
       }
     }
 
-    const { userAnswers = [], poll } = pollAndAnswers
+    let { userAnswers = [], poll } = pollAndAnswers
+
+    const hasVoted = !!userAnswers.length
+
+    if (process.browser) {
+      // check if user answers are in the local storage as they may have just logged in
+      const localStorageAnswers = localStorage.getItem('userAnswers')
+      if (localStorageAnswers && !hasVoted) {
+        userAnswers = localStorageAnswers.split(',')
+      }
+      localStorage.setItem('userAnswers', null)
+    }
 
     return {
       poll: poll || pollAndAnswers,
       chosen: userAnswers,
       error,
-      hasVoted: !!userAnswers.length,
+      hasVoted,
     }
   },
   data(): any {
