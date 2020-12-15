@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex justify-center items-center p-px bg-blue-500 mx-auto my-6"
+    class="flex justify-center items-center p-px bg-blue-500 my-6"
     @click="$auth.loginWith('google')"
   >
     <div class="p-2 mr-3 bg-white flex justify-center items-center text-lg">
