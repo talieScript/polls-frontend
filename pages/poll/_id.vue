@@ -79,12 +79,12 @@
         </div>
       </div>
       <div
-        class="bg-gray-200 fixed w-screen sm:hidden bottom-0 left-0 pb-12 pt-1 flex flex-col items-center"
+        class="bg-gray-200 fixed w-screen sm:hidden bottom-0 left-0 pt-1 flex flex-col items-center"
       >
         <SmallShare class="mb-2" :poll-id="poll.id" :question="poll.question" />
         <SubmitButton
-          v-if="!hasVoted"
-          class="mx-auto my-2 w-4/5 border-none absolute bottom-0"
+          v-if="!hasVoted && !ended"
+          class="mx-auto my-2 w-4/5 border-none"
           :requiredAnswers="requiredAnswersNo"
           :selectedAnswersNo="chosen.length"
           :loading="voteLoading"
