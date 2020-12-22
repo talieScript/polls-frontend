@@ -39,9 +39,9 @@ export const actions = {
     this.$axios.$post('/polls', {
       ...payload,
       password,
-    }).then((createdPoll) => {
+    }).then((createdPollId) => {
       console.log('Poll created! 🥳');
-      this.$router.push('/poll/' + createdPoll)
+      this.$router.push('/poll/' + createdPollId)
       mutations.resetActive();
     }).catch(error => {
       console.log(error);

@@ -24,7 +24,7 @@
             class="w-full"
             :answerNumber="pollOptions.choiceNo"
             :exact="pollOptions.choiceNoStrict"
-            :answers="poll.Answer"
+            :answers="poll.Answers"
             :disabled="hasVoted || ended"
           />
           <div class="hidden sm:inline-block">
@@ -64,8 +64,9 @@
           class="sm:order-2 sm:w-32 w- flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
         >
           <CountDown
+            v-if="poll.end_date"
             class="max-w-xs w-2/5 sm:w-full"
-            :endDate="poll.end_date"
+            :endDate="poll.end_date || ''"
           />
           <div class="sm:ml-0 mb-3 sm:mt-3">
             <p class="text-xs">Total Votes</p>
@@ -154,7 +155,7 @@ export default Vue.extend({
       if (localStorageAnswers && !hasVoted) {
         userAnswers = localStorageAnswers.split(',')
       }
-      localStorage.setItem('userAnswers', null)
+      localStorage.setItem('userAnswers', '')
     }
 
     return {
@@ -181,14 +182,13 @@ export default Vue.extend({
       if (!this.poll.end_date) {
         return false
       }
-      console.log(this.poll.end_date)
       return dayjs(this.poll.end_date).isBefore(dayjs())
     },
     pollOptions(): PollOptions {
       return JSON.parse(this.poll.options)
     },
     totalVotes(): number {
-      return this.poll.Answer.map((a) => a.votes).reduce(
+      return this.poll.Answers.map((a) => a.votes).reduce(
         (total, votes) => total + votes
       )
     },

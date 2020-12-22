@@ -167,7 +167,7 @@ export default {
       ],
       resultsOptions: [
         {
-          text: 'Can Always Be viewed',
+          text: 'Always Visible',
           value: 'alwaysShow',
         },
         {
