@@ -34,7 +34,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async submit({state, mutations}, password) {
+  async submit({state, commit}, password) {
     const payload = createPostPayload(state.active);
     this.$axios.$post('/polls', {
       ...payload,
@@ -42,7 +42,7 @@ export const actions = {
     }).then((createdPollId) => {
       console.log('Poll created! 🥳');
       this.$router.push('/poll/' + createdPollId)
-      mutations.resetActive();
+      commit('resetActive')
     }).catch(error => {
       console.log(error);
     })
