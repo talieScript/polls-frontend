@@ -80,6 +80,7 @@ export default Vue.extend({
       }
       if (this.passOne !== this.passTwo) {
         this.passTwoError = 'Passwords do not match'
+        return
       }
 
       this.$store.dispatch('newPoll/submit', passOne)

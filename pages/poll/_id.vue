@@ -1,6 +1,6 @@
 <template>
   <div class="pb-20">
-    <div class="w-full" v-if="!poll">
+    <div class="w-full" v-if="!Object.keys(poll).length">
       <div
         class="h-screen flex w-full items-center justify-center text-center text-lg flex-col"
       >
@@ -25,7 +25,7 @@
             :answerNumber="pollOptions.choiceNo"
             :exact="pollOptions.choiceNoStrict"
             :answers="poll.Answer"
-            :disabled="hasVoted"
+            :disabled="hasVoted || ended"
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
@@ -34,6 +34,7 @@
               :requiredAnswers="requiredAnswersNo"
               :selectedAnswersNo="chosen.length"
               :loading="voteLoading"
+              :ended="ended"
               @click="handleSubmitClick"
             />
             <div
@@ -87,6 +88,7 @@
           :requiredAnswers="requiredAnswersNo"
           :selectedAnswersNo="chosen.length"
           :loading="voteLoading"
+          :ended="ended"
           @click="handleSubmitClick"
         />
       </div>
@@ -135,7 +137,7 @@ export default Vue.extend({
 
     if (!pollAndAnswers) {
       return {
-        poll: null,
+        poll: {},
         userAnswers: [],
         error,
         hasVoted: false,
@@ -175,6 +177,13 @@ export default Vue.extend({
     }
   },
   computed: {
+    ended(): boolean {
+      if (!this.poll.end_date) {
+        return false
+      }
+      console.log(this.poll.end_date)
+      return dayjs(this.poll.end_date).isBefore(dayjs())
+    },
     pollOptions(): PollOptions {
       return JSON.parse(this.poll.options)
     },
@@ -186,6 +195,17 @@ export default Vue.extend({
     requiredAnswersNo() {
       const { pollOptions } = this as any
       return pollOptions.choiceNoStrict ? pollOptions.choiceNo : 1
+    },
+  },
+  mounted() {
+    console.log(this.poll)
+  },
+  watch: {
+    ended: {
+      immediate: true,
+      handler(val) {
+        console.log(val)
+      },
     },
   },
   methods: {
