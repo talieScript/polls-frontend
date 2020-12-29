@@ -86,7 +86,7 @@
           aria-label="Close"
           @click="showQr = false"
         >
-          <fa class="text-2xl mr-2" :icon="['fa', 'times']" />
+          <fa class="text-2xl mr-2" :icon="['fa', 'times-circle']" />
         </button>
         <p class="text-2xl">QR Code</p>
         <p class="mt-2">
