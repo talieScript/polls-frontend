@@ -74,8 +74,8 @@ export default Vue.extend({
 
 .active {
   @apply text-primary;
-  box-shadow: 0 5px 17px -2px rgba(125, 131, 255, 0.2),
-    0 8px 3px -1px rgba(125, 131, 255, 0.1);
+  box-shadow: 0 4px 17px -2px rgba(125, 131, 255, 0.2),
+    0 7px 3px -1px rgba(125, 131, 255, 0.1);
 
   .circle {
     @apply border-primary;
