@@ -1,5 +1,5 @@
 export const state = () => ({
-  userIp: '',
+  userIp: null,
 })
 
 export const mutations = {

@@ -11,9 +11,11 @@ import Vue from 'vue'
 export default Vue.extend({
   mounted() {
     if (!localStorage.getItem('redirect')) {
-      localStorage.setItem('redirect', '/')
+      this.$router.back()
+      return
     }
     this.$router.push(localStorage.getItem('redirect'))
+    localStorage.removeItem('redirect')
   },
 })
 </script>
