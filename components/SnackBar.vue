@@ -1,12 +1,15 @@
 <template>
-  <div class="fixed bottom-0 left-0 flex items-end justify-center w-full h-10">
+  <div
+    class="fixed bottom-0 left-0 flex items-end justify-center w-full h-10 pointer-events-none"
+  >
     <transition name="fade">
       <div
         v-if="open"
         :class="`bg-${colour}`"
-        class="max-w-md w-full mx-5 min-h-full text-white text-sm rounded-t-sm p-3 relative"
+        class="max-w-md w-full mx-5 min-h-full text-white text-sm rounded-t-sm p-3 relative pr-6 pointer-events-auto"
       >
         {{ text }}
+        <slot> </slot>
         <button
           class="absolute top-0 right-0 mr-2 mt-1"
           aria-label="Close"

@@ -29,7 +29,7 @@
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
-              v-if="!hasVoted"
+              v-if="!hasVoted && !ended"
               class="mt-2"
               :requiredAnswers="requiredAnswersNo"
               :selectedAnswersNo="chosen.length"
@@ -105,7 +105,7 @@
         :voteStatus="submitRes.voteStatus"
       />
     </div>
-    <SnackBar v-model="snackOpen" text="This is some test text here" />
+    <SnackBar v-model="snackOpen" :text="snackText" />
   </div>
 </template>
 
@@ -178,7 +178,8 @@ export default Vue.extend({
         voteStatus: 'alreadyVoted',
         voterId: '',
       } as VoteStatusRes,
-      snackOpen: true,
+      snackOpen: false,
+      snackText: '',
     }
   },
   computed: {
@@ -253,6 +254,11 @@ export default Vue.extend({
         this.chosen = voterAnswers
         this.hasVoted = true
         this.voteInfoDialogOpen = true
+      } else if (submitRes.voteStatus === 'emailPending') {
+        // show snack informing user they have voted
+        this.snackText =
+          'Your choice has already been saved. Please click the link in the confirmation email for your vote to be counted.'
+        this.snackOpen = true
       }
       this.voteLoading = false
     },
