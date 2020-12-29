@@ -1,27 +1,35 @@
 <template>
   <div class="h-18">
-    <p class="text-xs">Time Remaining</p>
-    <div
-      class="flex -ml-3 item s-center justify-between text-lg"
-      :class="`text-${color}`"
-    >
-      <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakdown.days | emptyDash }}
-        <span class="text-xs text-gray-500">D</span>
-      </span>
-      <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakdown.hours | emptyDash }}
-        <span class="text-xs text-gray-500">H</span>
-      </span>
-      <span class="text-center w-4/5 flex flex-col">
-        {{ timeBreakdown.minutes | emptyDash }}
-        <span class="text-xs text-gray-500">M</span>
-      </span>
-      <span class="text-center w-4/5 flex flex-col">
-        <span v-if="!ended">{{ timeBreakdown.seconds }}</span>
-        <span v-else>-</span>
-        <span class="text-xs h-full text-gray-500">S</span>
-      </span>
+    <div v-if="!ended">
+      <p class="text-xs">Time Remaining</p>
+      <div
+        class="flex -ml-3 item s-center justify-between text-lg"
+        :class="`text-${color}`"
+      >
+        <span class="text-center w-4/5 flex flex-col">
+          {{ timeBreakdown.days }}
+          <span class="text-xs text-gray-500">D</span>
+        </span>
+        <span class="text-center w-4/5 flex flex-col">
+          {{ timeBreakdown.hours }}
+          <span class="text-xs text-gray-500">H</span>
+        </span>
+        <span class="text-center w-4/5 flex flex-col">
+          {{ timeBreakdown.minutes }}
+          <span class="text-xs text-gray-500">M</span>
+        </span>
+        <span class="text-center w-4/5 flex flex-col">
+          <span v-if="!ended">{{ timeBreakdown.seconds }}</span>
+          <span v-else>-</span>
+          <span class="text-xs h-full text-gray-500">S</span>
+        </span>
+      </div>
+    </div>
+    <div v-else class="">
+      <h4>
+        Poll ended <br />
+        <span class="text-sm">{{ dayjs(endDate).from(dayjs()) }}</span>
+      </h4>
     </div>
   </div>
 </template>
@@ -30,6 +38,13 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+
+const emptyTime = {
+  days: '-',
+  hours: '-',
+  minutes: '-',
+  seconds: '-',
+}
 
 dayjs.extend(relativeTime)
 export default Vue.extend({
@@ -43,26 +58,25 @@ export default Vue.extend({
   data() {
     return {
       timeTo: 0,
-      timeBreakdown: {
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      } as any,
+      timeBreakdown: emptyTime as any,
       interval: null,
       dayjs,
     }
   },
   mounted() {
-    this.interval = setInterval(this.counter, 1000)
+    if (!this.ended) {
+      this.interval = setInterval(this.counter, 1000)
+    }
+  },
+  watch: {
+    ednded(value) {
+      if (value) {
+        this.timeBreakdown = emptyTime
+      }
+    },
   },
   beforeDestroy() {
     clearInterval(this.interval)
-  },
-  filters: {
-    emptyDash: (value) => {
-      return value ? value : '-'
-    },
   },
   methods: {
     counter(): void {
@@ -87,14 +101,7 @@ export default Vue.extend({
   },
   computed: {
     ended(): boolean {
-      const sum = Object.values(this.timeBreakdown).reduce(
-        (a: number, b: number) => a + b,
-        0
-      )
-      if (!sum) {
-        return true
-      }
-      return false
+      return dayjs(this.endDate).isBefore(dayjs())
     },
     color() {
       const { timeBreakdown } = this

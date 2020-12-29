@@ -1,16 +1,16 @@
 <template>
   <div class="pb-20">
-    <div class="w-full" v-if="!poll">
+    <div class="w-full" v-if="!Object.keys(poll).length">
       <div
         class="h-screen flex w-full items-center justify-center text-center text-lg flex-col"
       >
         Poll not found 😬
         <nuxt-link class="block" to="/">
-          <fa
+          <!-- <fa
             class="transform rotate-180"
             :icon="['fa', 'long-arrow-alt-right']"
-          />
-          <span class="underline"> back </span>
+          /> -->
+          <span class="underline"> Home </span>
         </nuxt-link>
       </div>
     </div>
@@ -24,8 +24,8 @@
             class="w-full"
             :answerNumber="pollOptions.choiceNo"
             :exact="pollOptions.choiceNoStrict"
-            :answers="poll.Answer"
-            :disabled="hasVoted"
+            :answers="poll.Answers"
+            :disabled="hasVoted || ended || voteLoading"
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
@@ -34,6 +34,7 @@
               :requiredAnswers="requiredAnswersNo"
               :selectedAnswersNo="chosen.length"
               :loading="voteLoading"
+              :ended="ended"
               @click="handleSubmitClick"
             />
             <div
@@ -63,8 +64,9 @@
           class="sm:order-2 sm:w-32 w- flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
         >
           <CountDown
+            v-if="poll.end_date"
             class="max-w-xs w-2/5 sm:w-full"
-            :endDate="poll.end_date"
+            :endDate="poll.end_date || ''"
           />
           <div class="sm:ml-0 mb-3 sm:mt-3">
             <p class="text-xs">Total Votes</p>
@@ -78,21 +80,23 @@
         </div>
       </div>
       <div
-        class="bg-gray-200 fixed w-screen sm:hidden bottom-0 left-0 pb-12 pt-1 flex flex-col items-center"
+        class="bg-gray-200 fixed w-screen sm:hidden bottom-0 left-0 pt-1 flex flex-col items-center"
       >
         <SmallShare class="mb-2" :poll-id="poll.id" :question="poll.question" />
         <SubmitButton
-          v-if="!hasVoted"
-          class="mx-auto my-2 w-4/5 border-none absolute bottom-0"
+          v-if="!hasVoted && !ended"
+          class="mx-auto my-2 w-4/5 border-none"
           :requiredAnswers="requiredAnswersNo"
           :selectedAnswersNo="chosen.length"
           :loading="voteLoading"
+          :ended="ended"
           @click="handleSubmitClick"
         />
       </div>
       <ValidationDialog
         v-model="validationDialogOpen"
         :poll-options="pollOptions"
+        :chosen="chosen"
         @close="validationDialogOpen = false"
         @confirm="sendVote($event)"
       />
@@ -115,14 +119,16 @@ dayjs.extend(relativeTime)
 
 export default Vue.extend({
   loading: true,
-  async asyncData({ params, $axios, store }) {
+  async asyncData({ params, $axios, store, $auth }) {
     const id = params.id
     let error
     await store.dispatch('getIP')
     const ip = store.state.userIp
 
     const pollAndAnswers = await $axios
-      .get(`${process.env.VUE_APP_POLLS_API}/polls/${id}?ip=${ip}`)
+      .get(
+        `${process.env.VUE_APP_POLLS_API}/polls/${id}?ip=${ip}email=${$auth.user?.email}`
+      )
       .then((response) => {
         error = false
         return response.data
@@ -134,20 +140,31 @@ export default Vue.extend({
 
     if (!pollAndAnswers) {
       return {
-        poll: null,
+        poll: {},
         userAnswers: [],
         error,
         hasVoted: false,
       }
     }
 
-    const { userAnswers = [], poll } = pollAndAnswers
+    let { userAnswers = [], poll } = pollAndAnswers
+
+    const hasVoted = !!userAnswers.length
+
+    if (process.browser) {
+      // check if user answers are in the local storage as they may have just logged in
+      const localStorageAnswers = localStorage.getItem('userAnswers')
+      if (localStorageAnswers && !hasVoted) {
+        userAnswers = localStorageAnswers.split(',')
+      }
+      localStorage.setItem('userAnswers', '')
+    }
 
     return {
       poll: poll || pollAndAnswers,
       chosen: userAnswers,
       error,
-      hasVoted: !!userAnswers.length,
+      hasVoted,
     }
   },
   data(): any {
@@ -163,11 +180,17 @@ export default Vue.extend({
     }
   },
   computed: {
+    ended(): boolean {
+      if (!this.poll.end_date) {
+        return false
+      }
+      return dayjs(this.poll.end_date).isBefore(dayjs())
+    },
     pollOptions(): PollOptions {
       return JSON.parse(this.poll.options)
     },
     totalVotes(): number {
-      return this.poll.Answer.map((a) => a.votes).reduce(
+      return this.poll.Answers.map((a) => a.votes).reduce(
         (total, votes) => total + votes
       )
     },
@@ -176,9 +199,20 @@ export default Vue.extend({
       return pollOptions.choiceNoStrict ? pollOptions.choiceNo : 1
     },
   },
+  async created() {
+    if (this.$auth.loggedIn && !this.hasVoted) {
+      const userAnswers = await this.$axios.get(
+        `${process.env.VUE_APP_POLLS_API}/voter/answers/${this.poll.id}?email=${this.$auth.user.email}`
+      )
+    }
+  },
   methods: {
     handleSubmitClick() {
       if (this.pollOptions.validateEmail) {
+        if (this.$auth.user) {
+          this.sendVote(this.$auth.user.email)
+          return
+        }
         this.validationDialogOpen = true
       } else {
         this.sendVote()
@@ -211,13 +245,14 @@ export default Vue.extend({
     },
     async handleVoteRes() {
       const { submitRes } = this
+      debugger
       if (submitRes.voteStatus === 'alreadyVoted') {
         const voterAnswers = await getVoterAnswers(submitRes, this.poll.id)
         this.chosen = voterAnswers
         this.hasVoted = true
-        this.voteLoading = false
         this.voteInfoDialogOpen = true
       }
+      this.voteLoading = false
     },
   },
 })

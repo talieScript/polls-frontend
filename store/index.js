@@ -1,5 +1,5 @@
 export const state = () => ({
-  userIp: '',
+  userIp: null,
 })
 
 export const mutations = {
@@ -9,8 +9,10 @@ export const mutations = {
 }
 
 export const actions = {
-  async getIP ({ commit }) {
-    const ip = await this.$axios.$get(process.env.VUE_APP_IP_GETTER)
-    commit('setIp', ip)
+  async getIP ({ state, commit }) {
+    if (!state.userIp) {
+      const ip = await this.$axios.$get(process.env.VUE_APP_IP_GETTER)
+      commit('setIp', ip)
+    }
   }
 }

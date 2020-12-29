@@ -167,7 +167,7 @@ export default {
       ],
       resultsOptions: [
         {
-          text: 'Can Always Be viewed',
+          text: 'Always Visible',
           value: 'alwaysShow',
         },
         {
@@ -233,6 +233,9 @@ export default {
       options: { ...self.activePoll.options },
       multipleChoice: { ...self.activePoll.multipleChoice },
     }
+  },
+  beforeDestroy() {
+    ;(this as any).$store.commit('newPoll/updatePoll', (this as any).pollData)
   },
   methods: {
     checkAnswers() {

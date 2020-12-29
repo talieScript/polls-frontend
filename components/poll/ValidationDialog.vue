@@ -9,6 +9,8 @@
       <fa :icon="['fa', 'check-circle']" class="mr-2 text-lg" />
     </template>
     <p class="">This poll requires an email for vote validation</p>
+    <GoogleSignIn />
+    or
     <div class="mt-2 mx-auto flex justify-center items-center">
       <TextInput
         v-model="email"
@@ -49,6 +51,10 @@ export default Vue.extend({
       type: Object,
       required: true,
     } as PropOptions<pollOptions>,
+    chosen: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
     open: {
@@ -58,6 +64,18 @@ export default Vue.extend({
       set(value: boolean) {
         this.$emit('input', value)
       },
+    },
+  },
+  mounted() {
+    // set the redirct page to this poll incase the user decides to log in
+    localStorage.setItem('redirect', this.$route.path)
+  },
+  watch: {
+    open(value) {
+      if (value) {
+        // Save the users answers incase they log in
+        localStorage.setItem('userAnswers', this.chosen.join(','))
+      }
     },
   },
   methods: {

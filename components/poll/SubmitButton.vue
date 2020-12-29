@@ -1,12 +1,14 @@
 <template>
   <button
+    v-if="!ended"
     class="button focus:shadow-outline uppercase"
     :class="{ active: selectedAnswersNo >= requiredAnswers }"
-    @click="$emit('click')"
+    @click="handleClick"
   >
     <LoadingSpinner v-if="loading" />
     <span v-else-if="selectedAnswersNo >= requiredAnswers">Submit Answers</span>
-    <span v-else>Choose {{ requiredAnswers - selectedAnswersNo }} More</span>
+    <span v-else-if="ended"> Poll Ended </span>
+    <span v-else> Choose {{ requiredAnswers - selectedAnswersNo }} More </span>
   </button>
 </template>
 
@@ -27,6 +29,18 @@ export default Vue.extend({
     loading: {
       type: Boolean,
       required: true,
+    },
+    ended: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  methods: {
+    handleClick() {
+      if (this.loading) {
+        return
+      }
+      this.$emit('click')
     },
   },
 })

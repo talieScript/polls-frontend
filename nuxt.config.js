@@ -87,6 +87,9 @@ export default {
   ],
 
   auth: {
+    redirect: {
+      home: '/redirect'
+    },
     strategies: {
       google: {
         clientId: '614997449484-e9qj6pkv1gice7itrhdmet9ne5d3qdj3.apps.googleusercontent.com',
