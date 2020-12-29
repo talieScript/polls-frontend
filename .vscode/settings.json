@@ -1,3 +1,8 @@
 {
-  "editor.defaultFormatter": "octref.vetur"
+  "editor.defaultFormatter": "octref.vetur",
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#691d7c",
+    "statusBar.foreground": "#ffffff",
+    "statusBarItem.hoverBackground": "#7a3c8a"
+  }
 }

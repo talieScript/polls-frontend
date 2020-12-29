@@ -25,7 +25,7 @@
             :answerNumber="pollOptions.choiceNo"
             :exact="pollOptions.choiceNoStrict"
             :answers="poll.Answers"
-            :disabled="hasVoted || ended"
+            :disabled="hasVoted || ended || voteLoading"
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
@@ -248,9 +248,9 @@ export default Vue.extend({
         const voterAnswers = await getVoterAnswers(submitRes, this.poll.id)
         this.chosen = voterAnswers
         this.hasVoted = true
-        this.voteLoading = false
         this.voteInfoDialogOpen = true
       }
+      this.voteLoading = false
     },
   },
 })
