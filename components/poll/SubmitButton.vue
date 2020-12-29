@@ -3,7 +3,7 @@
     v-if="!ended"
     class="button focus:shadow-outline uppercase"
     :class="{ active: selectedAnswersNo >= requiredAnswers }"
-    @click="$emit('click')"
+    @click="handleClick"
   >
     <LoadingSpinner v-if="loading" />
     <span v-else-if="selectedAnswersNo >= requiredAnswers">Submit Answers</span>
@@ -33,6 +33,14 @@ export default Vue.extend({
     ended: {
       type: Boolean,
       required: true,
+    },
+  },
+  methods: {
+    handleClick() {
+      if (this.loading) {
+        return
+      }
+      this.$emit('click')
     },
   },
 })
