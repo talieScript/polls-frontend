@@ -197,17 +197,6 @@ export default Vue.extend({
       return pollOptions.choiceNoStrict ? pollOptions.choiceNo : 1
     },
   },
-  mounted() {
-    console.log(this.poll)
-  },
-  watch: {
-    ended: {
-      immediate: true,
-      handler(val) {
-        console.log(val)
-      },
-    },
-  },
   methods: {
     handleSubmitClick() {
       if (this.pollOptions.validateEmail) {
