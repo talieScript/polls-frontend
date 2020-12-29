@@ -105,6 +105,7 @@
         :voteStatus="submitRes.voteStatus"
       />
     </div>
+    <SnackBar v-model="snackOpen" text="This is some test text here" />
   </div>
 </template>
 
@@ -177,6 +178,7 @@ export default Vue.extend({
         voteStatus: 'alreadyVoted',
         voterId: '',
       } as VoteStatusRes,
+      snackOpen: true,
     }
   },
   computed: {
