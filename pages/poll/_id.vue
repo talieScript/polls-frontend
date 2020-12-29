@@ -119,14 +119,16 @@ dayjs.extend(relativeTime)
 
 export default Vue.extend({
   loading: true,
-  async asyncData({ params, $axios, store }) {
+  async asyncData({ params, $axios, store, $auth }) {
     const id = params.id
     let error
     await store.dispatch('getIP')
     const ip = store.state.userIp
 
     const pollAndAnswers = await $axios
-      .get(`${process.env.VUE_APP_POLLS_API}/polls/${id}?ip=${ip}`)
+      .get(
+        `${process.env.VUE_APP_POLLS_API}/polls/${id}?ip=${ip}email=${$auth.user?.email}`
+      )
       .then((response) => {
         error = false
         return response.data
@@ -197,9 +199,20 @@ export default Vue.extend({
       return pollOptions.choiceNoStrict ? pollOptions.choiceNo : 1
     },
   },
+  async created() {
+    if (this.$auth.loggedIn && !this.hasVoted) {
+      const userAnswers = await this.$axios.get(
+        `${process.env.VUE_APP_POLLS_API}/voter/answers/${this.poll.id}?email=${this.$auth.user.email}`
+      )
+    }
+  },
   methods: {
     handleSubmitClick() {
       if (this.pollOptions.validateEmail) {
+        if (this.$auth.user) {
+          this.sendVote(this.$auth.user.email)
+          return
+        }
         this.validationDialogOpen = true
       } else {
         this.sendVote()
