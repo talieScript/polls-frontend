@@ -87,7 +87,9 @@ export default Vue.extend({
       ;(this as any).openDropdown = false
     },
     setUrl() {
-      localStorage.setItem('redirect', this.$route.path)
+      if (!localStorage.getItem('redirect')) {
+        localStorage.setItem('redirect', this.$route.path)
+      }
     },
   },
   directives: {
