@@ -6,6 +6,7 @@
       textSize="sm"
       rounded="md"
       class="ml-auto mt-1"
+      :loading="loadingEmail"
       @click="resendEmail"
     >
       resend email
@@ -24,6 +25,7 @@ export default Vue.extend({
       snackOpen: false,
       snackText: '',
       resStatus: '',
+      loadingEmail: false,
     }
   },
   props: {
@@ -48,10 +50,13 @@ export default Vue.extend({
     },
   },
   methods: {
-    resendEmail() {
-      this.$axios.post(`${process.env.VUE_APP_POLLS_API}/resendEmail`, {
+    async resendEmail() {
+      this.loadingEmail = true
+      await this.$axios.post(`${process.env.VUE_APP_POLLS_API}/email/resend`, {
         email: this.userEmail,
       })
+      this.snackOpen = false
+      this.loadingEmail = false
     },
   },
 })

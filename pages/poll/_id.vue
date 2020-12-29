@@ -105,7 +105,7 @@
         :voteStatus="submitRes.voteStatus"
       />
     </div>
-    <ResponseSnack :response="submitRes" />
+    <ResponseSnack :response="submitRes" :userEmail="userEmail" />
   </div>
 </template>
 
@@ -181,6 +181,12 @@ export default Vue.extend({
     }
   },
   computed: {
+    userEmail() {
+      if (this.$auth.user) {
+        return this.$auth.user.email
+      }
+      return ''
+    },
     ended(): boolean {
       if (!this.poll.end_date) {
         return false
@@ -248,6 +254,7 @@ export default Vue.extend({
       const { submitRes } = this
       debugger
       if (submitRes.voteStatus === 'alreadyVoted') {
+        debugger
         const voterAnswers = await getVoterAnswers(submitRes, this.poll.id)
         this.chosen = voterAnswers
         this.hasVoted = true
