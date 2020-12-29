@@ -100,7 +100,7 @@
           aria-label="Close"
           @click="showQr = false"
         >
-          <fa class="text-lg mr-2" :icon="['fa', 'times-circle']" />
+          <fa class="text-lg mr-2" :icon="['fa', 'times']" />
         </button>
         <p class="text-lg">QR Code</p>
         <p class="mt-2">

@@ -64,10 +64,10 @@ export default {
                   'faCheck',
                   'faLink',
                   'faQrcode',
-                  'faTimesCircle',
                   'faSpinner',
                   'faCheckCircle',
                   'faUser',
+                  'faTimes',
                   ]
               },
               {
