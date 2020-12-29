@@ -6,11 +6,11 @@
       >
         Poll not found 😬
         <nuxt-link class="block" to="/">
-          <fa
+          <!-- <fa
             class="transform rotate-180"
             :icon="['fa', 'long-arrow-alt-right']"
-          />
-          <span class="underline"> back </span>
+          /> -->
+          <span class="underline"> Home </span>
         </nuxt-link>
       </div>
     </div>
@@ -243,6 +243,7 @@ export default Vue.extend({
     },
     async handleVoteRes() {
       const { submitRes } = this
+      debugger
       if (submitRes.voteStatus === 'alreadyVoted') {
         const voterAnswers = await getVoterAnswers(submitRes, this.poll.id)
         this.chosen = voterAnswers

@@ -7,15 +7,15 @@
         :class="`text-${color}`"
       >
         <span class="text-center w-4/5 flex flex-col">
-          {{ timeBreakdown.days | emptyDash }}
+          {{ timeBreakdown.days }}
           <span class="text-xs text-gray-500">D</span>
         </span>
         <span class="text-center w-4/5 flex flex-col">
-          {{ timeBreakdown.hours | emptyDash }}
+          {{ timeBreakdown.hours }}
           <span class="text-xs text-gray-500">H</span>
         </span>
         <span class="text-center w-4/5 flex flex-col">
-          {{ timeBreakdown.minutes | emptyDash }}
+          {{ timeBreakdown.minutes }}
           <span class="text-xs text-gray-500">M</span>
         </span>
         <span class="text-center w-4/5 flex flex-col">
@@ -39,6 +39,13 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
+const emptyTime = {
+  days: '-',
+  hours: '-',
+  minutes: '-',
+  seconds: '-',
+}
+
 dayjs.extend(relativeTime)
 export default Vue.extend({
   name: 'CountDown',
@@ -51,13 +58,7 @@ export default Vue.extend({
   data() {
     return {
       timeTo: 0,
-      timeBreakdown: {
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-        dayjs,
-      } as any,
+      timeBreakdown: emptyTime as any,
       interval: null,
       dayjs,
     }
@@ -67,13 +68,15 @@ export default Vue.extend({
       this.interval = setInterval(this.counter, 1000)
     }
   },
+  watch: {
+    ednded(value) {
+      if (value) {
+        this.timeBreakdown = emptyTime
+      }
+    },
+  },
   beforeDestroy() {
     clearInterval(this.interval)
-  },
-  filters: {
-    emptyDash: (value) => {
-      return value ? value : '-'
-    },
   },
   methods: {
     counter(): void {
