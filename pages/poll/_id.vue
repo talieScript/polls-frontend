@@ -254,16 +254,10 @@ export default Vue.extend({
       const { submitRes } = this
       debugger
       if (submitRes.voteStatus === 'alreadyVoted') {
-        debugger
-        const voterAnswers = await getVoterAnswers(submitRes, this.poll.id)
+        const voterAnswers = await getVoterAnswers(this.userEmail, this.poll.id)
         this.chosen = voterAnswers
         this.hasVoted = true
         this.voteInfoDialogOpen = true
-      } else if (submitRes.voteStatus === 'emailPending') {
-        // show snack informing user they have voted
-        this.snackText =
-          'Your choice has already been saved. Please click the link in the confirmation email for your vote to be counted.'
-        this.snackOpen = true
       }
       this.voteLoading = false
     },
