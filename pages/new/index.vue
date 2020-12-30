@@ -130,7 +130,7 @@
           Please accept terms and conditions to continue
         </p>
       </div>
-      <BasicButton>
+      <BasicButton class="ml-auto">
         Next <fa class="ml-1" :icon="['fa', 'long-arrow-alt-right']" />
       </BasicButton>
     </form>

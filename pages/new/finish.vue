@@ -29,7 +29,11 @@
       :error.sync="passTwoError"
       password
     />
-    <BasicButton text="Create with password" @click="submitWithPassword" />
+    <BasicButton
+      class="ml-auto"
+      text="Create with password"
+      @click="submitWithPassword"
+    />
   </div>
 </template>
 
