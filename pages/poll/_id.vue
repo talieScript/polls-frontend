@@ -181,6 +181,9 @@ export default Vue.extend({
     }
   },
   computed: {
+    ipAddress() {
+      return this.$store.state.userIp
+    },
     userEmail() {
       if (this.$auth.user) {
         return this.$auth.user.email
@@ -207,12 +210,18 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    if (this.$auth.loggedIn && !this.hasVoted) {
-      const voterAnswers = await getVoterAnswers(this.userEmail, this.poll.id)
+    console.log(this.pollOptions)
+    if (
+      (this.$auth.loggedIn || this.pollOptions.validateIp) &&
+      !this.hasVoted
+    ) {
+      this.voteLoading = true
+      const voterAnswers = await this.getVoterAnswers()
       if (voterAnswers.length) {
         this.chosen = voterAnswers
         this.hasVoted = true
       }
+      this.voteLoading = false
     }
   },
   methods: {
@@ -256,12 +265,22 @@ export default Vue.extend({
       const { submitRes } = this
       debugger
       if (submitRes.voteStatus === 'alreadyVoted') {
-        const voterAnswers = await getVoterAnswers(this.userEmail, this.poll.id)
+        const voterAnswers = await this.getVoterAnswers()
         this.chosen = voterAnswers
         this.hasVoted = true
         this.voteInfoDialogOpen = true
+      } else if (submitRes.voteStatus === 'votePassed') {
+        this.hasVoted = true
       }
       this.voteLoading = false
+    },
+    async getVoterAnswers() {
+      await this.$store.dispatch('getIP')
+      return await getVoterAnswers({
+        userEmail: this.userEmail,
+        ipAdress: this.ipAddress,
+        pollId: this.poll.id,
+      })
     },
   },
 })

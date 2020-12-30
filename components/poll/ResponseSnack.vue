@@ -1,5 +1,5 @@
 <template>
-  <SnackBar v-model="snackOpen" :text="snackText">
+  <SnackBar v-model="snackOpen" :text="snackText" :colour="colour">
     <BasicButton
       v-if="resStatus === 'emailPending'"
       color="white"
@@ -26,6 +26,7 @@ export default Vue.extend({
       snackText: '',
       resStatus: '',
       loadingEmail: false,
+      colour: 'blue-500',
     }
   },
   props: {
@@ -40,11 +41,15 @@ export default Vue.extend({
   },
   watch: {
     response() {
-      const { response, resStatus } = this
+      const { response } = this
       this.resStatus = response.voteStatus
-      if (resStatus === 'emailPending') {
-        // show snack informing user they have voted
+      if (this.resStatus === 'emailPending') {
+        // show snack informing user they have already voted
         this.snackText = snackText.poll.pendingEmail
+        this.snackOpen = true
+      } else if (this.resStatus === 'votePassed') {
+        this.colour = 'green-500'
+        this.snackText = snackText.poll.voteCounted
         this.snackOpen = true
       }
     },
