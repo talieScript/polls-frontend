@@ -263,7 +263,6 @@ export default Vue.extend({
     },
     async handleVoteRes() {
       const { submitRes } = this
-      debugger
       if (submitRes.voteStatus === 'alreadyVoted') {
         const voterAnswers = await this.getVoterAnswers()
         this.chosen = voterAnswers

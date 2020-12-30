@@ -11,12 +11,12 @@
       @click.stop
     >
       <div
-        class="bg-primary w-full py-1 px-2 rounded-t flex items-center justify-start text-white"
+        class="w-full py-1 px-2 rounded-t flex items-center justify-start text-primary"
       >
         <slot class="mr-2 text-lg" name="icon" />
         <h5 class="text-xl">{{ title }}</h5>
         <button
-          class="ml-auto hover:text-gray-300"
+          class="ml-auto mr-1 text-gray-500 hover:text-gray-300 transition-colors duration-100"
           aria-label="Close"
           @click="open = false"
         >
@@ -26,7 +26,7 @@
       <div class="text-sm mt-2 px-3">
         <slot name="default" />
       </div>
-      <div class="mt-3 flex p-2">
+      <div v-if="buttonText" class="mt-3 flex p-2">
         <BasicButton
           @click="open = false"
           class="ml-auto"

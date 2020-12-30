@@ -1,5 +1,20 @@
 <template>
-  <Dialog v-model="open" :title="title" buttonText="accept" />
+  <Dialog v-model="open" title="">
+    <div class="p-3">
+      <h4 class="text-primary text-lg mb-3 -mt-8">
+        Posible reasons why we have counted your vote
+      </h4>
+      <p>
+        If the poll has validate by ip then someone else could have voted on
+        your network.
+      </p>
+      <br />
+      <p>
+        If the poll has validate by email then we have already counted a vote
+        with this email you are signed in with.
+      </p>
+    </div>
+  </Dialog>
 </template>
 
 <script lang="ts">
