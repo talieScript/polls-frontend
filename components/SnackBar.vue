@@ -15,7 +15,7 @@
           aria-label="Close"
           @click="open = false"
         >
-          <fa :icon="['fa', 'times-circle']" />
+          <fa :icon="['fa', 'times']" />
         </button>
       </div>
     </transition>

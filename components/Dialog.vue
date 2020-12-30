@@ -20,7 +20,7 @@
           aria-label="Close"
           @click="open = false"
         >
-          <fa :icon="['fa', 'times-circle']" />
+          <fa :icon="['fa', 'times']" />
         </button>
       </div>
       <div class="text-sm mt-2 px-3">
