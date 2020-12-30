@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div :class="{ disabled }">
     <div
       :class="[
         'bg-white px-2 py-3 rounded-md text-right cursor-pointer transition-all duration-150 answer',
@@ -34,7 +34,7 @@ export default Vue.extend({
     answers: {
       type: Array,
       required: true,
-    },
+    } as PropOptions<string[]>,
     value: {
       type: Array,
       required: true,
@@ -46,8 +46,8 @@ export default Vue.extend({
   },
   computed: {
     selected: {
-      get(): string[] {
-        return this.value[0]
+      get(): string {
+        return this.value[0] as string
       },
       set(value: string) {
         this.$emit('input', [value])
@@ -89,5 +89,18 @@ export default Vue.extend({
 }
 .answer:not(:first-of-type) {
   @apply mt-5;
+}
+
+.disabled {
+  @apply pointer-events-none;
+  .active .label {
+    @apply shadow-none;
+    .circle {
+      @apply border-purple-300 #{!important};
+      &::before {
+        @apply bg-purple-300;
+      }
+    }
+  }
 }
 </style>
