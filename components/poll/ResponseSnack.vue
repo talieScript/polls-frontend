@@ -11,6 +11,7 @@
     >
       resend email
     </BasicButton>
+    <LoginLink outline />
   </SnackBar>
 </template>
 
@@ -50,6 +51,10 @@ export default Vue.extend({
       } else if (this.resStatus === 'votePassed') {
         this.colour = 'green-500'
         this.snackText = snackText.poll.voteCounted
+        this.snackOpen = true
+      } else if (this.resStatus === 'alreadyVoted') {
+        this.colour = 'yellow-500'
+        this.snackText = snackText.poll.alreadyVoted
         this.snackOpen = true
       }
     },
