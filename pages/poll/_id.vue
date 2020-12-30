@@ -206,11 +206,13 @@ export default Vue.extend({
       return pollOptions.choiceNoStrict ? pollOptions.choiceNo : 1
     },
   },
-  async created() {
+  async mounted() {
     if (this.$auth.loggedIn && !this.hasVoted) {
-      const userAnswers = await this.$axios.get(
-        `${process.env.VUE_APP_POLLS_API}/voter/answers/${this.poll.id}?email=${this.$auth.user.email}`
-      )
+      const voterAnswers = await getVoterAnswers(this.userEmail, this.poll.id)
+      if (voterAnswers.length) {
+        this.chosen = voterAnswers
+        this.hasVoted = true
+      }
     }
   },
   methods: {
