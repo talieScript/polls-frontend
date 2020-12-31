@@ -2,8 +2,9 @@
   <div :class="{ disabled }">
     <div
       :class="[
-        'bg-white px-2 py-3 rounded-md text-right cursor-pointer transition-all duration-150 answer',
+        'bg-white p-2 rounded-md text-right cursor-pointer transition-all duration-150 answer',
         { active: selected === answer.id },
+        { winning: isWinning(answer.votes) },
       ]"
       v-for="answer in answers"
       :key="answer.id"
@@ -17,9 +18,15 @@
         name="answers"
         class="hidden"
       />
-      <label class="label w-full cursor-pointer" :for="answer.id">
-        <span>{{ answer.answer_string }}</span>
-        <span class="circle"></span>
+      <label class="w-full cursor-pointer" :for="answer.id">
+        <div class="label">
+          <span>{{ answer.answer_string }}</span>
+          <span class="circle"></span>
+        </div>
+        <div class="">
+          <span>{{ answer.votes }} votes</span>
+          <span>{{ getPercentage(answer.votes) }}%</span>
+        </div>
       </label>
     </div>
   </div>
@@ -34,7 +41,7 @@ export default Vue.extend({
     answers: {
       type: Array,
       required: true,
-    } as PropOptions<string[]>,
+    } as PropOptions<any[]>,
     value: {
       type: Array,
       required: true,
@@ -52,6 +59,18 @@ export default Vue.extend({
       set(value: string) {
         this.$emit('input', [value])
       },
+    },
+    votesArray(): number[] {
+      return this.answers.map((a) => a.votes)
+    },
+  },
+  methods: {
+    getPercentage(votes) {
+      const totalVotes = this.votesArray.reduce((a, b) => a + b, 0)
+      return Math.round((votes / totalVotes) * 100)
+    },
+    isWinning(votes) {
+      return votes === Math.max(...this.votesArray)
     },
   },
 })
@@ -99,6 +118,25 @@ export default Vue.extend({
       @apply border-purple-300 #{!important};
       &::before {
         @apply bg-purple-300;
+      }
+    }
+  }
+}
+
+.winning {
+  @apply text-green-400;
+  .circle {
+    @apply border-green-300 #{!important};
+  }
+  &.active {
+    box-shadow: 0 4px 17px -2px rgba(116, 252, 150, 0.2),
+      0 7px 3px -1px rgba(116, 252, 150, 0.1) !important;
+    .label {
+      .circle {
+        @apply border-green-300 #{!important};
+        &::before {
+          @apply bg-green-300;
+        }
       }
     }
   }
