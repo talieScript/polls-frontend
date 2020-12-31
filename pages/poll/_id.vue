@@ -301,8 +301,15 @@ export default Vue.extend({
         this.hasVoted = true
       } else if (submitRes.voteStatus === 'votePassed') {
         this.hasVoted = true
+        this.updateAnswers()
       }
       this.voteLoading = false
+    },
+    async updateAnswers() {
+      const newAnswers = await this.$axios.get(
+        `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}/answers`
+      )
+      this.poll.Answers = newAnswers.data
     },
     async getVoterAnswers() {
       await this.$store.dispatch('getIP')
