@@ -3,13 +3,14 @@
     <div
       v-for="answer in answers"
       :key="answer.id"
-      class="flex answer transition-all duration-200 relative rounded bg-white overflow-hidden"
+      class="flex answer transition-all duration-200 relative rounded bg-white overflow-hidden cursor-pointer"
       :class="[
         { checked: checkedAnswers.includes(answer.id) },
         { disabled },
         { winning: isWinning(answer.votes) },
         { 'show-results': showResults },
       ]"
+      @click="toggleCheck(answer.id)"
     >
       <input
         v-model="checkedAnswers"
@@ -23,7 +24,6 @@
       <div
         class="box transition-all duration-200 flex items-center justify-between"
         :class="{ 'cursor-pointer': !disabled }"
-        @click="toggleCheck(answer.id)"
       >
         <label :for="answer.id" class="label mr-auto pointer-events-none w-4/5">
           {{ answer.answer_string }}
@@ -36,7 +36,10 @@
             :class="[
               { 'opacity-100': checkedAnswers.includes(answer.id) },
               { 'text-gray-400': disabled },
-              { 'text-green-400': isWinning(answer.votes) && showResults },
+              {
+                'text-green-400':
+                  isWinning(answer.votes) && showResults && !disabled,
+              },
             ]"
             :icon="['fa', 'check']"
           />
