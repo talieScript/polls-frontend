@@ -269,11 +269,16 @@ export default Vue.extend({
       await this.$store.dispatch('getIP')
       const ipAddress = this.$store.state.userIp
       this.$axios
-        .post(`${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}`, {
-          answers: chosen,
-          email: email || '',
-          ipAddress,
-        })
+        .post(
+          `${process.env.VUE_APP_POLLS_API}/polls/${
+            this.poll.id
+          }?validateEmail=${email && !this.userEmail}`,
+          {
+            answers: chosen,
+            email: email || '',
+            ipAddress,
+          }
+        )
         .then((res) => {
           this.submitRes = res.data
           this.handleVoteRes()
