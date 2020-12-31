@@ -2,10 +2,10 @@
   <div :class="{ disabled }">
     <div
       :class="[
-        'bg-white px-2 rounded-md text-right cursor-pointer transition-all duration-150 answer relative overflow-hidden',
-        `py-${showResults ? '2' : '3'}`,
+        'bg-white px-2 py-2 rounded-md text-right cursor-pointer transition-all duration-300 answer relative overflow-hidden',
         { active: selected === answer.id },
         { winning: isWinning(answer.votes) },
+        { 'show-results': showResults },
       ]"
       v-for="answer in answers"
       :key="answer.id"
@@ -24,33 +24,42 @@
           <span>{{ answer.answer_string }}</span>
           <span class="circle"></span>
         </div>
-        <div v-if="showResults" class="flex items-center justify-between">
-          <span
-            >{{ answer.votes }} vote<span v-if="answer.votes !== 1"
-              >s</span
-            ></span
+        <transition name="fade">
+          <div
+            v-if="showResults"
+            class="flex items-center justify-between absolute left-0 mt-1 w-full px-2"
           >
-          <span>{{ getPercentage(answer.votes) }}%</span>
-        </div>
+            <span
+              >{{ answer.votes }} vote<span v-if="answer.votes !== 1"
+                >s</span
+              ></span
+            >
+            <span>{{ getPercentage(answer.votes) }}%</span>
+          </div>
+        </transition>
       </label>
-      <div
-        v-if="showResults"
-        class="percent-bar w-full h-2 bg-gray-200 absolute bottom-0 left-0"
-      >
+      <transition name="fade">
         <div
-          class="h-full"
-          :class="[
-            {
-              'bg-gray-500': true,
-            },
-            {
-              'bg-primary': selected === answer.id && !isWinning(answer.votes),
-            },
-            { 'bg-green-400': isWinning(answer.votes) },
-          ]"
-          :style="`width: ${getPercentage(answer.votes)}%;`"
-        ></div>
-      </div>
+          v-if="showResults"
+          class="percent-bar w-full bg-gray-200 absolute bottom-0 left-0"
+          :class="`${showResults ? 'h-2' : 'h-0'}`"
+        >
+          <div
+            class="h-full"
+            :class="[
+              {
+                'bg-gray-500': true,
+              },
+              {
+                'bg-primary':
+                  selected === answer.id && !isWinning(answer.votes),
+              },
+              { 'bg-green-400': isWinning(answer.votes) },
+            ]"
+            :style="`width: ${getPercentage(answer.votes)}%;`"
+          ></div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -171,5 +180,15 @@ export default Vue.extend({
       }
     }
   }
+}
+.show-results {
+  padding-bottom: 2.5rem !important;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
