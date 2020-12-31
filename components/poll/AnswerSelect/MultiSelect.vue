@@ -3,8 +3,14 @@
     <div
       v-for="answer in answers"
       :key="answer.id"
-      class="flex answer transition-all duration-200"
-      :class="[{ checked: checkedAnswers.includes(answer.id) }, { disabled }]"
+      class="flex answer transition-all duration-200 relative rounded bg-white overflow-hidden cursor-pointer"
+      :class="[
+        { checked: checkedAnswers.includes(answer.id) },
+        { disabled },
+        { winning: isWinning(answer.votes) },
+        { 'show-results': showResults },
+      ]"
+      @click="toggleCheck(answer.id)"
     >
       <input
         v-model="checkedAnswers"
@@ -18,24 +24,63 @@
       <div
         class="box transition-all duration-200 flex items-center justify-between"
         :class="{ 'cursor-pointer': !disabled }"
-        @click="toggleCheck(answer.id)"
       >
         <label :for="answer.id" class="label mr-auto pointer-events-none w-4/5">
           {{ answer.answer_string }}
         </label>
         <div
-          class="checkBox flex justify-center align-middle p-0 w-6 h-6 border rounded bg-gray-100 transition-all duration-200"
+          class="checkBox flex justify-center align-middle p-0 w-6 h-6 border rounded bg-gray-100 transition-all duration-200 self-start"
         >
           <fa
-            class="opacity-0 duration-100 transition-opacity mt-1"
+            class="opacity-0 mt-1 transition-all duration-200 tick"
             :class="[
               { 'opacity-100': checkedAnswers.includes(answer.id) },
               { 'text-gray-400': disabled },
+              {
+                'text-green-400':
+                  isWinning(answer.votes) && showResults && !disabled,
+              },
             ]"
             :icon="['fa', 'check']"
           />
         </div>
       </div>
+      <transition name="fade">
+        <div
+          v-if="showResults"
+          class="flex items-center justify-between absolute left-0 bottom-0 mb-3 w-full px-2 transition-all duration-200"
+        >
+          <span
+            >{{ answer.votes }} vote<span v-if="answer.votes !== 1"
+              >s</span
+            ></span
+          >
+          <span>{{ getPercentage(answer.votes) }}%</span>
+        </div>
+      </transition>
+      <transition name="fade">
+        <div
+          v-if="showResults"
+          class="percent-bar w-full bg-gray-200 absolute bottom-0 left-0 transition-all duration-200"
+          :class="`${showResults ? 'h-2' : 'h-0'}`"
+        >
+          <div
+            class="h-full"
+            :class="[
+              {
+                'bg-gray-500': true,
+              },
+              {
+                'bg-primary':
+                  checkedAnswers.includes(answer.id) &&
+                  !isWinning(answer.votes),
+              },
+              { 'bg-green-400': isWinning(answer.votes) },
+            ]"
+            :style="`width: ${getPercentage(answer.votes)}%;`"
+          ></div>
+        </div>
+      </transition>
     </div>
   </fieldset>
 </template>
@@ -66,6 +111,10 @@ export default Vue.extend({
       type: Boolean,
       required: true,
     },
+    showResults: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     checkedAnswers: {
@@ -76,6 +125,9 @@ export default Vue.extend({
         this.$emit('input', value)
       },
     } as any,
+    votesArray(): number[] {
+      return this.answers.map((a) => a.votes)
+    },
   },
   methods: {
     toggleCheck(id): void {
@@ -89,16 +141,29 @@ export default Vue.extend({
         this.checkedAnswers.push(id)
       }
     },
+    getPercentage(votes) {
+      if (votes < 1) {
+        return 0
+      }
+      const totalVotes = this.votesArray.reduce((a, b) => a + b, 0)
+      return Math.round((votes / totalVotes) * 100)
+    },
+    isWinning(votes) {
+      return votes === Math.max(...this.votesArray)
+    },
   },
 })
 </script>
 
 <style lang="scss" scoped>
+.tick {
+  @apply text-primary;
+}
 .answer:not(:first-of-type) {
   @apply mt-6;
 }
 .box {
-  @apply px-3 py-3 bg-white w-full rounded flex justify-between align-middle;
+  @apply px-3 py-3 w-full rounded flex justify-between align-middle;
 }
 
 input:focus + .box {
@@ -106,8 +171,8 @@ input:focus + .box {
 }
 
 .checked {
-  box-shadow: 0px 5px 20px -2px rgba(125, 131, 255, 0.1),
-    0px 5px 3px -1px rgba(125, 131, 255, 0.1);
+  box-shadow: 0 4px 17px -2px rgba(125, 131, 255, 0.2),
+    0 7px 3px -1px rgba(125, 131, 255, 0.1);
   @apply text-primary;
 
   .checkBox {
@@ -119,5 +184,29 @@ input:focus + .box {
   .checkBox {
     @apply border-gray-500 #{!important};
   }
+}
+
+.show-results {
+  &.winning {
+    @apply text-green-400;
+  }
+  &.checked {
+    &.winning {
+      box-shadow: 0 4px 17px -2px rgba(116, 252, 150, 0.2),
+        0 7px 3px -1px rgba(116, 252, 150, 0.1);
+
+      .checkBox {
+        @apply bg-green-100 border-green-400 #{!important};
+      }
+    }
+  }
+  padding-bottom: 2rem !important;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
