@@ -29,7 +29,7 @@
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
-              v-if="!hasVoted"
+              v-if="!hasVoted && !ended"
               class="mt-2"
               :requiredAnswers="requiredAnswersNo"
               :selectedAnswersNo="chosen.length"
@@ -105,7 +105,7 @@
         :voteStatus="submitRes.voteStatus"
       />
     </div>
-    <SnackBar v-model="snackOpen" text="This is some test text here" />
+    <ResponseSnack :response="submitRes" :userEmail="userEmail" />
   </div>
 </template>
 
@@ -178,10 +178,19 @@ export default Vue.extend({
         voteStatus: 'alreadyVoted',
         voterId: '',
       } as VoteStatusRes,
-      snackOpen: true,
+      enteredEmail: '',
     }
   },
   computed: {
+    ipAddress() {
+      return this.$store.state.userIp
+    },
+    userEmail() {
+      if (this.$auth.user) {
+        return this.$auth.user.email
+      }
+      return ''
+    },
     ended(): boolean {
       if (!this.poll.end_date) {
         return false
@@ -201,11 +210,19 @@ export default Vue.extend({
       return pollOptions.choiceNoStrict ? pollOptions.choiceNo : 1
     },
   },
-  async created() {
-    if (this.$auth.loggedIn && !this.hasVoted) {
-      const userAnswers = await this.$axios.get(
-        `${process.env.VUE_APP_POLLS_API}/voter/answers/${this.poll.id}?email=${this.$auth.user.email}`
-      )
+  async mounted() {
+    console.log(this.pollOptions)
+    if (
+      (this.$auth.loggedIn || this.pollOptions.validateIp) &&
+      !this.hasVoted
+    ) {
+      this.voteLoading = true
+      const voterAnswers = await this.getVoterAnswers()
+      if (voterAnswers.length) {
+        this.chosen = voterAnswers
+        this.hasVoted = true
+      }
+      this.voteLoading = false
     }
   },
   methods: {
@@ -221,6 +238,7 @@ export default Vue.extend({
       }
     },
     async sendVote(email?) {
+      this.enteredEmail = email
       this.voteLoading = true
       const { chosen } = this
       await this.$store.dispatch('getIP')
@@ -247,14 +265,22 @@ export default Vue.extend({
     },
     async handleVoteRes() {
       const { submitRes } = this
-      debugger
       if (submitRes.voteStatus === 'alreadyVoted') {
-        const voterAnswers = await getVoterAnswers(submitRes, this.poll.id)
+        const voterAnswers = await this.getVoterAnswers()
         this.chosen = voterAnswers
         this.hasVoted = true
-        this.voteInfoDialogOpen = true
+      } else if (submitRes.voteStatus === 'votePassed') {
+        this.hasVoted = true
       }
       this.voteLoading = false
+    },
+    async getVoterAnswers() {
+      await this.$store.dispatch('getIP')
+      return await getVoterAnswers({
+        userEmail: this.userEmail || this.enteredEmail,
+        ipAdress: this.ipAddress,
+        pollId: this.poll.id,
+      })
     },
   },
 })
