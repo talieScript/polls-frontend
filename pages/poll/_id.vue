@@ -61,7 +61,7 @@
           </div>
         </div>
         <div
-          class="sm:order-2 sm:w-32 w- flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
+          class="sm:order-2 sm:w-32 flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
         >
           <CountDown
             v-if="poll.end_date"
@@ -106,6 +106,16 @@
       />
     </div>
     <ResponseSnack :response="submitRes" :userEmail="userEmail" />
+    <SnackBar
+      v-model="afterEmailSnackShow"
+      text="Thank you for confirming your email. Your vote has now been counted!"
+    >
+      <br />
+      <span class="pb-2">
+        Log in or sign up to keep track of your votes and created polls.
+      </span>
+      <LoginLink outline />
+    </SnackBar>
   </div>
 </template>
 
@@ -179,6 +189,7 @@ export default Vue.extend({
         voterId: '',
       } as VoteStatusRes,
       enteredEmail: '',
+      afterEmailSnackShow: false,
     }
   },
   computed: {
@@ -222,6 +233,21 @@ export default Vue.extend({
         this.hasVoted = true
       }
       this.voteLoading = false
+    }
+    // if it still not got the users answer, check the url
+    const urlAnswers = this.$route.query.answers
+    if (!this.hasVoted && urlAnswers) {
+      const splitanswers = urlAnswers.split(',')
+      this.chosen = splitanswers
+      this.hasVoted = true
+      this.afterEmailSnackShow = true
+      // remove answers from url to avoid people sharing this page
+      this.$router.replace({
+        ...this.$router.currentRoute,
+        query: {
+          answers: undefined,
+        },
+      })
     }
   },
   methods: {
