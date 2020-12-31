@@ -11,7 +11,9 @@
       :disabled="disabled"
       :showResults="show"
     />
-    <BasicButton @click="show = !show"> toggle results </BasicButton>
+    <BasicButton @click="show = !show" class="mt-4">
+      toggle results
+    </BasicButton>
   </div>
 </template>
 

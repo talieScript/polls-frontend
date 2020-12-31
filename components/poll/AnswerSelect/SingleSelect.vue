@@ -2,7 +2,8 @@
   <div :class="{ disabled }">
     <div
       :class="[
-        'bg-white p-2 rounded-md text-right cursor-pointer transition-all duration-150 answer',
+        'bg-white px-2 rounded-md text-right cursor-pointer transition-all duration-150 answer relative overflow-hidden',
+        `py-${showResults ? '2' : '3'}`,
         { active: selected === answer.id },
         { winning: isWinning(answer.votes) },
       ]"
@@ -23,11 +24,33 @@
           <span>{{ answer.answer_string }}</span>
           <span class="circle"></span>
         </div>
-        <div class="">
-          <span>{{ answer.votes }} votes</span>
+        <div v-if="showResults" class="flex items-center justify-between">
+          <span
+            >{{ answer.votes }} vote<span v-if="answer.votes !== 1"
+              >s</span
+            ></span
+          >
           <span>{{ getPercentage(answer.votes) }}%</span>
         </div>
       </label>
+      <div
+        v-if="showResults"
+        class="percent-bar w-full h-2 bg-gray-200 absolute bottom-0 left-0"
+      >
+        <div
+          class="h-full"
+          :class="[
+            {
+              'bg-gray-500': true,
+            },
+            {
+              'bg-primary': selected === answer.id && !isWinning(answer.votes),
+            },
+            { 'bg-green-400': isWinning(answer.votes) },
+          ]"
+          :style="`width: ${getPercentage(answer.votes)}%;`"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
@@ -47,6 +70,10 @@ export default Vue.extend({
       required: true,
     },
     disabled: {
+      type: Boolean,
+      required: true,
+    },
+    showResults: {
       type: Boolean,
       required: true,
     },
@@ -110,6 +137,10 @@ export default Vue.extend({
   @apply mt-5;
 }
 
+.percent-bar {
+  width: 100px;
+}
+
 .disabled {
   @apply pointer-events-none;
   .active .label {
@@ -126,16 +157,16 @@ export default Vue.extend({
 .winning {
   @apply text-green-400;
   .circle {
-    @apply border-green-300 #{!important};
+    @apply border-green-400 #{!important};
   }
   &.active {
     box-shadow: 0 4px 17px -2px rgba(116, 252, 150, 0.2),
-      0 7px 3px -1px rgba(116, 252, 150, 0.1) !important;
+      0 7px 3px -1px rgba(116, 252, 150, 0.1);
     .label {
       .circle {
-        @apply border-green-300 #{!important};
+        @apply border-green-400 #{!important};
         &::before {
-          @apply bg-green-300;
+          @apply bg-green-400;
         }
       }
     }
