@@ -2,7 +2,7 @@
   <div :class="{ disabled }">
     <div
       :class="[
-        'bg-white px-2 py-2 rounded-md text-right cursor-pointer transition-all duration-300 answer relative overflow-hidden',
+        'bg-white px-2 py-2 rounded-md cursor-pointer transition-all duration-300 answer relative overflow-hidden',
         { active: selected === answer.id },
         { winning: isWinning(answer.votes) },
         { 'show-results': showResults },
@@ -19,10 +19,10 @@
         name="answers"
         class="hidden"
       />
-      <label class="w-full cursor-pointer" :for="answer.id">
+      <label class="cursor-pointer" :for="answer.id">
         <div class="label">
-          <span>{{ answer.answer_string }}</span>
-          <span class="circle"></span>
+          <span class="w-4/5">{{ answer.answer_string }}</span>
+          <span class="circle self-start"></span>
         </div>
         <transition name="fade">
           <div
@@ -102,6 +102,9 @@ export default Vue.extend({
   },
   methods: {
     getPercentage(votes) {
+      if (votes < 1) {
+        return 0
+      }
       const totalVotes = this.votesArray.reduce((a, b) => a + b, 0)
       return Math.round((votes / totalVotes) * 100)
     },
