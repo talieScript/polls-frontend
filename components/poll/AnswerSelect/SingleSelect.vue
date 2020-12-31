@@ -2,8 +2,10 @@
   <div :class="{ disabled }">
     <div
       :class="[
-        'bg-white px-2 py-3 rounded-md text-right cursor-pointer transition-all duration-150 answer',
+        'bg-white px-2 py-2 rounded-md cursor-pointer transition-all duration-300 answer relative overflow-hidden',
         { active: selected === answer.id },
+        { winning: isWinning(answer.votes) },
+        { 'show-results': showResults },
       ]"
       v-for="answer in answers"
       :key="answer.id"
@@ -17,10 +19,47 @@
         name="answers"
         class="hidden"
       />
-      <label class="label w-full cursor-pointer" :for="answer.id">
-        <span>{{ answer.answer_string }}</span>
-        <span class="circle"></span>
+      <label class="cursor-pointer" :for="answer.id">
+        <div class="label">
+          <span class="w-4/5">{{ answer.answer_string }}</span>
+          <span class="circle self-start"></span>
+        </div>
+        <transition name="fade">
+          <div
+            v-if="showResults"
+            class="flex items-center justify-between absolute left-0 mt-1 w-full px-2"
+          >
+            <span
+              >{{ answer.votes }} vote<span v-if="answer.votes !== 1"
+                >s</span
+              ></span
+            >
+            <span>{{ getPercentage(answer.votes) }}%</span>
+          </div>
+        </transition>
       </label>
+      <transition name="fade">
+        <div
+          v-if="showResults"
+          class="percent-bar w-full bg-gray-200 absolute bottom-0 left-0"
+          :class="`${showResults ? 'h-2' : 'h-0'}`"
+        >
+          <div
+            class="h-full"
+            :class="[
+              {
+                'bg-gray-500': true,
+              },
+              {
+                'bg-primary':
+                  selected === answer.id && !isWinning(answer.votes),
+              },
+              { 'bg-green-400': isWinning(answer.votes) },
+            ]"
+            :style="`width: ${getPercentage(answer.votes)}%;`"
+          ></div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -34,12 +73,16 @@ export default Vue.extend({
     answers: {
       type: Array,
       required: true,
-    } as PropOptions<string[]>,
+    } as PropOptions<any[]>,
     value: {
       type: Array,
       required: true,
     },
     disabled: {
+      type: Boolean,
+      required: true,
+    },
+    showResults: {
       type: Boolean,
       required: true,
     },
@@ -52,6 +95,21 @@ export default Vue.extend({
       set(value: string) {
         this.$emit('input', [value])
       },
+    },
+    votesArray(): number[] {
+      return this.answers.map((a) => a.votes)
+    },
+  },
+  methods: {
+    getPercentage(votes) {
+      if (votes < 1) {
+        return 0
+      }
+      const totalVotes = this.votesArray.reduce((a, b) => a + b, 0)
+      return Math.round((votes / totalVotes) * 100)
+    },
+    isWinning(votes) {
+      return votes === Math.max(...this.votesArray)
     },
   },
 })
@@ -91,6 +149,10 @@ export default Vue.extend({
   @apply mt-5;
 }
 
+.percent-bar {
+  width: 100px;
+}
+
 .disabled {
   @apply pointer-events-none;
   .active .label {
@@ -102,5 +164,34 @@ export default Vue.extend({
       }
     }
   }
+}
+
+.show-results {
+  padding-bottom: 2.5rem !important;
+  &.winning {
+    @apply text-green-400;
+    .circle {
+      @apply border-green-400 #{!important};
+    }
+    &.active {
+      box-shadow: 0 4px 17px -2px rgba(116, 252, 150, 0.2),
+        0 7px 3px -1px rgba(116, 252, 150, 0.1);
+      .label {
+        .circle {
+          @apply border-green-400 #{!important};
+          &::before {
+            @apply bg-green-400;
+          }
+        }
+      }
+    }
+  }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

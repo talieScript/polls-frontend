@@ -178,6 +178,7 @@ export default Vue.extend({
         voteStatus: 'alreadyVoted',
         voterId: '',
       } as VoteStatusRes,
+      enteredEmail: '',
     }
   },
   computed: {
@@ -237,6 +238,7 @@ export default Vue.extend({
       }
     },
     async sendVote(email?) {
+      this.enteredEmail = email
       this.voteLoading = true
       const { chosen } = this
       await this.$store.dispatch('getIP')
@@ -267,7 +269,6 @@ export default Vue.extend({
         const voterAnswers = await this.getVoterAnswers()
         this.chosen = voterAnswers
         this.hasVoted = true
-        this.voteInfoDialogOpen = true
       } else if (submitRes.voteStatus === 'votePassed') {
         this.hasVoted = true
       }
@@ -276,7 +277,7 @@ export default Vue.extend({
     async getVoterAnswers() {
       await this.$store.dispatch('getIP')
       return await getVoterAnswers({
-        userEmail: this.userEmail,
+        userEmail: this.userEmail || this.enteredEmail,
         ipAdress: this.ipAddress,
         pollId: this.poll.id,
       })

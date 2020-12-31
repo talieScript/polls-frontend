@@ -112,7 +112,7 @@ export default Vue.extend({
           color = 'yellow-500'
           break
         // less then an hour
-        case timeBreakdown.hours < 1:
+        case timeBreakdown.hours < 1 && timeBreakdown.days < 1:
           color = 'red'
           break
         default:

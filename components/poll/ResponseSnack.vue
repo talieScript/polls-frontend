@@ -1,7 +1,7 @@
 <template>
   <SnackBar v-model="snackOpen" :text="snackText" :colour="colour">
     <BasicButton
-      v-if="resStatus === 'emailPending'"
+      v-if="resStatus === 'emailPending' || resStatus === 'emailSent'"
       color="white"
       textSize="sm"
       rounded="md"
@@ -11,6 +11,7 @@
     >
       resend email
     </BasicButton>
+    <LoginLink v-if="resStatus === 'alreadyVoted'" outline />
   </SnackBar>
 </template>
 
@@ -43,13 +44,17 @@ export default Vue.extend({
     response() {
       const { response } = this
       this.resStatus = response.voteStatus
-      if (this.resStatus === 'emailPending') {
+      if (this.resStatus === 'emailPending' || this.resStatus === 'emailSent') {
         // show snack informing user they have already voted
         this.snackText = snackText.poll.pendingEmail
         this.snackOpen = true
       } else if (this.resStatus === 'votePassed') {
         this.colour = 'green-500'
         this.snackText = snackText.poll.voteCounted
+        this.snackOpen = true
+      } else if (this.resStatus === 'alreadyVoted') {
+        this.colour = 'yellow-500'
+        this.snackText = snackText.poll.alreadyVoted
         this.snackOpen = true
       }
     },
