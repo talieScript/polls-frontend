@@ -166,26 +166,26 @@ export default Vue.extend({
   }
 }
 
-.winning {
-  @apply text-green-400;
-  .circle {
-    @apply border-green-400 #{!important};
-  }
-  &.active {
-    box-shadow: 0 4px 17px -2px rgba(116, 252, 150, 0.2),
-      0 7px 3px -1px rgba(116, 252, 150, 0.1);
-    .label {
-      .circle {
-        @apply border-green-400 #{!important};
-        &::before {
-          @apply bg-green-400;
+.show-results {
+  padding-bottom: 2.5rem !important;
+  &.winning {
+    @apply text-green-400;
+    .circle {
+      @apply border-green-400 #{!important};
+    }
+    &.active {
+      box-shadow: 0 4px 17px -2px rgba(116, 252, 150, 0.2),
+        0 7px 3px -1px rgba(116, 252, 150, 0.1);
+      .label {
+        .circle {
+          @apply border-green-400 #{!important};
+          &::before {
+            @apply bg-green-400;
+          }
         }
       }
     }
   }
-}
-.show-results {
-  padding-bottom: 2.5rem !important;
 }
 .fade-enter-active,
 .fade-leave-active {
