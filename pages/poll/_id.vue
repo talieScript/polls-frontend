@@ -15,7 +15,8 @@
       </div>
     </div>
     <div class="sm:pt-10" v-else-if="poll">
-      <h1 class="text-2xl">{{ poll.question }}</h1>
+      <h1 class="text-center text-3xl mb-4">{{ poll.title }}</h1>
+      <h2 class="text-2xl">{{ poll.question }}</h2>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
       <div class="flex flex-col sm:flex-row sm:flex-wrap justify-between">
         <div class="sm:w-3/4 order-1 flex items-end flex-col">
