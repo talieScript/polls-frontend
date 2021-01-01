@@ -248,7 +248,6 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    console.log(this.pollOptions)
     if (
       (this.$auth.loggedIn || this.pollOptions.validateIp) &&
       !this.hasVoted
@@ -275,6 +274,9 @@ export default Vue.extend({
           answers: undefined,
         },
       })
+    }
+    if (this.hasVoted) {
+      this.showResults = true
     }
   },
   methods: {
