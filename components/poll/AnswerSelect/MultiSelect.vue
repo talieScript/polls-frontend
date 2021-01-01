@@ -128,6 +128,9 @@ export default Vue.extend({
     votesArray(): number[] {
       return this.answers.map((a) => a.votes)
     },
+    totalVotes(): number {
+      return this.votesArray.reduce((a, b) => a + b, 0)
+    },
   },
   methods: {
     toggleCheck(id): void {
@@ -145,10 +148,12 @@ export default Vue.extend({
       if (votes < 1) {
         return 0
       }
-      const totalVotes = this.votesArray.reduce((a, b) => a + b, 0)
-      return Math.round((votes / totalVotes) * 100)
+      return Math.round((votes / this.totalVotes) * 100)
     },
     isWinning(votes) {
+      if (!this.totalVotes) {
+        return false
+      }
       return votes === Math.max(...this.votesArray)
     },
   },
