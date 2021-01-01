@@ -123,7 +123,7 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { PollOptions, VoteStatusRes } from '@/utils/types'
+import { pollOptions, PollOptions, VoteStatusRes } from '@/utils/types'
 import { getVoterAnswers } from '@/utils/helpers'
 
 dayjs.extend(relativeTime)
@@ -209,7 +209,10 @@ export default Vue.extend({
       return dayjs(this.poll.end_date).isBefore(dayjs())
     },
     pollOptions(): PollOptions {
-      return JSON.parse(this.poll.options)
+      if (this.poll.options) {
+        return JSON.parse(this.poll.options)
+      }
+      return {} as pollOptions
     },
     totalVotes(): number {
       return this.poll.Answers.map((a) => a.votes).reduce(

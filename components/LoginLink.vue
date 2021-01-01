@@ -27,7 +27,7 @@ export default Vue.extend({
   },
   computed: {
     user() {
-      return this.$auth.user
+      return (this as any).$auth.user
     },
   },
   methods: {
