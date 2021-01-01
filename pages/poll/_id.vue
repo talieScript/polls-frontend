@@ -26,6 +26,7 @@
             :exact="pollOptions.choiceNoStrict"
             :answers="poll.Answers"
             :disabled="hasVoted || ended || voteLoading"
+            :show-results="showResults"
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
@@ -68,9 +69,18 @@
             class="max-w-xs w-2/5 sm:w-full"
             :endDate="poll.end_date || ''"
           />
-          <div class="sm:ml-0 mb-3 sm:mt-3">
-            <p class="text-xs">Total Votes</p>
-            <span class="text-xl text-black">{{ totalVotes }}</span>
+          <div
+            class="sm:ml-0 mb-3 sm:mt-3 w-full flex sm:justify-between items-center"
+          >
+            <div class="mr-3 sm:mr-0">
+              <p class="text-xs">Total Votes</p>
+              <span class="text-xl text-black">{{ totalVotes }}</span>
+            </div>
+            <ToggleResults
+              v-model="showResults"
+              :disabled="disabledResults"
+              :poll-options="pollOptions"
+            />
           </div>
           <SharePoll
             class="hidden sm:block"
@@ -190,9 +200,22 @@ export default Vue.extend({
       } as VoteStatusRes,
       enteredEmail: '',
       afterEmailSnackShow: false,
+      showResults: false,
     }
   },
   computed: {
+    disabledResults(): boolean {
+      const { pollOptions } = this
+      if (pollOptions.resultsVisibility === 'alwaysShow') {
+        return false
+      }
+      if (pollOptions.resultsVisibility === 'afterVote') {
+        return !this.hasVoted
+      }
+      if (pollOptions.resultsVisibility === 'pollEnd') {
+        return !this.ended
+      }
+    },
     ipAddress() {
       return this.$store.state.userIp
     },
@@ -225,6 +248,7 @@ export default Vue.extend({
     },
   },
   async mounted() {
+    console.log(this.pollOptions)
     if (
       (this.$auth.loggedIn || this.pollOptions.validateIp) &&
       !this.hasVoted

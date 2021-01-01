@@ -9,11 +9,8 @@
       :answers="answers"
       :answerNumber="answerNumber"
       :disabled="disabled"
-      :showResults="show"
+      :showResults="showResults"
     />
-    <BasicButton @click="show = !show" class="mt-4">
-      toggle results
-    </BasicButton>
   </div>
 </template>
 
@@ -50,11 +47,10 @@ export default Vue.extend({
       type: Boolean,
       required: true,
     },
-  },
-  data() {
-    return {
-      show: true,
-    }
+    showResults: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     answerCompoent() {

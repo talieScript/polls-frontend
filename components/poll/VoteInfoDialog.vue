@@ -5,8 +5,8 @@
         Posible reasons why we have counted your vote
       </h4>
       <p>
-        If the poll has validate by ip then someone else could have voted on
-        your network.
+        If the poll has validate by ip then someone has already voted on your
+        network.
       </p>
       <br />
       <p>
