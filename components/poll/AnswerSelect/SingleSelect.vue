@@ -7,7 +7,7 @@
         { winning: isWinning(answer.votes) },
         { 'show-results': showResults },
       ]"
-      v-for="answer in answers"
+      v-for="answer in orderedAnswers"
       :key="answer.id"
       @click="selected = answer.id"
     >
@@ -66,6 +66,7 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
+import { Answer } from '~/utils/types'
 
 export default Vue.extend({
   name: 'SingleSelect',
@@ -101,6 +102,11 @@ export default Vue.extend({
     },
     totalVotes(): number {
       return this.votesArray.reduce((a, b) => a + b, 0)
+    },
+    orderedAnswers(): Answer[] {
+      return this.answers.sort((a, b) => {
+        return a.index - b.index
+      })
     },
   },
   methods: {

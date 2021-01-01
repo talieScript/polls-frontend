@@ -324,14 +324,27 @@ export default Vue.extend({
       this.alertOpen = true
     },
     async handleVoteRes() {
-      const { submitRes } = this
+      const { submitRes, pollOptions } = this
       if (submitRes.voteStatus === 'alreadyVoted') {
         const voterAnswers = await this.getVoterAnswers()
         this.chosen = voterAnswers
         this.hasVoted = true
+        if (
+          pollOptions.resultsVisibility === 'alwaysShow' ||
+          pollOptions.resultsVisibility === 'afterVote'
+        ) {
+          this.showResults = true
+        }
       } else if (submitRes.voteStatus === 'votePassed') {
         this.hasVoted = true
-        this.updateAnswers()
+        this.showResults = true
+        await this.updateAnswers()
+        if (
+          pollOptions.resultsVisibility === 'alwaysShow' ||
+          pollOptions.resultsVisibility === 'afterVote'
+        ) {
+          this.showResults = true
+        }
       }
       this.voteLoading = false
     },
