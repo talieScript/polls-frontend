@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div v-if="!ended">
-      <p class="text-xs">Time Remaining</p>
+      <p class="text-xs" v-if="!compact">Time Remaining</p>
       <div
         class="flex item justify-center"
         :class="[`text-${color}`, { 'text-sm': compact }]"

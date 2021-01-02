@@ -1,11 +1,13 @@
 <template>
   <NuxtLink :to="`/poll/${poll.id}`">
-    <article class="article bg-white px-2 py-3 rounded">
+    <article
+      class="article bg-white p-2 rounded shadow transition-transform duration-200 transform hover:-translate-y-2"
+    >
       <div class="flex items-center justify-between">
-        <h2 class="text-lg">{{ poll.title }}</h2>
-        <p class="text-right text-base">{{ poll.question }}</p>
+        <h2 class="text-lg">{{ poll.title || poll.question }}</h2>
+        <p v-if="poll.title" class="text-right text-sm">{{ poll.question }}</p>
       </div>
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between mt-2">
         <div class="text-sm text-gray-500 self-end">
           Created {{ dayjs(poll.created).from(dayjs()) }}
         </div>

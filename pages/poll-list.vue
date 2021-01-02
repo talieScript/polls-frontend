@@ -2,7 +2,7 @@
   <div class="">
     <h1 class="text-2xl mt-5">Polls List</h1>
     <p>These are all the polls that are shared Publicly</p>
-    <ul>
+    <ul class="mt-6">
       <li v-for="poll in list" :key="poll.id" class="list-item">
         <PollListItem :poll="poll" />
       </li>
