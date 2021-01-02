@@ -10,22 +10,21 @@
         >
           {{ poll.title || poll.question }}
         </h2>
-        <p
-          v-if="poll.title"
-          class="text-right text-xs sm:text-sm w-2/3 truncate ml-2"
-        >
+        <p v-if="poll.title" class="text-right text-sm w-2/3 truncate ml-2">
           {{ poll.question }}
         </p>
       </div>
-      <div class="flex items-center justify-between mt-2">
+      <div class="flex items-center justify-between mt-2 h-8">
         <div class="text-sm text-gray-500 self-end">
           Created {{ dayjs(poll.created).from(dayjs()) }}
         </div>
         <CountDown
+          v-if="!ended && poll.end_date"
           class="max-w-xs w-20 sm:w-1/5 text-right text-sm"
           compact
           :endDate="poll.end_date || ''"
         />
+        <div v-else-if="ended" class="text-red">Ended</div>
       </div>
     </article>
   </NuxtLink>
@@ -55,6 +54,14 @@ export default Vue.extend({
       type: Object,
       required: true,
     } as PropOptions<ListItemData>,
+  },
+  computed: {
+    ended(): boolean {
+      if (!this.poll.end_date) {
+        return false
+      }
+      return dayjs(this.poll.end_date).isBefore(dayjs())
+    },
   },
 })
 </script>
