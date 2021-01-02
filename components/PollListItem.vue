@@ -1,7 +1,7 @@
 <template>
   <NuxtLink :to="`/poll/${poll.id}`">
     <article
-      class="article bg-white p-2 rounded shadow transition-transform duration-200 transform hover:-translate-y-2"
+      class="article bg-white p-2 rounded shadow transition-all duration-300 transform hover:-translate-y-2 hover:shadow-md"
     >
       <div class="flex items-center justify-between">
         <h2 class="text-lg">{{ poll.title || poll.question }}</h2>
