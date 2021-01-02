@@ -2,7 +2,11 @@
   <div class="font-sans bg-secondary h-screen text-gray-600 overflow-auto">
     <AppHeader />
     <div class="flex align-center max-w-xl w-full mx-auto pb-16 px-2 sm:px-0">
-      <Nuxt class="pt-16 sm:pt-16 w-full" />
+      <Nuxt
+        class="pt-16 sm:pt-16 w-full"
+        keep-alive
+        :keep-alive-props="{ max: 5 }"
+      />
     </div>
   </div>
 </template>

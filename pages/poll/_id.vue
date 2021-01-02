@@ -239,9 +239,11 @@ export default Vue.extend({
       return {} as pollOptions
     },
     totalVotes(): number {
-      return this.poll.Answers.map((a) => a.votes).reduce(
-        (total, votes) => total + votes
-      )
+      if (this.poll.Answers) {
+        return this.poll.Answers.map((a) => a.votes)?.reduce(
+          (total, votes) => total + votes
+        )
+      }
     },
     requiredAnswersNo() {
       const { pollOptions } = this as any
