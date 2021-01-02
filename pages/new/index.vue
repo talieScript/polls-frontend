@@ -11,9 +11,10 @@
             outline
             :rules="[
               (input) => {
-                return input ? '' : 'Required'
+                return input.length <= 35 ? '' : 'Max 35 characters, sorry'
               },
             ]"
+            :maxCharacters="35"
             :error.sync="errors['title']"
             class="shadow-sm mb-8 w-full"
           />

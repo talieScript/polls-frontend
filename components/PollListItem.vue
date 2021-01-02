@@ -4,8 +4,18 @@
       class="article bg-white p-2 rounded shadow transition-all duration-300 transform hover:-translate-y-2 hover:shadow-md"
     >
       <div class="flex items-center justify-between">
-        <h2 class="text-lg">{{ poll.title || poll.question }}</h2>
-        <p v-if="poll.title" class="text-right text-sm">{{ poll.question }}</p>
+        <h2
+          class="text-lg max-w-full max-h-full"
+          :class="{ truncate: !poll.title }"
+        >
+          {{ poll.title || poll.question }}
+        </h2>
+        <p
+          v-if="poll.title"
+          class="text-right text-xs sm:text-sm w-2/3 truncate ml-2"
+        >
+          {{ poll.question }}
+        </p>
       </div>
       <div class="flex items-center justify-between mt-2">
         <div class="text-sm text-gray-500 self-end">
