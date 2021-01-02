@@ -5,6 +5,7 @@
     :class="[
       'switch relative h-5 w-10 rounded-xl border cursor-pointer outline-none',
       { on: localValue },
+      { 'pointer-events-none': disabled },
     ]"
   ></button>
 </template>
@@ -17,6 +18,10 @@ export default Vue.extend({
   props: {
     value: {
       type: Boolean,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

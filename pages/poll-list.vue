@@ -7,13 +7,17 @@
       </div>
       <div class="">
         <Select v-model="order" :options="orderOptions" class="" />
+        <div class="flex items-center justify-end">
+          <ToggleButton v-model="showEnded" :disabled="loading" class="z-20" />
+          <label for="endedCheck" class="ml-2">Ended</label>
+        </div>
       </div>
     </div>
     <ul class="mt-6">
       <li v-if="loading" class="text-center mt-12">
         <LoadingSpinner size="8" />
       </li>
-      <li v-else v-for="poll in list" :key="poll.id" class="list-item">
+      <li v-else v-for="poll in filteredPolls" :key="poll.id" class="list-item">
         <PollListItem :poll="poll" />
       </li>
     </ul>
@@ -33,6 +37,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { debounce } from '@/utils/helpers'
+import dayjs from 'dayjs'
 
 export default Vue.extend({
   loading: true,
@@ -54,6 +60,7 @@ export default Vue.extend({
         },
       ],
       moreLoading: false,
+      showEnded: false,
     }
   },
   async fetch() {
@@ -68,13 +75,30 @@ export default Vue.extend({
     }
     this.list.push(...listRes)
   },
+  created() {
+    this.reload = debounce(this.reload, 300)
+  },
   watch: {
     '$route.query': '$fetch',
     async order() {
       this.loading = true
-      this.pages = 1
-      this.list = []
-      this.$fetch()
+      this.reload()
+    },
+    filteredPolls(value) {
+      console.log(value)
+      if (value.length < 10) {
+        this.loadNextPage()
+      }
+    },
+  },
+  computed: {
+    filteredPolls(): any[] {
+      if (this.showEnded) {
+        return this.list
+      }
+      return this.list.filter((poll) => {
+        return dayjs(poll.end_date).isAfter(dayjs()) || !poll.end_date
+      })
     },
   },
   methods: {
@@ -83,6 +107,11 @@ export default Vue.extend({
       this.moreLoading = true
       await this.$fetch()
       this.moreLoading = false
+    },
+    reload() {
+      this.pages = 1
+      this.list = []
+      this.$fetch()
     },
   },
 })
