@@ -4,7 +4,11 @@
       <p class="text-xs" v-if="!compact">Time Remaining</p>
       <div
         class="flex item justify-center"
-        :class="[`text-${color}`, { 'text-sm': compact }]"
+        :class="[
+          `text-${color}`,
+          { 'text-sm': compact },
+          { 'leading-4': compact },
+        ]"
       >
         <span
           class="text-center flex flex-col"

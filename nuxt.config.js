@@ -68,6 +68,7 @@ export default {
                   'faCheckCircle',
                   'faUser',
                   'faTimes',
+                  'faArrowDown'
                   ]
               },
               {

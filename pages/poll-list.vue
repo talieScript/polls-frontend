@@ -7,7 +7,15 @@
         <PollListItem :poll="poll" />
       </li>
     </ul>
-    <BasicButton @click="() => $fetch()"> fetch </BasicButton>
+    <BasicButton
+      v-if="!loadedAllPolls"
+      @click="loadNextPage"
+      ariaLabel="load more"
+      rounded="md"
+      class="mx-auto mt-2"
+    >
+      <fa :icon="['fa', 'arrow-down']" /> Load More
+    </BasicButton>
   </div>
 </template>
 
@@ -19,16 +27,27 @@ export default Vue.extend({
   data(): any {
     return {
       list: [],
+      pages: 1,
+      loadedAllPolls: false,
     }
   },
   async fetch() {
     const listRes = await fetch(
-      `${process.env.VUE_APP_POLLS_API}/polls/list`
+      `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}`
     ).then((res) => res.json())
-    this.list = listRes
+    if (listRes.length < 10) {
+      this.loadedAllPolls = true
+    }
+    this.list.push(...listRes)
   },
   watch: {
     '$route.query': '$fetch',
+  },
+  methods: {
+    loadNextPage() {
+      this.pages += 1
+      this.$fetch()
+    },
   },
 })
 </script>

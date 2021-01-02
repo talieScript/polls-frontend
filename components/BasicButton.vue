@@ -8,6 +8,7 @@
       `rounded-${rounded}`,
     ]"
     @click="$emit('click')"
+    :aria-label="ariaLabel"
   >
     {{ text }}
     <slot name="default"></slot>
@@ -34,6 +35,10 @@ export default Vue.extend({
     rounded: {
       type: String,
       default: '2xl',
+    },
+    ariaLabel: {
+      type: String,
+      required: false,
     },
   },
 })
