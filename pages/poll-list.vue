@@ -103,9 +103,11 @@ export default Vue.extend({
       this.reload()
     },
     searchTerm() {
+      this.pages = 1
       this.search()
     },
     showEnded() {
+      this.pages = 1
       this.search()
     },
   },
