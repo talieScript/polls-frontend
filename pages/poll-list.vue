@@ -23,8 +23,8 @@
         :rules="[]"
       />
     </div>
-    <transition-group name="list" mode="in-out" class="mt-2" tag="ul">
-      <li v-for="poll in list" :key="poll.id" class="list-item">
+    <transition-group name="list" mode="in-out" class="mt-2 relative" tag="ul">
+      <li v-for="poll in list" :key="poll.id" class="list-item w-full">
         <PollListItem :poll="poll" />
       </li>
     </transition-group>
@@ -105,7 +105,7 @@ export default Vue.extend({
       this.search()
     },
     showEnded() {
-      this.reload()
+      this.search()
     },
   },
   methods: {
@@ -125,7 +125,10 @@ export default Vue.extend({
       this.loading = true
       this.pages = 1
       this.list = []
-      this.$fetch()
+      // This will give the animation time to happen
+      setTimeout(() => {
+        this.$fetch()
+      }, 300)
     },
     async search() {
       const searchRes = await this.$axios.get(
@@ -155,7 +158,7 @@ export default Vue.extend({
 .list-leave-active {
   transition: all 0.5s;
 }
-.fade-leave-active {
+.list-leave-active {
   position: absolute;
 }
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
