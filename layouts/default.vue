@@ -21,4 +21,10 @@ export default Vue.extend({})
 html {
   height: 100%;
 }
+.page-enter-active,
+.page-leave-active {
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
+}
 </style>

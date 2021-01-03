@@ -117,6 +117,6 @@ export default Vue.extend({
 }
 
 .select {
-  min-width: 10rem;
+  min-width: 8rem;
 }
 </style>

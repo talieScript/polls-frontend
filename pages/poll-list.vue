@@ -1,19 +1,29 @@
 <template>
   <div class="">
-    <div class="flex justify-between items-end">
-      <div class="">
-        <h1 class="text-2xl mt-5 font-bold">Polls List</h1>
-        <p>These are all the polls that are shared publically</p>
-      </div>
-      <div class="">
-        <Select v-model="order" :options="orderOptions" class="" />
-        <div class="flex items-center justify-end">
-          <ToggleButton v-model="showEnded" :disabled="loading" class="z-20" />
-          <label for="endedCheck" class="ml-2">Ended</label>
+    <div>
+      <h1 class="text-2xl mt-5 font-bold">Polls List</h1>
+      <p>These are all the polls that are shared publically</p>
+    </div>
+    <div class="flex mt-8">
+      <div class="flex items-center">
+        <Select v-model="order" :options="orderOptions" class="mr-2" />
+        <div class="flex flex-col items-center justify-center">
+          <label for="endedCheck" class="text-xs">Ended</label>
+          <ToggleButton
+            v-model="showEnded"
+            :disabled="cannotShowEnded"
+            class="z-20"
+          />
         </div>
       </div>
+      <TextInput
+        class="ml-auto w-1/3"
+        v-model="searchTerm"
+        label="Search"
+        :rules="[]"
+      />
     </div>
-    <ul class="mt-6">
+    <ul class="mt-2">
       <li v-if="loading" class="text-center mt-12">
         <LoadingSpinner size="8" />
       </li>
@@ -42,6 +52,7 @@ import dayjs from 'dayjs'
 
 export default Vue.extend({
   loading: true,
+  scrollToTop: true,
   data(): any {
     return {
       list: [],
@@ -61,11 +72,13 @@ export default Vue.extend({
       ],
       moreLoading: false,
       showEnded: false,
+      searchTerm: '',
+      cannotShowEnded: false,
     }
   },
   async fetch() {
     const listRes = await fetch(
-      `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}`
+      `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
     ).then((res) => res.json())
     this.loading = false
     if (listRes.length < 10) {
@@ -80,15 +93,26 @@ export default Vue.extend({
   },
   watch: {
     '$route.query': '$fetch',
-    async order() {
+    async order(value) {
+      if (value === 'end_date') {
+        this.showEnded = false
+        this.cannotShowEnded = true
+      } else {
+        this.cannotShowEnded = false
+      }
       this.loading = true
       this.reload()
     },
     filteredPolls(value) {
-      console.log(value)
       if (value.length < 10) {
         this.loadNextPage()
       }
+    },
+    searchTerm() {
+      this.reload()
+    },
+    showEnded() {
+      this.reload()
     },
   },
   computed: {
@@ -109,6 +133,8 @@ export default Vue.extend({
       this.moreLoading = false
     },
     reload() {
+      console.log('here')
+      this.loading = true
       this.pages = 1
       this.list = []
       this.$fetch()
