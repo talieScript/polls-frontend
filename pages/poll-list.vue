@@ -2,7 +2,7 @@
   <div class="">
     <div>
       <h1 class="text-2xl mt-5 font-bold">Polls List</h1>
-      <p>These are all the polls that are shared publically</p>
+      <p>These are all the polls that have been shared publically</p>
     </div>
     <div class="flex mt-8">
       <div class="flex items-center">
@@ -23,14 +23,11 @@
         :rules="[]"
       />
     </div>
-    <ul class="mt-2">
-      <li v-if="loading" class="text-center mt-12">
-        <LoadingSpinner size="8" />
-      </li>
-      <li v-else v-for="poll in filteredPolls" :key="poll.id" class="list-item">
+    <transition-group name="list" mode="in-out" class="mt-2" tag="ul">
+      <li v-for="poll in list" :key="poll.id" class="list-item">
         <PollListItem :poll="poll" />
       </li>
-    </ul>
+    </transition-group>
     <BasicButton
       v-if="!loadedAllPolls && !loading"
       @click="loadNextPage"
@@ -86,10 +83,11 @@ export default Vue.extend({
     } else {
       this.loadedAllPolls = false
     }
-    this.list.push(...listRes)
+    this.list = listRes
   },
   created() {
     this.reload = debounce(this.reload, 300)
+    this.search = debounce(this.search, 500)
   },
   watch: {
     '$route.query': '$fetch',
@@ -103,41 +101,42 @@ export default Vue.extend({
       this.loading = true
       this.reload()
     },
-    filteredPolls(value) {
-      if (value.length < 10) {
-        this.loadNextPage()
-      }
-    },
     searchTerm() {
-      this.reload()
+      this.search()
     },
     showEnded() {
       this.reload()
-    },
-  },
-  computed: {
-    filteredPolls(): any[] {
-      if (this.showEnded) {
-        return this.list
-      }
-      return this.list.filter((poll) => {
-        return dayjs(poll.end_date).isAfter(dayjs()) || !poll.end_date
-      })
     },
   },
   methods: {
     async loadNextPage() {
       this.pages += 1
       this.moreLoading = true
-      await this.$fetch()
+      const nextPageData = await this.$axios.get(
+        `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
+      )
+      this.list.push(...nextPageData.data)
+      if (nextPageData.data.length < 10) {
+        this.loadedAllPolls = true
+      }
       this.moreLoading = false
     },
     reload() {
-      console.log('here')
       this.loading = true
       this.pages = 1
       this.list = []
       this.$fetch()
+    },
+    async search() {
+      const searchRes = await this.$axios.get(
+        `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
+      )
+      if (searchRes.data.length < 10) {
+        this.loadedAllPolls = true
+      } else {
+        this.loadedAllPolls = false
+      }
+      this.list = searchRes.data
     },
   },
 })
@@ -146,5 +145,21 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .list-item:not(:first-of-type) {
   @apply mt-6 #{!important};
+}
+
+.list-move {
+  transition: transform 0.5s;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s;
+}
+.fade-leave-active {
+  position: absolute;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(-2rem);
 }
 </style>
