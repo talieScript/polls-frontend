@@ -129,7 +129,7 @@ export default Vue.extend({
       return this.answers.map((a) => a.votes)
     },
     totalVotes(): number {
-      return this.votesArray.reduce((a, b) => a + b, 0)
+      return this.votesArray?.reduce((a, b) => a + b, 0)
     },
   },
   methods: {

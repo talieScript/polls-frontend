@@ -7,7 +7,7 @@
     <button
       @click.prevent="open = !open"
       aria-label="Drop down toggle"
-      :class="'button rounded border px-2 py-1 flex justify-between items-center cursor-pointer w-full outline-none z-10 bg-white'"
+      :class="'button rounded border px-2 py-1 flex justify-between items-center cursor-pointer w-full outline-none z-20 bg-white'"
     >
       <span>{{ selected }}</span
       ><fa
@@ -20,7 +20,7 @@
         ]"
       />
     </button>
-    <div class="z-0 draw text-sm">
+    <div class="z-10 draw text-sm">
       <ol>
         <li
           v-for="option in options"
@@ -117,6 +117,6 @@ export default Vue.extend({
 }
 
 .select {
-  min-width: 10rem;
+  min-width: 8rem;
 }
 </style>

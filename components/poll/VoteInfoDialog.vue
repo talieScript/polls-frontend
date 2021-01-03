@@ -6,7 +6,7 @@
       </h4>
       <p>
         If the poll has validate by ip then someone has already voted on your
-        network.
+        current network.
       </p>
       <br />
       <p>

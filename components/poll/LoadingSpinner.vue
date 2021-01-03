@@ -2,7 +2,7 @@
   <fa
     :icon="['fa', 'spinner']"
     class="animate-spin"
-    :class="[`h-${size}`, `w-${size}`]"
+    :class="[`h-${size}`, `w-${size}`, `text-${color}`]"
   />
 </template>
 
@@ -13,6 +13,10 @@ export default {
     size: {
       type: String,
       default: '5',
+    },
+    color: {
+      type: String,
+      required: false,
     },
   },
 }

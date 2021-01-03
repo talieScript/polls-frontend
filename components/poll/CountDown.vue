@@ -1,24 +1,40 @@
 <template>
-  <div class="h-18">
+  <div class="">
     <div v-if="!ended">
-      <p class="text-xs">Time Remaining</p>
+      <p class="text-xs" v-if="!compact">Time Remaining</p>
       <div
-        class="flex -ml-3 item s-center justify-between text-lg"
-        :class="`text-${color}`"
+        class="flex item justify-center"
+        :class="[
+          `text-${color}`,
+          { 'text-sm': compact },
+          { 'leading-4': compact },
+        ]"
       >
-        <span class="text-center w-4/5 flex flex-col">
+        <span
+          class="text-center flex flex-col"
+          :class="`${compact ? 'w-8' : 'w-4/5'}`"
+        >
           {{ timeBreakdown.days }}
           <span class="text-xs text-gray-500">D</span>
         </span>
-        <span class="text-center w-4/5 flex flex-col">
+        <span
+          class="text-center flex flex-col"
+          :class="`${compact ? 'w-8' : 'w-4/5'}`"
+        >
           {{ timeBreakdown.hours }}
           <span class="text-xs text-gray-500">H</span>
         </span>
-        <span class="text-center w-4/5 flex flex-col">
+        <span
+          class="text-center flex flex-col"
+          :class="`${compact ? 'w-8' : 'w-4/5'}`"
+        >
           {{ timeBreakdown.minutes }}
           <span class="text-xs text-gray-500">M</span>
         </span>
-        <span class="text-center w-4/5 flex flex-col">
+        <span
+          class="text-center flex flex-col"
+          :class="`${compact ? '' : 'w-4/5'}`"
+        >
           <span v-if="!ended">{{ timeBreakdown.seconds }}</span>
           <span v-else>-</span>
           <span class="text-xs h-full text-gray-500">S</span>
@@ -53,6 +69,10 @@ export default Vue.extend({
     endDate: {
       type: String,
       required: true,
+    },
+    compact: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

@@ -11,9 +11,10 @@
             outline
             :rules="[
               (input) => {
-                return input ? '' : 'Required'
+                return input.length <= 35 ? '' : 'Max 35 characters, sorry'
               },
             ]"
+            :maxCharacters="35"
             :error.sync="errors['title']"
             class="shadow-sm mb-8 w-full"
           />
@@ -142,6 +143,15 @@ import dayjs from 'dayjs'
 import helpTipsText from '@/utils/helpTipsText'
 
 export default {
+  transition(to, from) {
+    if (from?.name === 'poll-list') {
+      return 'slide-left'
+    }
+    if (to) {
+      return 'slide-right'
+    }
+    return 'slide-left'
+  },
   data(): any {
     return {
       tipText: helpTipsText.newPoll,

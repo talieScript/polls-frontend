@@ -16,7 +16,9 @@
     </div>
     <div class="sm:pt-10" v-else-if="poll">
       <h1 class="text-center text-3xl mb-4">{{ poll.title }}</h1>
-      <h2 class="text-xl">{{ poll.question }}</h2>
+      <h2 class="text-xl whitespace-normal break-words">
+        {{ poll.question }}
+      </h2>
       <div class="text-sm">Created {{ dayjs(poll.created).from(dayjs()) }}</div>
       <div class="flex flex-col sm:flex-row sm:flex-wrap justify-between">
         <div class="sm:w-3/4 order-1 flex items-end flex-col">
@@ -141,6 +143,17 @@ dayjs.extend(relativeTime)
 
 export default Vue.extend({
   loading: true,
+  transition(to, from) {
+    if (from?.name === 'poll-list') {
+      return 'slide-left'
+    }
+    if (from?.name === 'poll-list') {
+      return 'slide-left'
+    } else if (to) {
+      return 'slide-right'
+    }
+    return 'slide-right'
+  },
   async asyncData({ params, $axios, store, $auth }) {
     const id = params.id
     let error
@@ -239,9 +252,12 @@ export default Vue.extend({
       return {} as pollOptions
     },
     totalVotes(): number {
-      return this.poll.Answers.map((a) => a.votes).reduce(
-        (total, votes) => total + votes
-      )
+      if (this.poll.Answers) {
+        return this.poll.Answers.map((a) => a.votes)?.reduce(
+          (total, votes) => total + votes,
+          0
+        )
+      }
     },
     requiredAnswersNo() {
       const { pollOptions } = this as any
