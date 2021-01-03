@@ -143,6 +143,17 @@ dayjs.extend(relativeTime)
 
 export default Vue.extend({
   loading: true,
+  transition(to, from) {
+    if (from?.name === 'poll-list') {
+      return 'slide-left'
+    }
+    if (from?.name === 'poll-list') {
+      return 'slide-left'
+    } else if (to) {
+      return 'slide-right'
+    }
+    return 'slide-right'
+  },
   async asyncData({ params, $axios, store, $auth }) {
     const id = params.id
     let error

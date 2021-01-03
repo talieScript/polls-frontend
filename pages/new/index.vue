@@ -143,6 +143,15 @@ import dayjs from 'dayjs'
 import helpTipsText from '@/utils/helpTipsText'
 
 export default {
+  transition(to, from) {
+    if (from?.name === 'poll-list') {
+      return 'slide-left'
+    }
+    if (to) {
+      return 'slide-right'
+    }
+    return 'slide-left'
+  },
   data(): any {
     return {
       tipText: helpTipsText.newPoll,

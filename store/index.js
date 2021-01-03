@@ -10,7 +10,6 @@ export const mutations = {
 
 export const actions = {
   async getIP ({ state, commit }) {
-    console.log({state})
     if (!state.userIp) {
       const ip = await this.$axios.$get(process.env.VUE_APP_IP_GETTER)
       commit('setIp', ip)
