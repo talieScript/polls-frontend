@@ -40,6 +40,7 @@
       <LoadingSpinner v-else />
       Load More
     </BasicButton>
+    <CornerLoadingSpinner v-model="loading" />
   </div>
 </template>
 
@@ -132,6 +133,7 @@ export default Vue.extend({
       }, 300)
     },
     async search() {
+      this.loading = true
       this.pages = 1
       const searchRes = await this.$axios.get(
         `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
@@ -142,6 +144,7 @@ export default Vue.extend({
         this.loadedAllPolls = false
       }
       this.list = searchRes.data
+      this.loading = false
     },
   },
 })
