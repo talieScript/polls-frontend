@@ -23,6 +23,7 @@
         :rules="[]"
       />
     </div>
+    <!-- Might want to make this a recycle scroller when whe get lots of polls :D -->
     <transition-group name="list" mode="in-out" class="mt-2 relative" tag="ul">
       <li v-for="poll in list" :key="poll.id" class="list-item w-full">
         <PollListItem :poll="poll" />
