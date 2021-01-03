@@ -254,7 +254,8 @@ export default Vue.extend({
     totalVotes(): number {
       if (this.poll.Answers) {
         return this.poll.Answers.map((a) => a.votes)?.reduce(
-          (total, votes) => total + votes
+          (total, votes) => total + votes,
+          0
         )
       }
     },
