@@ -103,11 +103,9 @@ export default Vue.extend({
       this.reload()
     },
     searchTerm() {
-      this.pages = 1
       this.search()
     },
     showEnded() {
-      this.pages = 1
       this.search()
     },
   },
@@ -134,6 +132,7 @@ export default Vue.extend({
       }, 300)
     },
     async search() {
+      this.pages = 1
       const searchRes = await this.$axios.get(
         `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
       )
