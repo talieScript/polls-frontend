@@ -86,40 +86,13 @@
         </button>
       </li>
     </ul>
-    <div
-      class="bg-opacity-25 bg-black h-screen w-screen fixed top-0 left-0 z-50 flex items-center justify-center"
-      :class="{ hidden: !showQr }"
-      @click="showQr = false"
-    >
-      <div
-        @click.stop
-        class="bg-white rounded p-5 w-4/5 sm:w-auto flex flex-col items-center relative"
-      >
-        <button
-          class="absolute top-0 right-0 mt-2 ml-1 text-gray-400 hover:text-gray-500 flex"
-          aria-label="Close"
-          @click="showQr = false"
-        >
-          <fa class="text-lg mr-2" :icon="['fa', 'times']" />
-        </button>
-        <p class="text-lg">QR Code</p>
-        <p class="mt-2">
-          This can be printed and posted IRL (in real life).<br />
-          If scanned they will be taken to this page.
-        </p>
-        <canvas class="mx-8" ref="qrCode"></canvas>
-        <a href="#" ref="qrDownload">
-          <BasicButton class="mt-3"> Download </BasicButton>
-        </a>
-      </div>
-    </div>
+    <QrDialog v-model="showQr" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import VueTippy from 'vue-tippy/dist/vue-tippy.esm'
-import qrcode from 'qrcode'
 Vue.use(VueTippy)
 
 export default Vue.extend({
@@ -139,22 +112,6 @@ export default Vue.extend({
       URL: '',
       showQr: false,
     }
-  },
-  mounted() {
-    this.URL = document.URL
-    // create qr dowloader
-    const canvas = this.$refs.qrCode as any
-    qrcode.toCanvas(canvas, this.URL, (error) => {
-      if (error) {
-        console.log(error)
-      }
-    })
-    const link = this.$refs.qrDownload as any
-    var dataURL = canvas.toDataURL('png')
-    link.download = 'image.png'
-    link.addEventListener('click', () => {
-      link.href = dataURL
-    })
   },
   methods: {
     copyLink(): void {

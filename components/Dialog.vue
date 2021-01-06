@@ -88,14 +88,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped>
-.expand-enter-active,
-.expand-leave-active {
-  transition: transform 0.3s;
-}
-.expand-enter,
-.expand-leave-to {
-  transform: scale(0);
-}
-</style>
