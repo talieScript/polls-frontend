@@ -5,7 +5,7 @@
       v-click-outside="closeDropdown"
       @click="$emit('click')"
     >
-      <LoginLink v-if="!user" />
+      <LoginLink v-if="!user" compact />
       <div v-else>
         <div class="hidden sm:block">
           <button

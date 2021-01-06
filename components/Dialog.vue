@@ -5,7 +5,7 @@
     @click="open = false"
   >
     <dialog
-      class="bg-white p-0 w-4/5 sm:w-auto text-gray-600 rounded"
+      class="bg-white p-0 w-11/12 sm:w-auto text-gray-600 rounded"
       :class="`sm:max-w-${maxWidth}`"
       :open="open"
       @click.stop

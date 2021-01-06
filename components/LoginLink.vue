@@ -7,7 +7,8 @@
   >
     <button
       @click="setUrl"
-      class="outline-none focus:shadow-outline rounded p-1 bg-primary text-white"
+      class="outline-none focus:shadow-outline rounded p-1 bg-primary text-white h-full w-full"
+      :class="{ 'py-3': !compact }"
     >
       Log in or Sign Up
     </button>
@@ -23,6 +24,10 @@ export default Vue.extend({
     outline: {
       type: Boolean,
       required: false,
+    },
+    compact: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
