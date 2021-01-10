@@ -117,7 +117,7 @@ export default Vue.extend({
     copyLink(): void {
       const URL = this.$refs.linkCopy
       const el = document.createElement('textarea')
-      el.value = this.URL
+      el.value = (this as any).URL
       el.setAttribute('readonly', '')
       el.style.position = 'absolute'
       el.style.left = '-9999px'

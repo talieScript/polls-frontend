@@ -7,8 +7,8 @@
   >
     <button
       @click="setUrl"
-      class="outline-none focus:shadow-outline rounded p-1 bg-primary text-white h-full w-full"
-      :class="{ 'py-3': !compact }"
+      class="outline-none focus:shadow-outline rounded p-1 text-white h-full"
+      :class="[{ 'py-3': !compact }, { 'bg-primary w-full': !outline }]"
     >
       Log in or Sign Up
     </button>
