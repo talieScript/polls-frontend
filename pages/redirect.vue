@@ -9,7 +9,10 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  mounted() {
+  async mounted() {
+    if (this.$route.params.code) {
+      // handel redirect from discord
+    }
     if (!localStorage.getItem('redirect')) {
       this.$router.back()
       return
