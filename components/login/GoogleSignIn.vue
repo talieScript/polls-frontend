@@ -1,8 +1,5 @@
 <template>
-  <button
-    class="flex justify-center items-center p-px bg-blue-500 my-6"
-    @click="$auth.loginWith('google')"
-  >
+  <a :href="url" class="flex justify-center items-center p-px bg-blue-500 my-6">
     <div class="p-2 mr-3 bg-white flex justify-center items-center text-lg">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +26,7 @@
       </svg>
     </div>
     <span class="text-white mr-3">Sign in with Google</span>
-  </button>
+  </a>
 </template>
 
 <script lang="ts">
@@ -37,6 +34,11 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'GoogleSignIn',
+  computed: {
+    url() {
+      return `${process.env.VUE_APP_POLLS_API}/auth/google`
+    },
+  },
 })
 </script>
 

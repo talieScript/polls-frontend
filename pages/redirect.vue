@@ -11,21 +11,24 @@ import Vue from 'vue'
 export default Vue.extend({
   async mounted() {
     const code = this.$route.query.code
-    if (code) {
-      const authRes = await this.$axios.get(
-        `${process.env.VUE_APP_POLLS_API}/auth/discord/${code}`
-      )
+    const strat = this.$route.query.strat
 
-      this.$auth.strategy('local')
-      this.$auth.setUser(authRes.data.user)
-      this.$auth.setUserToken(authRes.data.access_token)
-    }
+    const authRes = await this.$axios.get(
+      `${process.env.VUE_APP_POLLS_API}/auth/${strat}?code=${code}`
+    )
+
+    this.$auth.setUser(authRes.data.user)
+    this.$auth.setUserToken(authRes.data.access_token)
+
     if (!localStorage.getItem('redirect')) {
       this.$router.back()
       return
     }
     this.$router.push(localStorage.getItem('redirect'))
     localStorage.removeItem('redirect')
+  },
+  methods: {
+    getUser(auth) {},
   },
 })
 </script>
