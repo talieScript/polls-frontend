@@ -51,6 +51,9 @@
         <button @click="newUser = !newUser" class="underline text-xs">
           {{ !newUser ? 'New user?' : 'Existing user?' }}
         </button>
+        <BasicButton rounded="md" class="w-full mt-2" :loading="loading">
+          Sign {{ !newUser ? 'In' : 'Up' }}
+        </BasicButton>
       </div>
     </div>
   </div>
@@ -62,6 +65,7 @@ import Vue from 'vue'
 export default Vue.extend({
   data(): any {
     return {
+      loading: false,
       email: '',
       pass1: '',
       pass2: '',
