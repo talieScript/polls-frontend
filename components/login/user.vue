@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import login from '~/pages/login.vue'
+import login from '@/pages/login.vue'
 import ClickOutside from 'vue-click-outside'
 
 export default Vue.extend({
