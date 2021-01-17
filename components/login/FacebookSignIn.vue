@@ -1,7 +1,7 @@
 <template>
   <a
     :href="url"
-    class="text-center text-white bg-blue-500 py-1 leading-8 w-full"
+    class="text-center text-white bg-blue-600 py-1 leading-8 w-full"
   >
     <fa class="mr-2 text-lg" :icon="['fab', 'facebook']" />
     Sign in with Facebook

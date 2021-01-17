@@ -42,16 +42,22 @@
             label="confirm password"
             outline
             width="full"
-            :rules="emailRules"
+            :rules="passRules"
+            :error.sync="pass2Error"
             validateOnBlur
             required
             password
           />
         </transition>
-        <button @click="newUser = !newUser" class="underline text-xs">
+        <button @click.prevent="newUser = !newUser" class="underline text-xs">
           {{ !newUser ? 'New user?' : 'Existing user?' }}
         </button>
-        <BasicButton rounded="md" class="w-full mt-2" :loading="loading">
+        <BasicButton
+          rounded="md"
+          class="w-full mt-2"
+          :loading="loading"
+          @click="logIn"
+        >
           Sign {{ !newUser ? 'In' : 'Up' }}
         </BasicButton>
       </div>
@@ -71,6 +77,7 @@ export default Vue.extend({
       pass2: '',
       emailError: '',
       pass1Error: '',
+      pass2Error: '',
       emailRules: [
         (v) =>
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v)
@@ -102,7 +109,46 @@ export default Vue.extend({
       if (password.length > 20) {
         return 'Cannot be over 20 charentors'
       }
-      return ''
+      if (!/[a-z]+/.test(password)) {
+        return 'One lowercase letter required.'
+      }
+      if (!/[A-Z]+/.test(password)) {
+        return 'One uppercase letter required.'
+      }
+      if (!/[0-9]+/.test(password)) {
+        return 'One number required.'
+      }
+    },
+    logIn() {
+      const {
+        pass2Error,
+        pass1Error,
+        emailError,
+        email,
+        pass1,
+        pass2,
+        newUser,
+      } = this
+      if (!email || !pass1) {
+        this.emailError = !email ? 'Required' : ''
+        this.pass1Error = !pass1 ? 'Required' : ''
+        return
+      }
+      if (pass2Error || pass1Error || emailError) {
+        return
+      }
+      if (newUser) {
+        this.pass2Error = !pass2 ? 'Required' : ''
+        this.pass2Error =
+          pass2 && pass2 !== pass1 ? 'Passwords do not match' : ''
+        if (this.pass2Error) {
+          return
+        }
+      }
+      this.loading = true
+      this.$axios.post(
+        `${process.env.VUE_APP_POLLS_API}/auth/${newUser ? 'signup' : 'login'}`
+      )
     },
   },
 })
