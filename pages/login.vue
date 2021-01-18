@@ -10,8 +10,27 @@
         <span class="mx-5">OR</span>
         <hr class="w-full" />
       </div>
-      <div class="mt-8 w-full">
-        <h4 class="text-center">Sign in with your email</h4>
+      <h4 class="text-center mt-5">Sign in with your email</h4>
+      <div
+        class="mt-5 w-full relative transition-all duration-500"
+        :class="{ 'pb-20 pt-20': newUser }"
+      >
+        <transition name="slide">
+          <div v-if="newUser" class="absolute top-0 w-full">
+            <TextInput
+              v-model="name"
+              label="Name"
+              outline
+              width="full"
+              :rules="[
+                (value) => (value < 25 ? 'Max 25 characters, sorry' : ''),
+              ]"
+              :error.sync="nameError"
+              validateOnBlur
+              required
+            />
+          </div>
+        </transition>
         <TextInput
           v-model="email"
           label="email"
@@ -23,7 +42,7 @@
           validateOnBlur
         />
         <TextInput
-          class="mt-8"
+          class="mt-10"
           v-model="pass1"
           label="password"
           outline
@@ -35,32 +54,32 @@
           validateOnBlur
         />
         <transition name="slide">
-          <TextInput
-            class="mt-8"
-            v-model="pass2"
-            v-if="newUser"
-            label="confirm password"
-            outline
-            width="full"
-            :rules="passRules"
-            :error.sync="pass2Error"
-            validateOnBlur
-            required
-            password
-          />
+          <div v-if="newUser" class="absolute bottom-0 w-full">
+            <TextInput
+              v-model="pass2"
+              label="confirm password"
+              outline
+              width="full"
+              :rules="passRules"
+              :error.sync="pass2Error"
+              validateOnBlur
+              required
+              password
+            />
+          </div>
         </transition>
-        <button @click.prevent="newUser = !newUser" class="underline text-xs">
-          {{ !newUser ? 'New user?' : 'Existing user?' }}
-        </button>
-        <BasicButton
-          rounded="md"
-          class="w-full mt-2"
-          :loading="loading"
-          @click="logIn"
-        >
-          Sign {{ !newUser ? 'In' : 'Up' }}
-        </BasicButton>
       </div>
+      <button @click.prevent="newUser = !newUser" class="underline text-xs">
+        {{ !newUser ? 'New user?' : 'Existing user?' }}
+      </button>
+      <BasicButton
+        rounded="md"
+        class="w-full mt-2"
+        :loading="loading"
+        @click="logIn"
+      >
+        Sign {{ !newUser ? 'In' : 'Up' }}
+      </BasicButton>
     </div>
   </div>
 </template>
@@ -72,12 +91,14 @@ export default Vue.extend({
   data(): any {
     return {
       loading: false,
+      name: '',
       email: '',
       pass1: '',
       pass2: '',
       emailError: '',
       pass1Error: '',
       pass2Error: '',
+      nameError: '',
       emailRules: [
         (v) =>
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v)
@@ -89,9 +110,9 @@ export default Vue.extend({
       ],
       passRules: [
         (input): string => {
-          return this.checkPassword(input)
+          return (this as any).newUser ? (this as any).checkPassword(input) : ''
         },
-        (input) => {
+        (input): string => {
           return input ? '' : 'Required'
         },
       ],
@@ -119,7 +140,7 @@ export default Vue.extend({
         return 'One number required.'
       }
     },
-    logIn() {
+    logIn(): void {
       const {
         pass2Error,
         pass1Error,
