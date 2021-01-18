@@ -117,6 +117,7 @@ export default Vue.extend({
         },
       ],
       newUser: false,
+      showEmailError: false,
     }
   },
   methods: {
@@ -140,7 +141,7 @@ export default Vue.extend({
         return 'One number required.'
       }
     },
-    logIn(): void {
+    async logIn(): Promise<void> {
       const {
         pass2Error,
         pass1Error,
@@ -148,6 +149,7 @@ export default Vue.extend({
         email,
         pass1,
         pass2,
+        name,
         newUser,
       } = this
       if (!email || !pass1) {
@@ -155,7 +157,7 @@ export default Vue.extend({
         this.pass1Error = !pass1 ? 'Required' : ''
         return
       }
-      if (pass2Error || pass1Error || emailError) {
+      if (pass1Error || emailError) {
         return
       }
       if (newUser) {
@@ -167,9 +169,36 @@ export default Vue.extend({
         }
       }
       this.loading = true
-      this.$axios.post(
-        `${process.env.VUE_APP_POLLS_API}/auth/${newUser ? 'signup' : 'login'}`
-      )
+      await this.$axios
+        .post(
+          `${process.env.VUE_APP_POLLS_API}/auth/${
+            newUser ? 'signup' : 'login'
+          }`,
+          {
+            email,
+            name,
+            password: pass1,
+          }
+        )
+        .then(({ data }) => {
+          // set user
+          this.$auth.setUser(data.user)
+          this.$auth.setUserToken(data.access_token)
+          //redirect
+          if (!localStorage.getItem('redirect')) {
+            this.$router.back()
+            return
+          }
+          this.$router.push(localStorage.getItem('redirect'))
+          localStorage.removeItem('redirect')
+        })
+        .catch((error) => {
+          console.log(error.responce)
+          if (error.message === 'Request failed with status code 403') {
+            this.showEmailError = true
+          }
+        })
+      this.loading = false
     },
   },
 })
