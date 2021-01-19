@@ -11,76 +11,84 @@
         <hr class="w-full" />
       </div>
       <h4 class="text-center mt-5">Sign in with your email</h4>
-      <div
-        class="mt-5 w-full relative transition-all duration-500"
-        :class="{ 'pb-20 pt-20': newUser }"
-      >
-        <transition name="slide">
-          <div v-if="newUser" class="absolute top-0 w-full">
-            <TextInput
-              v-model="name"
-              label="Name"
-              outline
-              width="full"
-              :rules="[
-                (value) => (value < 25 ? 'Max 25 characters, sorry' : ''),
-              ]"
-              :error.sync="nameError"
-              validateOnBlur
-              required
-            />
-          </div>
-        </transition>
-        <TextInput
-          v-model="email"
-          label="email"
-          outline
-          width="full"
-          :rules="emailRules"
-          :error.sync="emailError"
-          required
-          validateOnBlur
-        />
-        <TextInput
-          class="mt-10"
-          v-model="pass1"
-          label="password"
-          outline
-          width="full"
-          :rules="passRules"
-          :error.sync="pass1Error"
-          required
-          password
-          validateOnBlur
-        />
-        <transition name="slide">
-          <div v-if="newUser" class="absolute bottom-0 w-full">
-            <TextInput
-              v-model="pass2"
-              label="confirm password"
-              outline
-              width="full"
-              :rules="passRules"
-              :error.sync="pass2Error"
-              validateOnBlur
-              required
-              password
-            />
-          </div>
-        </transition>
-      </div>
-      <button @click.prevent="newUser = !newUser" class="underline text-xs">
-        {{ !newUser ? 'New user?' : 'Existing user?' }}
-      </button>
-      <BasicButton
-        rounded="md"
-        class="w-full mt-2"
-        :loading="loading"
-        @click="logIn"
-      >
-        Sign {{ !newUser ? 'In' : 'Up' }}
-      </BasicButton>
+      <form class="mt-5 w-full" @submit.prevent="logIn">
+        <div
+          @submit.prevent="logIn"
+          class="relative transition-all duration-500"
+          :class="{ 'pb-20 pt-20': newUser }"
+        >
+          <transition name="slide">
+            <div v-if="newUser" class="absolute top-0 w-full">
+              <TextInput
+                v-model="name"
+                label="Name"
+                outline
+                width="full"
+                :rules="[
+                  (value) => (value < 25 ? 'Max 25 characters, sorry' : ''),
+                ]"
+                :error.sync="nameError"
+                validateOnBlur
+                required
+              />
+            </div>
+          </transition>
+          <TextInput
+            v-model="email"
+            label="email"
+            outline
+            width="full"
+            :rules="emailRules"
+            :error.sync="emailError"
+            required
+            validateOnBlur
+          />
+          <TextInput
+            class="mt-10"
+            v-model="pass1"
+            label="password"
+            outline
+            width="full"
+            :rules="passRules"
+            :error.sync="pass1Error"
+            required
+            password
+            validateOnBlur
+          />
+          <transition name="slide">
+            <div v-if="newUser" class="absolute bottom-0 w-full">
+              <TextInput
+                v-model="pass2"
+                label="confirm password"
+                outline
+                width="full"
+                :rules="passRules"
+                :error.sync="pass2Error"
+                validateOnBlur
+                required
+                password
+              />
+            </div>
+          </transition>
+        </div>
+        <button
+          type="button"
+          @click.prevent="newUser = !newUser"
+          class="underline text-xs"
+        >
+          {{ !newUser ? 'New user?' : 'Existing user?' }}
+        </button>
+        <BasicButton
+          rounded="md"
+          class="w-full mt-2"
+          :loading="loading"
+          @click="logIn"
+        >
+          Sign {{ !newUser ? 'In' : 'Up' }}
+        </BasicButton>
+      </form>
     </div>
+    <SnackBar v-model="showSnack" :text="snackText" colour="red" />
   </div>
 </template>
 
@@ -117,7 +125,8 @@ export default Vue.extend({
         },
       ],
       newUser: false,
-      showEmailError: false,
+      snackText: '',
+      showSnack: false,
     }
   },
   methods: {
@@ -142,6 +151,7 @@ export default Vue.extend({
       }
     },
     async logIn(): Promise<void> {
+      this.showSnack = false
       const {
         pass2Error,
         pass1Error,
@@ -184,18 +194,16 @@ export default Vue.extend({
           // set user
           this.$auth.setUser(data.user)
           this.$auth.setUserToken(data.access_token)
-          //redirect
-          if (!localStorage.getItem('redirect')) {
-            this.$router.back()
-            return
-          }
-          this.$router.push(localStorage.getItem('redirect'))
-          localStorage.removeItem('redirect')
         })
         .catch((error) => {
-          console.log(error.responce)
+          console.log(error.message)
           if (error.message === 'Request failed with status code 403') {
-            this.showEmailError = true
+            this.snackText = 'This email is already in use'
+            this.showSnack = true
+          }
+          if (error.message === 'Request failed with status code 401') {
+            this.snackText = 'Incorect email or password'
+            this.showSnack = true
           }
         })
       this.loading = false
