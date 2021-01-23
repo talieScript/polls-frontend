@@ -102,7 +102,6 @@ export default Vue.extend({
       return this.answers.map((a) => a.votes.length)
     },
     totalVotes(): number {
-      console.log(this.votesArray)
       return this.votesArray?.reduce((a, b) => a + b, 0)
     },
     orderedAnswers(): Answer[] {
@@ -119,9 +118,6 @@ export default Vue.extend({
       return Math.round((votes / this.totalVotes) * 100)
     },
     isWinning(votes) {
-      console.log('votes', votes)
-      console.log('total', this.totalVotes)
-
       if (!this.totalVotes) {
         return false
       }
