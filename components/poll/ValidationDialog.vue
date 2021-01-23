@@ -14,7 +14,11 @@
         This poll requires an email for vote validation
       </p>
       <LoginLink class="mx-auto block mt-5 text-lg w-full" />
-      <HR />
+      <div class="flex items-center mt-8">
+        <hr class="w-full" />
+        <span class="mx-5">OR</span>
+        <hr class="w-full" />
+      </div>
       <div class="mt-3 mx-auto">
         <span class="text-lg block mb-1">Continue as a guest</span>
         <span>Please confirm your email address</span>

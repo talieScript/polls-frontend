@@ -7,7 +7,7 @@
       :class="[
         { checked: checkedAnswers.includes(answer.id) },
         { disabled },
-        { winning: isWinning(answer.votes) },
+        { winning: isWinning(answer.votes.length) },
         { 'show-results': showResults },
       ]"
       @click="toggleCheck(answer.id)"
@@ -38,7 +38,7 @@
               { 'text-gray-400': disabled },
               {
                 'text-green-400':
-                  isWinning(answer.votes) && showResults && !disabled,
+                  isWinning(answer.votes.length) && showResults && !disabled,
               },
             ]"
             :icon="['fa', 'check']"
@@ -51,11 +51,12 @@
           class="flex items-center justify-between absolute left-0 bottom-0 mb-3 w-full px-2 transition-all duration-200"
         >
           <span
-            >{{ answer.votes }} vote<span v-if="answer.votes !== 1"
+            >{{ answer.votes.length }} vote<span
+              v-if="answer.votes.length !== 1"
               >s</span
             ></span
           >
-          <span>{{ getPercentage(answer.votes) }}%</span>
+          <span>{{ getPercentage(answer.votes.length) }}%</span>
         </div>
       </transition>
       <transition name="fade">
@@ -73,11 +74,11 @@
               {
                 'bg-primary':
                   checkedAnswers.includes(answer.id) &&
-                  !isWinning(answer.votes),
+                  !isWinning(answer.votes.length),
               },
-              { 'bg-green-400': isWinning(answer.votes) },
+              { 'bg-green-400': isWinning(answer.votes.length) },
             ]"
-            :style="`width: ${getPercentage(answer.votes)}%;`"
+            :style="`width: ${getPercentage(answer.votes.length)}%;`"
           ></div>
         </div>
       </transition>
@@ -126,7 +127,7 @@ export default Vue.extend({
       },
     } as any,
     votesArray(): number[] {
-      return this.answers.map((a) => a.votes)
+      return this.answers.map((a) => a.votes.length)
     },
     totalVotes(): number {
       return this.votesArray?.reduce((a, b) => a + b, 0)

@@ -22,7 +22,7 @@ export default Vue.extend({
       this.$auth.setUserToken(authRes.data.access_token)
     }
     if (!localStorage.getItem('redirect')) {
-      this.$router.back()
+      this.$router.push('/')
       return
     }
     this.$router.push(localStorage.getItem('redirect'))
