@@ -83,7 +83,7 @@
             {{ !newUser ? 'New user?' : 'Existing user?' }}
           </button>
           <nuxt-link
-            to="/forgotten-password"
+            to="/request-password-reset"
             v-if="!newUser"
             class="underline text-xs"
           >
@@ -100,13 +100,19 @@
         </BasicButton>
       </form>
     </div>
-    <SnackBar v-model="showSnack" :text="snackText" colour="red" />
+    <SnackBar v-model="showSnack" :text="errorSnackText" colour="red" />
+    <SnackBar
+      v-model="showPasswordChange"
+      :text="snackText.password.changed"
+      colour="green-400"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { checkPassword } from '@/utils/helpers'
+import snackText from '@/utils/snackText'
 
 export default Vue.extend({
   data(): any {
@@ -138,8 +144,18 @@ export default Vue.extend({
         },
       ],
       newUser: false,
-      snackText: '',
+      errorSnackText: '',
       showSnack: false,
+      snackText,
+      showPasswordChange: false,
+    }
+  },
+  mounted() {
+    if (this.$route.query.passwordChanged) {
+      this.showPasswordChange = true
+      setTimeout(() => {
+        this.showPasswordChange = false
+      }, 6000)
     }
   },
   methods: {
@@ -191,11 +207,11 @@ export default Vue.extend({
         .catch((error) => {
           console.log(error.message)
           if (error.message === 'Request failed with status code 403') {
-            this.snackText = 'This email is already in use'
+            this.errorSnackText = 'This email is already in use'
             this.showSnack = true
           }
           if (error.message === 'Request failed with status code 401') {
-            this.snackText = 'Incorect email or password'
+            this.errorSnackText = 'Incorect email or password'
             this.showSnack = true
           }
         })
