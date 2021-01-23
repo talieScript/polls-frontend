@@ -62,7 +62,10 @@
                 label="confirm password"
                 outline
                 width="full"
-                :rules="passRules"
+                :rules="[
+                  ...passRules,
+                  (value) => (value === pass1 ? '' : 'Passwords do not match'),
+                ]"
                 :error.sync="pass2Error"
                 validateOnBlur
                 required
@@ -71,13 +74,22 @@
             </div>
           </transition>
         </div>
-        <button
-          type="button"
-          @click.prevent="newUser = !newUser"
-          class="underline text-xs"
-        >
-          {{ !newUser ? 'New user?' : 'Existing user?' }}
-        </button>
+        <div class="flex w-full items-center justify-between">
+          <button
+            type="button"
+            @click.prevent="newUser = !newUser"
+            class="underline text-xs"
+          >
+            {{ !newUser ? 'New user?' : 'Existing user?' }}
+          </button>
+          <nuxt-link
+            to="/forgotten-password"
+            v-if="!newUser"
+            class="underline text-xs"
+          >
+            forgotten password
+          </nuxt-link>
+        </div>
         <BasicButton
           rounded="md"
           class="w-full mt-2"
@@ -94,6 +106,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { checkPassword } from '@/utils/helpers'
 
 export default Vue.extend({
   data(): any {
@@ -118,7 +131,7 @@ export default Vue.extend({
       ],
       passRules: [
         (input): string => {
-          return (this as any).newUser ? (this as any).checkPassword(input) : ''
+          return checkPassword(input)
         },
         (input): string => {
           return input ? '' : 'Required'
@@ -130,26 +143,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    checkPassword(password: string): string {
-      if (!password) {
-        return 'Cannot be empty'
-      }
-      if (password.length < 8) {
-        return 'Must be more the 8 charentors'
-      }
-      if (password.length > 20) {
-        return 'Cannot be over 20 charentors'
-      }
-      if (!/[a-z]+/.test(password)) {
-        return 'One lowercase letter required.'
-      }
-      if (!/[A-Z]+/.test(password)) {
-        return 'One uppercase letter required.'
-      }
-      if (!/[0-9]+/.test(password)) {
-        return 'One number required.'
-      }
-    },
     async logIn(): Promise<void> {
       this.showSnack = false
       const {

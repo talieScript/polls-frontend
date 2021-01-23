@@ -104,7 +104,8 @@ export default {
           property: 'user',
         },
         endpoints: {
-          user: { url: '/auth/user', method: 'get' }
+          user: { url: '/auth/user', method: 'get' },
+          logout: { url: '/auth/logout', method: 'post' }
         }
       }
     },

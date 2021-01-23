@@ -60,3 +60,24 @@ export const debounce = (func, wait, immediate = false) => {
 		if (callNow) func.apply(context);
 	};
 };
+
+export const checkPassword = (password: string): string => {
+  if (!password) {
+    return 'Cannot be empty'
+  }
+  if (password.length < 8) {
+    return 'Must be more the 8 charentors'
+  }
+  if (password.length > 20) {
+    return 'Cannot be over 20 charentors'
+  }
+  if (!/[a-z]+/.test(password)) {
+    return 'One lowercase letter required.'
+  }
+  if (!/[A-Z]+/.test(password)) {
+    return 'One uppercase letter required.'
+  }
+  if (!/[0-9]+/.test(password)) {
+    return 'One number required.'
+  }
+}
