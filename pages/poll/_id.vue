@@ -121,7 +121,8 @@
     <ResponseSnack :response="submitRes" :userEmail="userEmail" />
     <SnackBar
       v-model="afterEmailSnackShow"
-      text="Thank you for confirming your email. Your vote has now been counted!"
+      :text="snackText.poll.afterEmailconfirm"
+      :timer="8000"
     >
       <br />
       <span class="pb-2">
@@ -138,6 +139,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { pollOptions, PollOptions, VoteStatusRes } from '@/utils/types'
 import { getVoterAnswers } from '@/utils/helpers'
+import snackText from '@/utils/snackText'
 
 dayjs.extend(relativeTime)
 
@@ -204,6 +206,7 @@ export default Vue.extend({
   },
   data(): any {
     return {
+      snackText,
       dayjs,
       validationDialogOpen: false,
       voteInfoDialogOpen: false,

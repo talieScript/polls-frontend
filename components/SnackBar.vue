@@ -40,6 +40,19 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    timer: {
+      type: Number,
+      required: false,
+    },
+  },
+  watch: {
+    value(value) {
+      if (value && this.timer) {
+        setTimeout(() => {
+          this.open = false
+        }, this.timer)
+      }
+    },
   },
   computed: {
     open: {

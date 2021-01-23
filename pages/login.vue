@@ -105,6 +105,7 @@
       v-model="showPasswordChange"
       :text="snackText.password.changed"
       colour="green-400"
+      :timer="6000"
     />
   </div>
 </template>
@@ -153,9 +154,6 @@ export default Vue.extend({
   mounted() {
     if (this.$route.query.passwordChanged) {
       this.showPasswordChange = true
-      setTimeout(() => {
-        this.showPasswordChange = false
-      }, 6000)
     }
   },
   methods: {
