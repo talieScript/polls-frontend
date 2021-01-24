@@ -43,7 +43,7 @@ export default Vue.extend({
     },
     userEmail: {
       type: String,
-      required: false,
+      required: true,
     },
   },
   watch: {

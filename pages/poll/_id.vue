@@ -119,7 +119,7 @@
         :voteStatus="submitRes.voteStatus"
       />
     </div>
-    <ResponseSnack :response="submitRes" :userEmail="userEmail" />
+    <ResponseSnack :response="submitRes" :userEmail="enteredEmail" />
     <SnackBar
       v-model="afterEmailSnackShow"
       :text="snackText.poll.afterEmailconfirm"
