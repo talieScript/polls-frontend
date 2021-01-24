@@ -30,6 +30,7 @@
             :answers="poll.Answers"
             :disabled="hasVoted || ended || voteLoading"
             :show-results="showResults"
+            :totalVotes="totalVotes"
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
@@ -121,7 +122,8 @@
     <ResponseSnack :response="submitRes" :userEmail="userEmail" />
     <SnackBar
       v-model="afterEmailSnackShow"
-      text="Thank you for confirming your email. Your vote has now been counted!"
+      :text="snackText.poll.afterEmailconfirm"
+      :timer="8000"
     >
       <br />
       <span class="pb-2">
@@ -138,6 +140,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { pollOptions, PollOptions, VoteStatusRes } from '@/utils/types'
 import { getVoterAnswers } from '@/utils/helpers'
+import snackText from '@/utils/snackText'
 
 dayjs.extend(relativeTime)
 
@@ -204,6 +207,7 @@ export default Vue.extend({
   },
   data(): any {
     return {
+      snackText,
       dayjs,
       validationDialogOpen: false,
       voteInfoDialogOpen: false,
@@ -252,12 +256,7 @@ export default Vue.extend({
       return {} as pollOptions
     },
     totalVotes(): number {
-      if (this.poll.Answers) {
-        return this.poll.Answers.map((a) => a.votes)?.reduce(
-          (total, votes) => total + votes,
-          0
-        )
-      }
+      return this.poll.totalVotes
     },
     requiredAnswersNo() {
       const { pollOptions } = this as any
@@ -316,9 +315,9 @@ export default Vue.extend({
       const ipAddress = this.$store.state.userIp
       this.$axios
         .post(
-          `${process.env.VUE_APP_POLLS_API}/polls/${
-            this.poll.id
-          }?validateEmail=${email && !this.userEmail}`,
+          `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}${
+            this.$auth.loggedIn ? '/authenticated' : ''
+          }`,
           {
             answers: chosen,
             email: email || '',
@@ -368,7 +367,8 @@ export default Vue.extend({
       const newAnswers = await this.$axios.get(
         `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}/answers`
       )
-      this.poll.Answers = newAnswers.data
+      this.poll.Answers = newAnswers.data.answers
+      this.poll.totalVotes = newAnswers.data.votes
     },
     async getVoterAnswers() {
       await this.$store.dispatch('getIP')

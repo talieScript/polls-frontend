@@ -275,7 +275,7 @@ export default {
       }
 
       this.$store.commit('newPoll/updatePoll', this.pollData)
-      this.$router.push('/new/finish')
+      this.$store.dispatch('newPoll/submit')
     },
   } as any,
 }

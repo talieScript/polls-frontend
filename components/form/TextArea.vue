@@ -24,6 +24,7 @@
           outline ? 'rounded' : 'rounded-t-sm',
           `bg-${bgColor}`,
         ]"
+        validateOnBlur
         @input="handleInput($event.target.value)"
         :value="value"
         :required="required"

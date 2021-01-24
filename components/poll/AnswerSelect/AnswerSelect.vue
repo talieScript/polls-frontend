@@ -10,6 +10,7 @@
       :answerNumber="answerNumber"
       :disabled="disabled"
       :showResults="showResults"
+      :totalVotes="totalVotes"
     />
   </div>
 </template>
@@ -49,6 +50,10 @@ export default Vue.extend({
     },
     showResults: {
       type: Boolean,
+      required: true,
+    },
+    totalVotes: {
+      type: Number,
       required: true,
     },
   },

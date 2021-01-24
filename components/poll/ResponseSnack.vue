@@ -1,5 +1,10 @@
 <template>
-  <SnackBar v-model="snackOpen" :text="snackText" :colour="colour">
+  <SnackBar
+    v-model="snackOpen"
+    :text="snackText"
+    :colour="colour"
+    :timer="6000"
+  >
     <br />
     <BasicButton
       v-if="resStatus === 'emailPending' || resStatus === 'emailSent'"

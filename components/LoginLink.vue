@@ -7,9 +7,10 @@
   >
     <button
       @click="setUrl"
-      class="outline-none focus:shadow-outline rounded p-1"
+      class="outline-none focus:shadow-outline rounded p-1 text-white h-full"
+      :class="[{ 'py-3': !compact }, { 'bg-primary w-full': !outline }]"
     >
-      Login/Sign Up
+      Log in or Sign Up
     </button>
   </NuxtLink>
 </template>
@@ -24,6 +25,10 @@ export default Vue.extend({
       type: Boolean,
       required: false,
     },
+    compact: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     user() {
@@ -32,6 +37,8 @@ export default Vue.extend({
   },
   methods: {
     setUrl() {
+      this.$emit('click')
+      // set the current page to the redirct variable in the local storage
       if (!localStorage.getItem('redirect')) {
         localStorage.setItem('redirect', this.$route.path)
       }

@@ -4,49 +4,52 @@
     :class="{ hidden: !open }"
     @click="open = false"
   >
-    <dialog
-      class="bg-white p-0 w-4/5 sm:w-auto text-gray-600 rounded"
-      :class="`sm:max-w-${maxWidth}`"
-      :open="open"
-      @click.stop
-    >
-      <div
-        class="w-full py-1 px-2 rounded-t flex items-center justify-start text-primary"
+    <transition name="expand">
+      <dialog
+        v-if="value"
+        class="bg-white p-0 w-11/12 sm:w-auto text-gray-600 rounded"
+        :class="`sm:max-w-${maxWidth}`"
+        :open="open"
+        @click.stop
       >
-        <slot class="mr-2 text-lg" name="icon" />
-        <h5 class="text-xl">{{ title }}</h5>
-        <button
-          class="ml-auto mr-1 text-gray-500 hover:text-gray-300 transition-colors duration-100"
-          aria-label="Close"
-          @click="open = false"
+        <div
+          class="w-full py-1 px-2 rounded-t flex items-center justify-start text-primary"
         >
-          <fa :icon="['fa', 'times']" />
-        </button>
-      </div>
-      <div class="text-sm mt-2 px-3">
-        <slot name="default" />
-      </div>
-      <div v-if="buttonText" class="mt-3 flex p-2">
-        <BasicButton
-          @click="open = false"
-          class="ml-auto"
-          color="red"
-          textSize="sm"
-          rounded="md"
-        >
-          cancel
-        </BasicButton>
-        <BasicButton
-          v-if="buttonText"
-          @click="$emit('submit')"
-          class="ml-3"
-          textSize="sm"
-          rounded="md"
-        >
-          {{ buttonText }}
-        </BasicButton>
-      </div>
-    </dialog>
+          <slot class="mr-2 text-lg" name="icon" />
+          <h5 class="text-xl">{{ title }}</h5>
+          <button
+            class="ml-auto mr-1 text-gray-500 hover:text-gray-300 transition-colors duration-100"
+            aria-label="Close"
+            @click="open = false"
+          >
+            <fa :icon="['fa', 'times']" />
+          </button>
+        </div>
+        <div class="text-sm mt-2 px-3">
+          <slot name="default" />
+        </div>
+        <div v-if="buttonText" class="mt-3 flex p-2">
+          <BasicButton
+            @click="open = false"
+            class="ml-auto"
+            color="red"
+            textSize="sm"
+            rounded="md"
+          >
+            cancel
+          </BasicButton>
+          <BasicButton
+            v-if="buttonText"
+            @click="$emit('submit')"
+            class="ml-3"
+            textSize="sm"
+            rounded="md"
+          >
+            {{ buttonText }}
+          </BasicButton>
+        </div>
+      </dialog>
+    </transition>
   </div>
 </template>
 
@@ -85,6 +88,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped>
-</style>

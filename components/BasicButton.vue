@@ -6,12 +6,16 @@
       `border-${color}`,
       `text-${textSize}`,
       `rounded-${rounded}`,
+      { 'pointer-events-none': loading },
     ]"
     @click="$emit('click')"
     :aria-label="ariaLabel"
   >
-    {{ text }}
-    <slot name="default"></slot>
+    <LoadingSpinner v-if="loading" />
+    <span v-else-if="text">
+      {{ text }}
+    </span>
+    <slot v-else name="default"></slot>
   </button>
 </template>
 
@@ -39,6 +43,10 @@ export default Vue.extend({
     ariaLabel: {
       type: String,
       required: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
 })

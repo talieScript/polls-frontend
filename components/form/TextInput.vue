@@ -42,7 +42,6 @@
           'label absolute top-0 duration-300 origin-0',
           placeholder ? 'hidden-label' : '',
           outline ? 'mt-2' : 'mt-1',
-          outline ? 'ml-2' : 'ml-0',
         ]"
       >
         {{ label }}
@@ -168,7 +167,7 @@ export default {
 
 <style lang="scss" scoped>
 .label {
-  @apply text-gray-500;
+  @apply text-gray-500 ml-2;
 }
 
 .input:not(:focus):not(:placeholder-shown) ~ .label {
@@ -177,7 +176,7 @@ export default {
 
 .input:focus-within ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  @apply transform scale-90 -translate-y-6;
+  @apply transform scale-90 -translate-y-6 ml-1;
 }
 
 .outline input:focus-within ~ .label,

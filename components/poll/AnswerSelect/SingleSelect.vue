@@ -4,7 +4,7 @@
       :class="[
         'bg-white px-2 py-2 rounded-md cursor-pointer transition-all duration-300 answer relative overflow-hidden',
         { active: selected === answer.id },
-        { winning: isWinning(answer.votes) },
+        { winning: isWinning(answer.votes.length) },
         { 'show-results': showResults },
       ]"
       v-for="answer in orderedAnswers"
@@ -30,11 +30,12 @@
             class="flex items-center justify-between absolute left-0 mt-1 w-full px-2"
           >
             <span
-              >{{ answer.votes }} vote<span v-if="answer.votes !== 1"
+              >{{ answer.votes.length }} vote<span
+                v-if="answer.votes.length !== 1"
                 >s</span
               ></span
             >
-            <span>{{ getPercentage(answer.votes) }}%</span>
+            <span>{{ getPercentage(answer.votes.length) }}%</span>
           </div>
         </transition>
       </label>
@@ -52,11 +53,11 @@
               },
               {
                 'bg-primary':
-                  selected === answer.id && !isWinning(answer.votes),
+                  selected === answer.id && !isWinning(answer.votes.length),
               },
-              { 'bg-green-400': isWinning(answer.votes) },
+              { 'bg-green-400': isWinning(answer.votes.length) },
             ]"
-            :style="`width: ${getPercentage(answer.votes)}%;`"
+            :style="`width: ${getPercentage(answer.votes.length)}%;`"
           ></div>
         </div>
       </transition>
@@ -87,6 +88,10 @@ export default Vue.extend({
       type: Boolean,
       required: true,
     },
+    totalVotes: {
+      type: Number,
+      required: true,
+    },
   },
   computed: {
     selected: {
@@ -98,10 +103,7 @@ export default Vue.extend({
       },
     },
     votesArray(): number[] {
-      return this.answers.map((a) => a.votes)
-    },
-    totalVotes(): number {
-      return this.votesArray?.reduce((a, b) => a + b, 0)
+      return this.answers.map((a) => a.votes.length)
     },
     orderedAnswers(): Answer[] {
       return this.answers.sort((a, b) => {
@@ -114,6 +116,7 @@ export default Vue.extend({
       if (votes < 1) {
         return 0
       }
+      console.log(this.totalVotes)
       return Math.round((votes / this.totalVotes) * 100)
     },
     isWinning(votes) {

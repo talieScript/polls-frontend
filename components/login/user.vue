@@ -5,7 +5,7 @@
       v-click-outside="closeDropdown"
       @click="$emit('click')"
     >
-      <LoginLink v-if="!user" />
+      <LoginLink v-if="!user" compact />
       <div v-else>
         <div class="hidden sm:block">
           <button
@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import login from '~/pages/login.vue'
+import login from '@/pages/login.vue'
 import ClickOutside from 'vue-click-outside'
 
 export default Vue.extend({

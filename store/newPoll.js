@@ -34,14 +34,17 @@ export const mutations = {
 }
 
 export const actions = {
-  async submit({state, commit}, password) {
+  async submit({state, commit}, ) {
     const payload = createPostPayload(state.active);
-    this.$axios.$post('/polls', {
+    this.$axios.post(`${process.env.VUE_APP_POLLS_API}/polls${this.$auth.$state.loggedIn ? '/authenticated' : ''}`, {
       ...payload,
-      password,
-    }).then((createdPollId) => {
+    },
+    {
+      'Content-Type': 'application/json',
+      'Authorization': this.$auth.$storage._state['_token.local']
+    }).then((res) => {
       console.log('Poll created! 🥳');
-      this.$router.push('/poll/' + createdPollId)
+      this.$router.push('/poll/' + res.data)
       commit('resetActive')
     }).catch(error => {
       console.log(error);

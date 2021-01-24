@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed bottom-0 left-0 flex items-end justify-center w-full h-10 pointer-events-none"
+    class="fixed bottom-0 left-0 flex items-end justify-center w-full h-10 pointer-events-none z-50"
   >
     <transition name="fade">
       <div
@@ -39,6 +39,19 @@ export default Vue.extend({
     text: {
       type: String,
       required: true,
+    },
+    timer: {
+      type: Number,
+      required: false,
+    },
+  },
+  watch: {
+    value(value) {
+      if (value && this.timer) {
+        setTimeout(() => {
+          this.open = false
+        }, this.timer)
+      }
     },
   },
   computed: {

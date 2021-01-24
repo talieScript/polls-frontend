@@ -4,25 +4,38 @@
     buttonText="confirm"
     title="Confoirm Vote"
     @submit="handleConfirm"
+    class="text-center"
   >
     <template slot="icon">
       <fa :icon="['fa', 'check-circle']" class="mr-2 text-lg" />
     </template>
-    <p class="">This poll requires an email for vote validation</p>
-    <GoogleSignIn />
-    or
-    <div class="mt-2 mx-auto flex justify-center items-center">
-      <TextInput
-        v-model="email"
-        label="Validate with email"
-        ariaDescribedby="email"
-        width="full"
-        bgColor="white"
-        outline
-        :rules="[emailInputValidate]"
-        :error.sync="emailError"
-        validate-on-blur
-      />
+    <div class="sm:px-10">
+      <p class="text-center text-lg">
+        This poll requires an email for vote validation
+      </p>
+      <LoginLink class="mx-auto block mt-5 text-lg w-full" />
+      <div class="flex items-center mt-8">
+        <hr class="w-full" />
+        <span class="mx-5">OR</span>
+        <hr class="w-full" />
+      </div>
+      <div class="mt-3 mx-auto">
+        <span class="text-lg block mb-1">Continue as a guest</span>
+        <span>Please confirm your email address</span>
+        <TextInput
+          v-model="email"
+          label="email"
+          ariaDescribedby="email"
+          placeholder="email"
+          width="full"
+          bgColor="white"
+          outline
+          :rules="[emailInputValidate]"
+          :error.sync="emailError"
+          validate-on-blur
+          class="text-left"
+        />
+      </div>
     </div>
   </Dialog>
 </template>
