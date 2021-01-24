@@ -12,7 +12,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   async mounted() {
-    if (!this.$auth.user) {
+    if (!this.$auth.loggedIn) {
       const code = this.$route.query.code
       const strat = this.$route.query.strat
       const authRes = await this.$axios.get(

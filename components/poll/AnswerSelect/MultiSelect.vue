@@ -116,6 +116,10 @@ export default Vue.extend({
       type: Boolean,
       required: true,
     },
+    totalVotes: {
+      type: Number,
+      required: true,
+    },
   },
   computed: {
     checkedAnswers: {
@@ -128,9 +132,6 @@ export default Vue.extend({
     } as any,
     votesArray(): number[] {
       return this.answers.map((a) => a.votes.length)
-    },
-    totalVotes(): number {
-      return this.votesArray?.reduce((a, b) => a + b, 0)
     },
   },
   methods: {
@@ -149,6 +150,7 @@ export default Vue.extend({
       if (votes < 1) {
         return 0
       }
+      console.log('total', this.totalVotes)
       return Math.round((votes / this.totalVotes) * 100)
     },
     isWinning(votes) {

@@ -30,6 +30,7 @@
             :answers="poll.Answers"
             :disabled="hasVoted || ended || voteLoading"
             :show-results="showResults"
+            :totalVotes="totalVotes"
           />
           <div class="hidden sm:inline-block">
             <SubmitButton
@@ -255,12 +256,7 @@ export default Vue.extend({
       return {} as pollOptions
     },
     totalVotes(): number {
-      if (this.poll.Answers) {
-        return this.poll.Answers.map((a) => a.votes.length)?.reduce(
-          (total, votes) => total + votes,
-          0
-        )
-      }
+      return this.poll.totalVotes
     },
     requiredAnswersNo() {
       const { pollOptions } = this as any
@@ -371,7 +367,8 @@ export default Vue.extend({
       const newAnswers = await this.$axios.get(
         `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}/answers`
       )
-      this.poll.Answers = newAnswers.data
+      this.poll.Answers = newAnswers.data.answers
+      this.poll.totalVotes = newAnswers.data.votes
     },
     async getVoterAnswers() {
       await this.$store.dispatch('getIP')
