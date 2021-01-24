@@ -29,12 +29,7 @@
             v-if="showResults"
             class="flex items-center justify-between absolute left-0 mt-1 w-full px-2"
           >
-            <span
-              >{{ answer.votes.length }} vote<span
-                v-if="answer.votes.length !== 1"
-                >s</span
-              ></span
-            >
+            <span>{{ answer.votes.length }} vote<span v-if="answer.votes.length !== 1">s</span>
             <span>{{ getPercentage(answer.votes.length) }}%</span>
           </div>
         </transition>
