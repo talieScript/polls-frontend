@@ -319,9 +319,9 @@ export default Vue.extend({
       const ipAddress = this.$store.state.userIp
       this.$axios
         .post(
-          `${process.env.VUE_APP_POLLS_API}/polls/${
-            this.poll.id
-          }?validateEmail=${email && !this.userEmail}`,
+          `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}${
+            this.$auth.loggedIn ? '/authenticated' : ''
+          }`,
           {
             answers: chosen,
             email: email || '',
