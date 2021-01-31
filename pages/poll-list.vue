@@ -76,6 +76,9 @@ export default Vue.extend({
     }
   },
   async fetch() {
+    console.log({
+      env: process.env,
+    })
     const listRes = await fetch(
       `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
     ).then((res) => res.json())
