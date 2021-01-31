@@ -165,7 +165,7 @@ export default Vue.extend({
 
     const pollAndAnswers = await $axios
       .get(
-        `${process.env.VUE_APP_POLLS_API}/polls/${id}?ip=${ip}email=${$auth.user?.email}`
+        `${process.env.vueAppPollsApi}/polls/${id}?ip=${ip}email=${$auth.user?.email}`
       )
       .then((response) => {
         error = false
@@ -315,7 +315,7 @@ export default Vue.extend({
       const ipAddress = this.$store.state.userIp
       this.$axios
         .post(
-          `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}${
+          `${process.env.vueAppPollsApi}/polls/${this.poll.id}${
             this.$auth.loggedIn ? '/authenticated' : ''
           }`,
           {
@@ -365,7 +365,7 @@ export default Vue.extend({
     },
     async updateAnswers() {
       const newAnswers = await this.$axios.get(
-        `${process.env.VUE_APP_POLLS_API}/polls/${this.poll.id}/answers`
+        `${process.env.vueAppPollsApi}/polls/${this.poll.id}/answers`
       )
       this.poll.Answers = newAnswers.data.answers
       this.poll.totalVotes = newAnswers.data.votes

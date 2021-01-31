@@ -64,7 +64,7 @@ export default Vue.extend({
       this.loading = true
       await this.$axios
         .get(
-          `${process.env.VUE_APP_POLLS_API}/auth/forgotten-password?email=${this.email}`
+          `${process.env.vueAppPollsApi}/auth/forgotten-password?email=${this.email}`
         )
         .then(() => {
           this.showSnack = true

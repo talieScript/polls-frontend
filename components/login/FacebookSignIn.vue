@@ -15,7 +15,7 @@ export default Vue.extend({
   name: 'FacebookSignIn',
   computed: {
     url() {
-      return `${process.env.VUE_APP_POLLS_API}/auth/facebook`
+      return `${process.env.vueAppPollsApi}/auth/facebook`
     },
   },
 })

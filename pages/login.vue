@@ -188,9 +188,7 @@ export default Vue.extend({
       this.loading = true
       await this.$axios
         .post(
-          `${process.env.VUE_APP_POLLS_API}/auth/${
-            newUser ? 'signup' : 'login'
-          }`,
+          `${process.env.vueAppPollsApi}/auth/${newUser ? 'signup' : 'login'}`,
           {
             email,
             name,

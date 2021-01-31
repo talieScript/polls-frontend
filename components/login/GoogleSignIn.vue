@@ -15,7 +15,7 @@ export default Vue.extend({
   name: 'GoogleSignIn',
   computed: {
     url() {
-      return `${process.env.VUE_APP_POLLS_API}/auth/google`
+      return `${process.env.vueAppPollsApi}/auth/google`
     },
   },
 })

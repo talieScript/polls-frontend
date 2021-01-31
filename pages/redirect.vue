@@ -16,7 +16,7 @@ export default Vue.extend({
       const code = this.$route.query.code
       const strat = this.$route.query.strat
       const authRes = await this.$axios.get(
-        `${process.env.VUE_APP_POLLS_API}/auth/${strat}?code=${code}`
+        `${process.env.vueAppPollsApi}/auth/${strat}?code=${code}`
       )
       this.$auth.setUser(authRes.data.user)
       this.$auth.setUserToken(authRes.data.access_token)

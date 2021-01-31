@@ -80,7 +80,7 @@ export default Vue.extend({
       env: process.env,
     })
     const listRes = await fetch(
-      `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
+      `${process.env.vueAppPollsApi}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
     ).then((res) => res.json())
     this.loading = false
     if (listRes.length < 10) {
@@ -118,7 +118,7 @@ export default Vue.extend({
       this.pages += 1
       this.moreLoading = true
       const nextPageData = await this.$axios.get(
-        `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
+        `${process.env.vueAppPollsApi}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
       )
       this.list.push(...nextPageData.data)
       if (nextPageData.data.length < 10) {
@@ -139,7 +139,7 @@ export default Vue.extend({
       this.loading = true
       this.pages = 1
       const searchRes = await this.$axios.get(
-        `${process.env.VUE_APP_POLLS_API}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
+        `${process.env.vueAppPollsApi}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
       )
       if (searchRes.data.length < 10) {
         this.loadedAllPolls = true

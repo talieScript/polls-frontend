@@ -36,7 +36,7 @@ export const mutations = {
 export const actions = {
   async submit({state, commit}, ) {
     const payload = createPostPayload(state.active);
-    this.$axios.post(`${process.env.VUE_APP_POLLS_API}/polls${this.$auth.$state.loggedIn ? '/authenticated' : ''}`, {
+    this.$axios.post(`${process.env.vueAppPollsApi}/polls${this.$auth.$state.loggedIn ? '/authenticated' : ''}`, {
       ...payload,
     },
     {

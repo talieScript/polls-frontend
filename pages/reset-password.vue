@@ -75,7 +75,7 @@ export default Vue.extend({
       }
       this.loading = true
       await this.$axios
-        .post(`${process.env.VUE_APP_POLLS_API}/auth/forgotten-password`, {
+        .post(`${process.env.vueAppPollsApi}/auth/forgotten-password`, {
           password: this.pass1,
           id: this.$route.query.id,
         })

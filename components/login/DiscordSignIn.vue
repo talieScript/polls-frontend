@@ -15,7 +15,7 @@ export default Vue.extend({
   name: 'DiscordSignIn',
   computed: {
     url() {
-      return `${process.env.VUE_APP_POLLS_API}/auth/discord`
+      return `${process.env.vueAppPollsApi}/auth/discord`
     },
   },
 })

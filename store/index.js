@@ -11,7 +11,7 @@ export const mutations = {
 export const actions = {
   async getIP ({ state, commit }) {
     if (!state.userIp) {
-      const ip = await this.$axios.$get(process.env.VUE_APP_IP_GETTER)
+      const ip = await this.$axios.$get(process.env.vueAppIpGetter)
       commit('setIp', ip)
     }
   }

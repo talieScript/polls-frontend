@@ -115,6 +115,12 @@ export default {
 
   },
 
+  env: {
+    vueAppPollsApi: process.env.VUE_APP_POLLS_API || 'http://api.pollsimply.com',
+    vueAppIpGetter: process.env.VUE_APP_IP_GETTER || 'https://icanhazip.com/',
+    browserBaseUrl: process.env.BROWSER_BASE_URL || 'https://pollsimply.com'
+  },
+
   axios: {
     baseURL: process.env.VUE_APP_POLLS_API,
   },

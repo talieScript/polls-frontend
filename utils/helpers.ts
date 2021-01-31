@@ -41,7 +41,7 @@ export const createPostPayload = (pollData: LocalPoll): ApiPoll => {
 
 export const getVoterAnswers = async ({userEmail, ipAdress, pollId}): Promise<string[]> => {
   // get voter answers
-  const allVoterAnswers = (await axios.get(`${process.env.VUE_APP_POLLS_API}/voter/answers/${pollId}?email=${userEmail}&ip=${ipAdress}`)).data
+  const allVoterAnswers = (await axios.get(`${process.env.vueAppPollsApi}/voter/answers/${pollId}?email=${userEmail}&ip=${ipAdress}`)).data
   // filter out answers related to poll
   return allVoterAnswers
 }

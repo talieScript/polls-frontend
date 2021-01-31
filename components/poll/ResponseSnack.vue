@@ -69,7 +69,7 @@ export default Vue.extend({
     async resendEmail() {
       // TODO: add loading state to basic button
       this.loadingEmail = true
-      await this.$axios.post(`${process.env.VUE_APP_POLLS_API}/email/resend`, {
+      await this.$axios.post(`${process.env.vueAppPollsApi}/email/resend`, {
         email: this.userEmail,
       })
       this.snackOpen = false
