@@ -48,7 +48,7 @@
       </label>
     </div>
     <div
-      class="error-message absolute bottom-0 z-0 text-red text-xs duration-300"
+      class="error-message absolute bottom-0 pt-1 z-0 text-red text-xs duration-300"
     >
       {{ localError }}
     </div>
