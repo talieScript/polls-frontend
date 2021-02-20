@@ -167,7 +167,11 @@ export default {
 
 <style lang="scss" scoped>
 .label {
-  @apply text-gray-500 ml-2;
+  @apply text-gray-500;
+}
+
+.outline .label {
+  @apply ml-2;
 }
 
 .input:not(:focus):not(:placeholder-shown) ~ .label {
@@ -176,7 +180,7 @@ export default {
 
 .input:focus-within ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  @apply transform scale-90 -translate-y-6 ml-1;
+  @apply transform scale-90 -translate-y-6;
 }
 
 .outline input:focus-within ~ .label,
