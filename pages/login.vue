@@ -25,7 +25,8 @@
                 outline
                 width="full"
                 :rules="[
-                  (value) => (value < 25 ? 'Max 25 characters, sorry' : ''),
+                  (value) => (value > 25 ? 'Max 25 characters, sorry' : ''),
+                  (value) => (!value ? 'Required' : ''),
                 ]"
                 :error.sync="nameError"
                 validateOnBlur

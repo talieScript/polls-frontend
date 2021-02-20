@@ -111,8 +111,10 @@ export default {
     },
   },
 
-  router: {
+  router: {},
 
+  generate: {
+    fallback: true
   },
 
   env: {
