@@ -54,7 +54,7 @@
                 Didnt recive an email?
               </button>
             </div>
-            <div class="mt-2" v-else>
+            <div class="mt-2" v-else-if="!ended">
               Your vote has been counted! 👌
               <button
                 class="block ml-auto text-xs underline"

@@ -41,4 +41,18 @@ module.exports = {
     borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
     border: ['responsive', 'hover', 'focus', 'focus-within'],
   },
+  purge: {
+    options: {
+      // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
+      enabled: process.env.NODE_ENV === 'production',
+      content: [
+        'components/**/*.vue',
+        'layouts/**/*.vue',
+        'pages/**/*.vue',
+        'plugins/**/*.js',
+        'nuxt.config.js',
+      ],
+      whitelist: ['sm:max-w-lg']
+    }
+  }
 };
