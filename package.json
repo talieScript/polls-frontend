@@ -20,7 +20,7 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.9.6",
     "luxon": "^1.25.0",
-    "nuxt": "^2.14.6",
+    "nuxt": "^2.15.4",
     "nuxt-fontawesome": "^0.4.0",
     "qrcode": "^1.4.4",
     "vue-click-outside": "^1.1.0",
