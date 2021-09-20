@@ -17,7 +17,7 @@
     "@nuxtjs/axios": "^5.12.3",
     "@nuxtjs/dotenv": "^1.4.1",
     "axios": "^0.21.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.18.0",
     "dayjs": "^1.9.6",
     "luxon": "^1.25.0",
     "nuxt": "^2.14.6",
