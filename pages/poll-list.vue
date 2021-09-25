@@ -79,19 +79,17 @@ export default Vue.extend({
     }
   },
   async fetch() {
-    console.log({
-      env: process.env,
-    })
-    const listRes = await fetch(
+    const res = await fetch(
       `${process.env.vueAppPollsApi}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
-    ).then((res) => res.json())
+    )
+    const list = await res.json()
     this.loading = false
-    if (listRes.length < 10) {
+    if (list.length < 10) {
       this.loadedAllPolls = true
     } else {
       this.loadedAllPolls = false
     }
-    this.list = listRes
+    this.list = list
   },
   created() {
     this.reload = debounce(this.reload, 300)
