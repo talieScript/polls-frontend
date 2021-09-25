@@ -52,7 +52,11 @@ module.exports = {
         'plugins/**/*.js',
         'nuxt.config.js',
       ],
-      whitelist: ['sm:max-w-lg']
+      whitelist: ['sm:max-w-lg', 'rounded-2xl']
     }
-  }
+  },
+  future: {
+    purgeLayersByDefault: true,
+  },
+
 };
