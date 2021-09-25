@@ -7,7 +7,10 @@
     <div class="flex mt-8">
       <div class="flex items-center">
         <Select v-model="order" :options="orderOptions" class="mr-2" />
-        <div class="flex flex-col items-center justify-center">
+        <div
+          v-if="order !== 'end_date'"
+          class="flex flex-col items-center justify-center"
+        >
           <label for="endedCheck" class="text-xs">Ended</label>
           <ToggleButton
             v-model="showEnded"
