@@ -276,7 +276,12 @@ export default {
       this.$store.commit('newPoll/updatePoll', this.pollData)
       this.$store.dispatch('newPoll/submit')
 
-      this.pollData = initPollData
+      this.pollData = {
+        ...this.pollData,
+        title: '',
+        question: '',
+        answers: [],
+      }
     },
   } as any,
 }
