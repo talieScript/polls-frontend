@@ -91,12 +91,7 @@
             forgotten password
           </nuxt-link>
         </div>
-        <BasicButton
-          rounded="md"
-          class="w-full mt-2"
-          :loading="loading"
-          @click="logIn"
-        >
+        <BasicButton class="w-full mt-2" :loading="loading" @click="logIn">
           Sign {{ !newUser ? 'In' : 'Up' }}
         </BasicButton>
       </form>

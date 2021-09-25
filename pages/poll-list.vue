@@ -36,7 +36,6 @@
       v-if="!loadedAllPolls && !loading"
       @click="loadNextPage"
       ariaLabel="load more"
-      rounded="md"
       class="mx-auto mt-2"
     >
       <fa v-if="!moreLoading" :icon="['fa', 'arrow-down']" />

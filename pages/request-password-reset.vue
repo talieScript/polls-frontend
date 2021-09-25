@@ -21,7 +21,7 @@
           required
           validateOnBlur
         />
-        <BasicButton rounded="md" class="w-full mt-5" :loading="loading">
+        <BasicButton class="w-full mt-5" :loading="loading">
           confirm
         </BasicButton>
       </form>

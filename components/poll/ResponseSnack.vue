@@ -10,7 +10,6 @@
       v-if="resStatus === 'emailPending' || resStatus === 'emailSent'"
       color="white"
       textSize="sm"
-      rounded="md"
       class="ml-auto mt-1"
       :loading="loadingEmail"
       @click="resendEmail"

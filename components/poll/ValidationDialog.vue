@@ -43,11 +43,8 @@
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
 import { pollOptions } from '@/utils/types'
-import BasicButton from '../BasicButton.vue'
-import MultiSelectVue from './AnswerSelect/MultiSelect.vue'
 
 export default Vue.extend({
-  components: { BasicButton },
   name: 'ValidationDialog',
   data() {
     return {
@@ -99,7 +96,8 @@ export default Vue.extend({
       if (!email) {
         return ''
       }
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const re =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(String(email).toLowerCase()) ? '' : 'Please enter an email'
     },
     handleConfirm(): any {
