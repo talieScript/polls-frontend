@@ -148,6 +148,17 @@
 import dayjs from 'dayjs'
 import helpTipsText from '@/utils/helpTipsText'
 
+const initPollData = {
+  title: '',
+  question: '',
+  answers: [],
+  resultsVisibility: '',
+  pollVisibility: '',
+  options: {},
+  endDate: '',
+  multipleChoice: {},
+}
+
 export default {
   data(): any {
     return {
@@ -209,16 +220,7 @@ export default {
       account: false,
       terms: false,
       termsError: false,
-      pollData: {
-        title: '',
-        question: '',
-        answers: [],
-        resultsVisibility: '',
-        pollVisibility: '',
-        options: {},
-        endDate: '',
-        multipleChoice: {},
-      },
+      pollData: initPollData,
     }
   },
   computed: {
@@ -273,6 +275,8 @@ export default {
 
       this.$store.commit('newPoll/updatePoll', this.pollData)
       this.$store.dispatch('newPoll/submit')
+
+      this.pollData = initPollData
     },
   } as any,
 }
