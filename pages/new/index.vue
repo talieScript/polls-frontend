@@ -121,7 +121,13 @@
             >I agree to the
             <button
               @click.prevent
-              class="font-semibold text-primary hover:underline cursor-pointer outline-none"
+              class="
+                font-semibold
+                text-primary
+                hover:underline
+                cursor-pointer
+                outline-none
+              "
             >
               Terms and conditions
             </button>
@@ -143,15 +149,6 @@ import dayjs from 'dayjs'
 import helpTipsText from '@/utils/helpTipsText'
 
 export default {
-  transition(to, from) {
-    if (from?.name === 'poll-list') {
-      return 'slide-left'
-    }
-    if (to) {
-      return 'slide-right'
-    }
-    return 'slide-left'
-  },
   data(): any {
     return {
       tipText: helpTipsText.newPoll,
