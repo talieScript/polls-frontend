@@ -9,7 +9,16 @@
       <div v-else>
         <div class="hidden sm:block">
           <button
-            class="outline-none focus:shadow-outline rounded flex justify-center items-center ml-1 p-1"
+            class="
+              outline-none
+              focus:shadow-outline
+              rounded
+              flex
+              justify-center
+              items-center
+              ml-1
+              p-1
+            "
             to="/dashboard"
             @click="openDropdown = true"
           >
@@ -42,9 +51,6 @@
             {{ user.email }}
           </h6>
           <div class="flex flex-col items-start">
-            <NuxtLink to="/dashboard" class="hover:text-primary">
-              <button @click="openDropdown = false">My Dashboard</button>
-            </NuxtLink>
             <button @click="$auth.logout()" class="mt-2 hover:text-red">
               Logout
             </button>
