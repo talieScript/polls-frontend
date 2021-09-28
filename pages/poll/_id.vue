@@ -2,7 +2,15 @@
   <div class="pb-20">
     <div class="w-full" v-if="!Object.keys(poll).length">
       <div
-        class="h-screen flex w-full items-center justify-center text-center text-lg flex-col"
+        class="
+          h-screen
+          flex
+          w-full
+          items-center
+          justify-center
+          text-center text-lg
+          flex-col
+        "
       >
         Poll not found 😬
         <nuxt-link class="block" to="/">
@@ -66,7 +74,21 @@
           </div>
         </div>
         <div
-          class="sm:order-2 sm:w-32 flex flex-row-reverse sm:flex-col justify-between sm:justify-start w-full mt-4 mb-4 sm:mb-0 items-center sm:items-baseline h-full"
+          class="
+            sm:order-2
+            sm:w-32
+            flex flex-row-reverse
+            sm:flex-col
+            justify-between
+            sm:justify-start
+            w-full
+            mt-4
+            mb-4
+            sm:mb-0
+            items-center
+            sm:items-baseline
+            h-full
+          "
         >
           <CountDown
             v-if="poll.end_date"
@@ -74,7 +96,15 @@
             :endDate="poll.end_date || ''"
           />
           <div
-            class="sm:ml-0 mb-3 sm:mt-3 w-full flex sm:justify-between items-center"
+            class="
+              sm:ml-0
+              mb-3
+              sm:mt-3
+              w-full
+              flex
+              sm:justify-between
+              items-center
+            "
           >
             <div class="mr-3 sm:mr-0">
               <p class="text-xs">Total Votes</p>
@@ -94,7 +124,17 @@
         </div>
       </div>
       <div
-        class="bg-gray-200 fixed w-screen sm:hidden bottom-0 left-0 pt-1 flex flex-col items-center"
+        class="
+          bg-gray-200
+          fixed
+          w-screen
+          sm:hidden
+          bottom-0
+          left-0
+          pt-1
+          flex flex-col
+          items-center
+        "
       >
         <SmallShare class="mb-2" :poll-id="poll.id" :question="poll.question" />
         <SubmitButton
@@ -146,17 +186,6 @@ dayjs.extend(relativeTime)
 
 export default Vue.extend({
   loading: true,
-  transition(to, from) {
-    if (from?.name === 'poll-list') {
-      return 'slide-left'
-    }
-    if (from?.name === 'poll-list') {
-      return 'slide-left'
-    } else if (to) {
-      return 'slide-right'
-    }
-    return 'slide-right'
-  },
   async asyncData({ params, $axios, store, $auth }) {
     const id = params.id
     let error

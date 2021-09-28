@@ -121,7 +121,13 @@
             >I agree to the
             <button
               @click.prevent
-              class="font-semibold text-primary hover:underline cursor-pointer outline-none"
+              class="
+                font-semibold
+                text-primary
+                hover:underline
+                cursor-pointer
+                outline-none
+              "
             >
               Terms and conditions
             </button>
@@ -142,16 +148,18 @@
 import dayjs from 'dayjs'
 import helpTipsText from '@/utils/helpTipsText'
 
+const initPollData = {
+  title: '',
+  question: '',
+  answers: [],
+  resultsVisibility: '',
+  pollVisibility: '',
+  options: {},
+  endDate: '',
+  multipleChoice: {},
+}
+
 export default {
-  transition(to, from) {
-    if (from?.name === 'poll-list') {
-      return 'slide-left'
-    }
-    if (to) {
-      return 'slide-right'
-    }
-    return 'slide-left'
-  },
   data(): any {
     return {
       tipText: helpTipsText.newPoll,
@@ -212,16 +220,7 @@ export default {
       account: false,
       terms: false,
       termsError: false,
-      pollData: {
-        title: '',
-        question: '',
-        answers: [],
-        resultsVisibility: '',
-        pollVisibility: '',
-        options: {},
-        endDate: '',
-        multipleChoice: {},
-      },
+      pollData: initPollData,
     }
   },
   computed: {
@@ -276,6 +275,13 @@ export default {
 
       this.$store.commit('newPoll/updatePoll', this.pollData)
       this.$store.dispatch('newPoll/submit')
+
+      this.pollData = {
+        ...this.pollData,
+        title: '',
+        question: '',
+        answers: [],
+      }
     },
   } as any,
 }

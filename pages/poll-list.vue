@@ -7,7 +7,10 @@
     <div class="flex mt-8">
       <div class="flex items-center">
         <Select v-model="order" :options="orderOptions" class="mr-2" />
-        <div class="flex flex-col items-center justify-center">
+        <div
+          v-if="order !== 'end_date'"
+          class="flex flex-col items-center justify-center"
+        >
           <label for="endedCheck" class="text-xs">Ended</label>
           <ToggleButton
             v-model="showEnded"
@@ -33,7 +36,6 @@
       v-if="!loadedAllPolls && !loading"
       @click="loadNextPage"
       ariaLabel="load more"
-      rounded="md"
       class="mx-auto mt-2"
     >
       <fa v-if="!moreLoading" :icon="['fa', 'arrow-down']" />
@@ -76,19 +78,17 @@ export default Vue.extend({
     }
   },
   async fetch() {
-    console.log({
-      env: process.env,
-    })
-    const listRes = await fetch(
+    const res = await fetch(
       `${process.env.vueAppPollsApi}/polls/list?page=${this.pages}&order=${this.order}&searchTerm=${this.searchTerm}&ended=${this.showEnded}`
-    ).then((res) => res.json())
+    )
+    const list = await res.json()
     this.loading = false
-    if (listRes.length < 10) {
+    if (list.length < 10) {
       this.loadedAllPolls = true
     } else {
       this.loadedAllPolls = false
     }
-    this.list = listRes
+    this.list = list
   },
   created() {
     this.reload = debounce(this.reload, 300)

@@ -1,6 +1,17 @@
 <template>
   <div
-    class="w-screen h-screen fixed top-0 left-0 bg-black bg-opacity-25 z-50 flex items-center justify-center"
+    class="
+      w-screen
+      h-screen
+      fixed
+      top-0
+      left-0
+      bg-black bg-opacity-25
+      z-50
+      flex
+      items-center
+      justify-center
+    "
     :class="{ hidden: !open }"
     @click="open = false"
   >
@@ -13,12 +24,28 @@
         @click.stop
       >
         <div
-          class="w-full py-1 px-2 rounded-t flex items-center justify-start text-primary"
+          class="
+            w-full
+            py-1
+            px-2
+            rounded-t
+            flex
+            items-center
+            justify-start
+            text-primary
+          "
         >
           <slot class="mr-2 text-lg" name="icon" />
           <h5 class="text-xl">{{ title }}</h5>
           <button
-            class="ml-auto mr-1 text-gray-500 hover:text-gray-300 transition-colors duration-100"
+            class="
+              ml-auto
+              mr-1
+              text-gray-500
+              hover:text-gray-300
+              transition-colors
+              duration-100
+            "
             aria-label="Close"
             @click="open = false"
           >
@@ -34,7 +61,6 @@
             class="ml-auto"
             color="red"
             textSize="sm"
-            rounded="md"
           >
             cancel
           </BasicButton>
@@ -43,7 +69,6 @@
             @click="$emit('submit')"
             class="ml-3"
             textSize="sm"
-            rounded="md"
           >
             {{ buttonText }}
           </BasicButton>

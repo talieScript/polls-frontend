@@ -1,11 +1,20 @@
 <template>
   <button
-    class="block px-2 py-1 border outline-none focus:shadow-outline w-auto uppercase"
+    class="
+      block
+      px-2
+      py-1
+      border
+      outline-none
+      focus:shadow-outline
+      w-auto
+      uppercase
+      rounded-md
+    "
     :class="[
       `text-${color}`,
       `border-${color}`,
       `text-${textSize}`,
-      `rounded-${rounded}`,
       { 'pointer-events-none': loading },
     ]"
     @click="$emit('click')"
@@ -35,10 +44,6 @@ export default Vue.extend({
     textSize: {
       type: String,
       default: 'base',
-    },
-    rounded: {
-      type: String,
-      default: '2xl',
     },
     ariaLabel: {
       type: String,
